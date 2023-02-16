@@ -8,15 +8,17 @@
 
     <TextView
         android:id="@+id/textView"
-        android:layout_width="100dp"
-        android:layout_height="52dp"
-        android:layout_marginStart="100dp"
-        android:layout_marginTop="250dp"
-        android:layout_marginEnd="100dp"
-        android:layout_marginBottom="250dp"
-        android:text="Solucion:"
+        android:layout_width="150dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="130dp"
+        android:layout_marginTop="321dp"
+        android:layout_marginEnd="131dp"
+        android:layout_marginBottom="322dp"
+        android:text="Resultado:"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
 </androidx.constraintlayout.widget.ConstraintLayout>
