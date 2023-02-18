@@ -7,4 +7,15 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="FunctionalButtons">
+        <item name="android:textColor">@color/colorFuncButtonTxt</item>
+        <item name="android:background">@drawable/rounded_rectangle</item>
+    </style>
+
+    <style name="EqualButtons">
+        <item name="android:textColor">@color/colorEqlButtonTxt</item>
+        <item name="android:background">@drawable/rounded_equal_rectangle</item>
+    </style>
+
+
 </resources>

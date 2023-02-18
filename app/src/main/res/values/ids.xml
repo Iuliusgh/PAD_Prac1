@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="divide" type="id"></item>
+    <item name="clear" type="id"></item>
+    <item name="delete" type="id"></item>
+    <item name="number7" type="id"></item>
+    <item name="number8" type="id"></item>
+    <item name="number9" type="id"></item>
+    <item name="number4" type="id"></item>
+    <item name="number5" type="id"></item>
+    <item name="number6" type="id"></item>
+    <item name="subtract" type="id"></item>
+    <item name="number1" type="id"></item>
+    <item name="number2" type="id"></item>
+    <item name="number3" type="id"></item>
+    <item name="number0" type="id"></item>
+    <item name="dot" type="id"></item>
+    <item name="equal" type="id"></item>
+</resources>

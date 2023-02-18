@@ -3,4 +3,10 @@
     <color name="colorPrimary">#6200EE</color>
     <color name="colorPrimaryDark">#3700B3</color>
     <color name="colorAccent">#03DAC5</color>
+
+    <color name="colorFuncButtonBG">#333333</color>
+    <color name="colorFuncButtonTxt">#c4c4c4</color>
+
+    <color name="colorEqlButtonBG">#FF5722</color>
+    <color name="colorEqlButtonTxt">#FFFFFF</color>
 </resources>
