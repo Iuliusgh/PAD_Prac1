@@ -10,7 +10,7 @@
         android:id="@+id/editTextNumberY"
         android:layout_width="235dp"
         android:layout_height="60dp"
-        android:layout_marginStart="43dp"
+        android:layout_marginStart="437dp"
         android:layout_marginEnd="59dp"
         android:ems="10"
         android:hint="Introduce un numero"
@@ -19,38 +19,39 @@
         android:visibility="visible"
         app:layout_constraintBottom_toTopOf="@+id/sumar"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/gridLayout"
-        app:layout_constraintTop_toBottomOf="@+id/editTextNumberX"
-        app:layout_constraintVertical_bias="0.324" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextNumberX" />
 
     <EditText
         android:id="@+id/editTextNumberX"
         style="@style/Widget.AppCompat.AutoCompleteTextView"
         android:layout_width="235dp"
         android:layout_height="60dp"
-        android:layout_marginStart="43dp"
+        android:layout_marginStart="437dp"
         android:layout_marginEnd="59dp"
-        android:layout_marginBottom="202dp"
         android:ems="10"
         android:hint="Introduce un numero"
         android:inputType="number"
         android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/editTextNumberY"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/gridLayout" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/sumar"
         android:layout_width="118dp"
         android:layout_height="49dp"
         android:layout_marginStart="502dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="111dp"
-        android:layout_marginBottom="16dp"
         android:text="Sumar"
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextNumberY" />
 
     <androidx.gridlayout.widget.GridLayout
         android:id="@+id/gridLayout"
