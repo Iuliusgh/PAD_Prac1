@@ -18,6 +18,8 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
     private int count = 0;
 
+    private int countOp = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -139,6 +141,7 @@ public class MainActivity extends AppCompatActivity {
                 Log.i(TAG, "Boton C pulsado");
                 text.setText("");
                 count = 0;
+                countOp = 0;
             }
         });
 
@@ -153,6 +156,10 @@ public class MainActivity extends AppCompatActivity {
                     text.setText(aux.substring(0, aux.length() - 1));
                     if(aux.charAt(aux.length() - 1) == '.' && count > 0)
                             count--;
+                    if(aux.charAt(aux.length() - 1) == '-' || aux.charAt(aux.length() - 1) == '+'
+                    || aux.charAt(aux.length() - 1) == '*' || aux.charAt(aux.length() - 1) == '/'
+                    && countOp > 0)
+                        countOp--;
                 }
             }
         });
@@ -164,8 +171,9 @@ public class MainActivity extends AppCompatActivity {
                 // Code here executes on main thread after user presses button
                 Log.i(TAG, "Boton + pulsado");
                 String aux = text.getText().toString();
-                if(aux.length() > 0 && !aux.contains("+") && Character.isDigit(aux.charAt(aux.length() - 1))) {
+                if(countOp == 0 && aux.length() > 0 && !aux.contains("+") && Character.isDigit(aux.charAt(aux.length() - 1))) {
                     text.setText(aux + "+");
+                    countOp++;
                 }
             }
         });
@@ -177,7 +185,7 @@ public class MainActivity extends AppCompatActivity {
                 // Code here executes on main thread after user presses button
                 Log.i(TAG, "Boton = pulsado");
                 String aux = text.getText().toString();
-                if(aux.length() > 0) {
+                if(aux.length() > 0 && !aux.contains("=")) {
                     String res;
                     if(aux.contains("+"))
                         res = op2(1);
@@ -185,8 +193,11 @@ public class MainActivity extends AppCompatActivity {
                         res = op2(2);
                     else if(aux.contains("*"))
                         res = op2(3);
-                    else{
+                    else if(aux.contains("/")){
                         res = op2(4);
+                    }
+                    else{
+                        res = op2(5);
                     }
                     text.setText(aux + "=");
                     result(res);
@@ -202,7 +213,7 @@ public class MainActivity extends AppCompatActivity {
                 Log.i(TAG, "Boton . pulsado");
                 String aux = text.getText().toString();
                 if(aux.length() > 0) {
-                    if(!aux.contains("+") && !aux.contains("-") && !aux.contains("*")){
+                    if(!aux.contains("+") && !aux.contains("-") && !aux.contains("*") && !aux.contains("/")){
                         if(!aux.contains(".")){
                             text.setText(aux + ".");
                         }
@@ -222,8 +233,9 @@ public class MainActivity extends AppCompatActivity {
                 // Code here executes on main thread after user presses button
                 Log.i(TAG, "Boton - pulsado");
                 String aux = text.getText().toString();
-                if(aux.length() > 0 && !aux.contains("-") && Character.isDigit(aux.charAt(aux.length() - 1))) {
+                if(countOp == 0 && aux.length() > 0 && !aux.contains("-") && Character.isDigit(aux.charAt(aux.length() - 1))) {
                     text.setText(aux + "-");
+                    countOp++;
                 }
             }
         });
@@ -235,8 +247,9 @@ public class MainActivity extends AppCompatActivity {
                 // Code here executes on main thread after user presses button
                 Log.i(TAG, "Boton * pulsado");
                 String aux = text.getText().toString();
-                if(aux.length() > 0 && !aux.contains("*") && Character.isDigit(aux.charAt(aux.length() - 1))) {
+                if(countOp == 0 && aux.length() > 0 && !aux.contains("*") && Character.isDigit(aux.charAt(aux.length() - 1))) {
                     text.setText(aux + "*");
+                    countOp++;
                 }
             }
         });
@@ -248,8 +261,9 @@ public class MainActivity extends AppCompatActivity {
                 // Code here executes on main thread after user presses button
                 Log.i(TAG, "Boton / pulsado");
                 String aux = text.getText().toString();
-                if(aux.length() > 0 && !aux.contains("*") && Character.isDigit(aux.charAt(aux.length() - 1))) {
+                if(countOp == 0 && aux.length() > 0 && !aux.contains("/") && Character.isDigit(aux.charAt(aux.length() - 1))) {
                     text.setText(aux + "/");
+                    countOp++;
                 }
             }
         });
@@ -293,7 +307,7 @@ public class MainActivity extends AppCompatActivity {
             Log.i(TAG, "Realizando multiplicacion");
             res = a * b;
         }
-        else{
+        else if(op == 4){
             String[] array = text.getText().toString().split("\\/");
             a = Double.parseDouble(array[0]);
             b = Double.parseDouble(array[1]);
@@ -301,6 +315,9 @@ public class MainActivity extends AppCompatActivity {
             if(b == 0)
                 return "Division por cero";
             else res = a / b;
+        }
+        else{
+            res = Double.parseDouble(text.getText().toString());
         }
         return Double.toString(res);
     }
