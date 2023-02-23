@@ -1,7 +1,7 @@
 package es.ucm.fdi.calculator;
 
 public class Calculator {
-    public static int add(int a, int b){
+    public static double add(double a, double b){
         return a + b;
     }
 }

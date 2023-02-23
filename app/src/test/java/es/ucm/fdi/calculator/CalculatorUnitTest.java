@@ -7,7 +7,7 @@ import es.ucm.fdi.calculator.Calculator;
 public class CalculatorUnitTest {
     @Test
     public void addTwoNumbers(){
-        double res = Calculator.add(1,2);
-        assertEquals(3, res, 1);
+        double res = Calculator.add(1.1,2.0);
+        assertEquals(3.1, res, 1);
     }
 }

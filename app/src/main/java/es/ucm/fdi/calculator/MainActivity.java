@@ -258,14 +258,14 @@ public class MainActivity extends AppCompatActivity {
     private void addXandY(){
         Log.i(TAG, "Capturando los numeros");
         String first = editTextX.getText().toString();
-        int a = (first.equals("")) ? 0 : Integer.parseInt(first);
+        Double a = (first.equals("")) ? 0 : Double.parseDouble(first);
         String second = editTextY.getText().toString();
-        int b = (second.equals("")) ? 0 : Integer.parseInt(second);
+        Double b = (second.equals("")) ? 0 : Double.parseDouble(second);
         Log.i(TAG, "Realizando calculo");
-        int res = Calculator.add(a, b);
+        Double res = Calculator.add(a, b);
         Intent intent = new Intent(this, CalculatorResultActivity.class);
         Log.i(TAG, "Pasando el resultado");
-        intent.putExtra("Resultado", Integer.toString(a) + "+" + Integer.toString(b) + "=" + res);
+        intent.putExtra("Resultado", Double.toString(a) + "+" + Double.toString(b) + "=" + res);
         startActivity(intent);
     }
 
