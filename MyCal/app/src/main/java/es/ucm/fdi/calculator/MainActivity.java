@@ -18,6 +18,8 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
     private int count = 0;
 
+    private int countOp = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -131,32 +133,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        Button clear = findViewById(R.id.clear);
-        clear.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Code here executes on main thread after user presses button
-                Log.i(TAG, "Boton C pulsado");
-                text.setText("");
-                count = 0;
-            }
-        });
-
-        Button delete = findViewById(R.id.delete);
-        delete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Code here executes on main thread after user presses button
-                Log.i(TAG, "Boton Del pulsado");
-                String aux = text.getText().toString();
-                if(aux.length() > 0) {
-                    text.setText(aux.substring(0, aux.length() - 1));
-                    if(aux.charAt(aux.length() - 1) == '.' && count > 0)
-                        count--;
-                }
-            }
-        });
-
         Button add = findViewById(R.id.add);
         add.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -164,8 +140,9 @@ public class MainActivity extends AppCompatActivity {
                 // Code here executes on main thread after user presses button
                 Log.i(TAG, "Boton + pulsado");
                 String aux = text.getText().toString();
-                if(aux.length() > 0 && !aux.contains("+") && Character.isDigit(aux.charAt(aux.length() - 1))) {
+                if(countOp == 0 && aux.length() > 0 && !aux.contains("+") && Character.isDigit(aux.charAt(aux.length() - 1))) {
                     text.setText(aux + "+");
+                    countOp++;
                 }
             }
         });
@@ -178,18 +155,18 @@ public class MainActivity extends AppCompatActivity {
                 Log.i(TAG, "Boton = pulsado");
                 String aux = text.getText().toString();
                 if(aux.length() > 0) {
-                    String res;
-                    if(aux.contains("+"))
-                        res = op2(1);
-                    else if(aux.contains("-"))
-                        res = op2(2);
-                    else if(aux.contains("*"))
-                        res = op2(3);
-                    else{
-                        res = op2(4);
+                    double res, a, b;
+                    String[] array = aux.split("\\+");
+                    a = Double.parseDouble(array[0]);
+                    if(array.length > 1){
+                        b = Double.parseDouble(array[1]);
                     }
-                    text.setText(aux + "=");
-                    result(res);
+                    else{
+                        b = 0;
+                    }
+                    Log.i(TAG, "Realizando suma");
+                    res = a + b;
+                    result(Double.toString(res));
                 }
             }
         });
@@ -202,7 +179,7 @@ public class MainActivity extends AppCompatActivity {
                 Log.i(TAG, "Boton . pulsado");
                 String aux = text.getText().toString();
                 if(aux.length() > 0) {
-                    if(!aux.contains("+") && !aux.contains("-") && !aux.contains("*")){
+                    if(!aux.contains("+")){
                         if(!aux.contains(".")){
                             text.setText(aux + ".");
                         }
@@ -214,100 +191,26 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-
-        Button sub = findViewById(R.id.subtract);
-        sub.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Code here executes on main thread after user presses button
-                Log.i(TAG, "Boton - pulsado");
-                String aux = text.getText().toString();
-                if(aux.length() > 0 && !aux.contains("-") && Character.isDigit(aux.charAt(aux.length() - 1))) {
-                    text.setText(aux + "-");
-                }
-            }
-        });
-
-        Button mul = findViewById(R.id.multiply);
-        mul.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Code here executes on main thread after user presses button
-                Log.i(TAG, "Boton * pulsado");
-                String aux = text.getText().toString();
-                if(aux.length() > 0 && !aux.contains("*") && Character.isDigit(aux.charAt(aux.length() - 1))) {
-                    text.setText(aux + "*");
-                }
-            }
-        });
-
-        Button div = findViewById(R.id.divide);
-        div.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Code here executes on main thread after user presses button
-                Log.i(TAG, "Boton / pulsado");
-                String aux = text.getText().toString();
-                if(aux.length() > 0 && !aux.contains("*") && Character.isDigit(aux.charAt(aux.length() - 1))) {
-                    text.setText(aux + "/");
-                }
-            }
-        });
     }
 
     private void addXandY(){
         Log.i(TAG, "Capturando los numeros");
         String first = editTextX.getText().toString();
-        int a = (first.equals("")) ? 0 : Integer.parseInt(first);
+        double a = (first.equals("")) ? 0 : Double.parseDouble(first);
         String second = editTextY.getText().toString();
-        int b = (second.equals("")) ? 0 : Integer.parseInt(second);
+        double b = (second.equals("")) ? 0 : Double.parseDouble(second);
         Log.i(TAG, "Realizando calculo");
-        int res = Calculator.add(a, b);
+        double res = Calculator.add(a, b);
         Intent intent = new Intent(this, CalculatorResultActivity.class);
         Log.i(TAG, "Pasando el resultado");
-        intent.putExtra("Resultado", Integer.toString(a) + "+" + Integer.toString(b) + "=" + res);
+        intent.putExtra("Resultado", Double.toString(res));
         startActivity(intent);
     }
 
-    private String op2(int op){
-        double res, a, b;
-        Log.i(TAG, "Capturando los numeros");
-        if(op == 1){
-            String[] array = text.getText().toString().split("\\+");
-            a = Double.parseDouble(array[0]);
-            b = Double.parseDouble(array[1]);
-            Log.i(TAG, "Realizando suma");
-            res = a + b;
-        }
-        else if(op == 2){
-            String[] array = text.getText().toString().split("\\-");
-            a = Double.parseDouble(array[0]);
-            b = Double.parseDouble(array[1]);
-            Log.i(TAG, "Realizando resta");
-            res = a - b;
-        }
-        else if(op == 3){
-            String[] array = text.getText().toString().split("\\*");
-            a = Double.parseDouble(array[0]);
-            b = Double.parseDouble(array[1]);
-            Log.i(TAG, "Realizando multiplicacion");
-            res = a * b;
-        }
-        else{
-            String[] array = text.getText().toString().split("\\/");
-            a = Double.parseDouble(array[0]);
-            b = Double.parseDouble(array[1]);
-            Log.i(TAG, "Realizando division");
-            if(b == 0)
-                return "Division por cero";
-            else res = a / b;
-        }
-        return Double.toString(res);
-    }
     private void result(String res){
         Intent intent = new Intent(this, CalculatorResultActivity.class);
         Log.i(TAG, "Pasando el resultado");
-        intent.putExtra("Resultado", text.getText().toString() + res);
+        intent.putExtra("Resultado", res);
         startActivity(intent);
     }
 }
