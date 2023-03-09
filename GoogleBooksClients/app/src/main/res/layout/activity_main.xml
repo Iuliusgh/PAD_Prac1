@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    android:background="#7CDCE4">
+
 
 
     <androidx.appcompat.widget.AppCompatButton
@@ -19,7 +21,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@drawable/rectangle3"/>
 
     <EditText
         android:id="@+id/autor"
@@ -34,21 +37,11 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <EditText
-        android:id="@+id/titulo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="121dp"
-        android:ems="8"
-        android:hint="@string/title"
-        android:inputType="text"
-        app:layout_constraintEnd_toEndOf="@+id/autor"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/autor"
-        app:layout_constraintTop_toBottomOf="@+id/autor" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@drawable/rectangle"
+        android:padding="10dp"
+        android:textColorHint="#2C2C2C"
+        android:textStyle="italic"/>
 
     <RadioGroup
         android:id="@+id/printType"
@@ -65,19 +58,25 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:checked="true"
-            android:text="@string/books" />
+            android:text="@string/books"
+            android:background="@drawable/rectangle2"
+            android:textStyle="bold"/>
 
         <RadioButton
             android:id="@+id/RBRevistas"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/magazines" />
+            android:text="@string/magazines"
+            android:background="@drawable/rectangle2"
+            android:textStyle="bold"/>
 
         <RadioButton
             android:id="@+id/RBAmbos"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/both" />
+            android:text="@string/both"
+            android:background="@drawable/rectangle2"
+            android:textStyle="bold"/>
     </RadioGroup>
 
     <TextView
@@ -90,7 +89,9 @@
         android:text="@string/choose"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:textColor="@color/black"
+        android:textStyle="bold"/>
 
     <TextView
         android:id="@+id/textView"
@@ -111,7 +112,8 @@
         android:layout_marginBottom="1dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

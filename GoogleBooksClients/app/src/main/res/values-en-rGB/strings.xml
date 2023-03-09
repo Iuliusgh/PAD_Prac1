@@ -9,6 +9,5 @@
     <string name="results">Results</string>
     <string name="loading">Loading...</string>
     <string name="no_result">No results found</string>
-    <string name="author">Introduce author</string>
-    <string name="title">Introduce title</string>
+    <string name="author">Introduce query</string>
 </resources>

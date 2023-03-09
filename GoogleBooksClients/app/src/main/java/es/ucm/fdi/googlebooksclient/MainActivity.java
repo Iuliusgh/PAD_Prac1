@@ -26,7 +26,7 @@ import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity {
-    private EditText mTitulo, mAutor;
+    private EditText mAutor;
     public static TextView mResult;
 
     private RadioGroup mPrintType;
@@ -41,7 +41,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Log.d(TAG, "Inicializando variables");
         Button buscar = findViewById(R.id.button);
-        mTitulo = findViewById(R.id.titulo);
         mAutor = findViewById(R.id.autor);
         mPrintType = findViewById(R.id.printType);
         mRecyclerView = findViewById(R.id.recyclerview);
@@ -74,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Log.i(TAG, "Boton de busqueda pulsado");
-                if(mTitulo.getText().toString().equals("") && mAutor.getText().toString().equals("")){
+                if(mAutor.getText().toString().equals("")){
                     dialog.show();
                 }else{
                     searchBooks(view);
@@ -93,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
         Log.i(TAG, "Capturando informaciones de busqueda");
         mResult.setText(R.string.loading);
         Bundle queryBundle = new Bundle();
-        queryBundle.putString(BookLoaderCallbacks.EXTRA_QUERY, mTitulo.getText().toString() + mAutor.getText().toString());
+        queryBundle.putString(BookLoaderCallbacks.EXTRA_QUERY, mAutor.getText().toString());
         queryBundle.putString(BookLoaderCallbacks.EXTRA_PRINT_TYPE, printType());
         LoaderManager.getInstance(this)
                 .restartLoader(0, queryBundle, bookLoaderCallbacks);
