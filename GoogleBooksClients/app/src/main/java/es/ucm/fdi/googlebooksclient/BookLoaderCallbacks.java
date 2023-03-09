@@ -4,6 +4,7 @@ import static es.ucm.fdi.googlebooksclient.MainActivity.updateBooksResultList;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -28,6 +29,13 @@ public class BookLoaderCallbacks implements LoaderManager.LoaderCallbacks<List<B
     @Override
     public void onLoadFinished(@NonNull Loader<List<BookInfo>> loader, List<BookInfo> data) {
         MainActivity.updateBooksResultList(data);
+        if(data != null){
+            MainActivity.mResult.setText(R.string.results);
+        }
+        else{
+            MainActivity.mResult.setText(R.string.no_result);
+        }
+
     }
 
     @Override

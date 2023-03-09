@@ -57,7 +57,7 @@ public class BooksResultListAdapter extends RecyclerView.Adapter<BooksResultList
 
     @Override
     public int getItemCount() {
-        return mBooksData.size();
+        return mBooksData != null ? mBooksData.size() : 0;
     }
 
     public void setBooksData(List<BookInfo> data){

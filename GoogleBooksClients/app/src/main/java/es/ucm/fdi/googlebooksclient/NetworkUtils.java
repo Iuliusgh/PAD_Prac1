@@ -35,7 +35,7 @@ public class NetworkUtils {
             conn.connect();
 
             int response = conn.getResponseCode();
-            Log.d(TAG, "The response is: " + response);
+            Log.i(TAG, "The response is: " + response);
 
             is = conn.getInputStream();
             if(is == null){
@@ -65,7 +65,7 @@ public class NetworkUtils {
                     e.printStackTrace();
                 }
             }
-            Log.d(TAG, "The result is:" + res);
+            Log.i(TAG, "The result is:" + res);
             return res;
         }
     }

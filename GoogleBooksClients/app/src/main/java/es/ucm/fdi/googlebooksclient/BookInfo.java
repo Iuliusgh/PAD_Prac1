@@ -22,6 +22,7 @@ public class BookInfo {
         this.mInfoLink = i;
     }
     static List<BookInfo> fromJsonResponse(String s){
+        Log.i(TAG, "Procesando JSON");
         List<BookInfo> res = new ArrayList<BookInfo>();
         try {
             JSONObject jsonObject = new JSONObject(s);

@@ -27,6 +27,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     private EditText mTitulo, mAutor;
+    public static TextView mResult;
 
     private RadioGroup mPrintType;
     private RecyclerView mRecyclerView;
@@ -44,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
         mAutor = findViewById(R.id.autor);
         mPrintType = findViewById(R.id.printType);
         mRecyclerView = findViewById(R.id.recyclerview);
+        mResult = findViewById(R.id.textView);
 
         mAdapter = new BooksResultListAdapter(new ArrayList<BookInfo>(), this);
         /*
@@ -89,6 +91,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void searchBooks(View view){
         Log.i(TAG, "Capturando informaciones de busqueda");
+        mResult.setText(R.string.loading);
         Bundle queryBundle = new Bundle();
         queryBundle.putString(BookLoaderCallbacks.EXTRA_QUERY, mTitulo.getText().toString() + mAutor.getText().toString());
         queryBundle.putString(BookLoaderCallbacks.EXTRA_PRINT_TYPE, printType());

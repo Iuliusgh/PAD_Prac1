@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">GoogleBooksClient</string>
+    <string name="choose">Selecciona:</string>
+    <string name="books">Solo libros</string>
+    <string name="magazines">Solo revistas</string>
+    <string name="both">Ambos</string>
+    <string name="find">Buscar</string>
+    <string name="results">Resultados</string>
+    <string name="loading">Cargando...</string>
+    <string name="no_result">No se han encontrado resultados</string>
+    <string name="author">Introduce el autor</string>
+    <string name="title">Introduce el titulo</string>
 </resources>
