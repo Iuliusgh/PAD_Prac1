@@ -93,11 +93,24 @@ public class MainActivity extends AppCompatActivity {
         Log.i(TAG, "Capturando informaciones de busqueda");
         mResult.setText(R.string.loading);
         Bundle queryBundle = new Bundle();
-        String query = "inauthor:" + mAutor.getText().toString() + " intitle:" + mTitle.getText().toString();
-        queryBundle.putString(BookLoaderCallbacks.EXTRA_QUERY, query);
+        queryBundle.putString(BookLoaderCallbacks.EXTRA_QUERY, queryString());
         queryBundle.putString(BookLoaderCallbacks.EXTRA_PRINT_TYPE, printType());
         LoaderManager.getInstance(this)
                 .restartLoader(0, queryBundle, bookLoaderCallbacks);
+    }
+
+    private String queryString(){
+        String res = "";
+        if(mAutor.getText().toString().equals("")){
+            res = "intitle:" + mTitle.getText().toString();
+        }
+        else if(mTitle.getText().toString().equals("")){
+            res = "inauthor:" + mAutor.getText().toString();
+        }
+        else{
+            res = "inauthor:" + mAutor.getText().toString() + " intitle:" + mTitle.getText().toString();
+        }
+        return res;
     }
 
     private String printType(){
