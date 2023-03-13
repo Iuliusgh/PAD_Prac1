@@ -26,7 +26,7 @@ import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity {
-    private EditText mAutor;
+    private EditText mAutor, mTitle;
     public static TextView mResult;
 
     private RadioGroup mPrintType;
@@ -42,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
         Log.d(TAG, "Inicializando variables");
         Button buscar = findViewById(R.id.button);
         mAutor = findViewById(R.id.autor);
+        mTitle = findViewById(R.id.titulo);
         mPrintType = findViewById(R.id.printType);
         mRecyclerView = findViewById(R.id.recyclerview);
         mResult = findViewById(R.id.textView);
@@ -63,9 +64,9 @@ public class MainActivity extends AppCompatActivity {
 
         Log.d(TAG, "Preparando mensaje de alerta");
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("¡Alerta!");
-        builder.setMessage("Introduce al menos uno de los siguientes campos: autor o título");
-        builder.setPositiveButton("Aceptar", null);
+        builder.setTitle(R.string.alert_title);
+        builder.setMessage(R.string.alert_message);
+        builder.setPositiveButton(R.string.alert_acept, null);
         AlertDialog dialog = builder.create();
 
 
@@ -73,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Log.i(TAG, "Boton de busqueda pulsado");
-                if(mAutor.getText().toString().equals("")){
+                if(mAutor.getText().toString().equals("") && mTitle.getText().toString().equals("")){
                     dialog.show();
                 }else{
                     searchBooks(view);
@@ -92,7 +93,8 @@ public class MainActivity extends AppCompatActivity {
         Log.i(TAG, "Capturando informaciones de busqueda");
         mResult.setText(R.string.loading);
         Bundle queryBundle = new Bundle();
-        queryBundle.putString(BookLoaderCallbacks.EXTRA_QUERY, mAutor.getText().toString());
+        String query = "inauthor:" + mAutor.getText().toString() + " intitle:" + mTitle.getText().toString();
+        queryBundle.putString(BookLoaderCallbacks.EXTRA_QUERY, query);
         queryBundle.putString(BookLoaderCallbacks.EXTRA_PRINT_TYPE, printType());
         LoaderManager.getInstance(this)
                 .restartLoader(0, queryBundle, bookLoaderCallbacks);
@@ -100,10 +102,11 @@ public class MainActivity extends AppCompatActivity {
 
     private String printType(){
         String res = null;
-        if(mPrintType.getCheckedRadioButtonId() == R.id.RBLibros){
+        int id = mPrintType.getCheckedRadioButtonId();
+        if(id == R.id.RBLibros){
             res = "BOOKS";
         }
-        else if(mPrintType.getCheckedRadioButtonId() == R.id.RBRevistas){
+        else if(id == R.id.RBRevistas){
             res = "MAGAZINES";
         }
         else{

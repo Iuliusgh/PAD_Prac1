@@ -16,7 +16,7 @@ import java.util.List;
 public class BookLoaderCallbacks implements LoaderManager.LoaderCallbacks<List<BookInfo>>{
     public static final String EXTRA_QUERY = "queryString";
     public static final String EXTRA_PRINT_TYPE = "printType";
-    Context mContext;
+    private Context mContext;
     public BookLoaderCallbacks(Context context){
         mContext = context;
     }
@@ -35,7 +35,6 @@ public class BookLoaderCallbacks implements LoaderManager.LoaderCallbacks<List<B
         else{
             MainActivity.mResult.setText(R.string.no_result);
         }
-
     }
 
     @Override
