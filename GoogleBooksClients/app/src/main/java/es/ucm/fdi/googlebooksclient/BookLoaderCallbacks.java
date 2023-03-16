@@ -28,12 +28,12 @@ public class BookLoaderCallbacks implements LoaderManager.LoaderCallbacks<List<B
 
     @Override
     public void onLoadFinished(@NonNull Loader<List<BookInfo>> loader, List<BookInfo> data) {
-        MainActivity.updateBooksResultList(data);
+        ((MainActivity) mContext).updateBooksResultList(data);
         if(data != null){
-            MainActivity.mResult.setText(R.string.results);
+            ((MainActivity) mContext).mResult.setText(R.string.results);
         }
         else{
-            MainActivity.mResult.setText(R.string.no_result);
+            ((MainActivity) mContext).mResult.setText(R.string.no_result);
         }
     }
 

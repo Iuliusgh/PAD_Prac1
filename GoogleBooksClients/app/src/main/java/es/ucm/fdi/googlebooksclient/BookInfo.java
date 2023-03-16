@@ -1,5 +1,7 @@
 package es.ucm.fdi.googlebooksclient;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.util.Log;
 
 import org.json.JSONArray;
@@ -14,12 +16,14 @@ import java.util.List;
 public class BookInfo {
     private String mTitle, mAuthors;
     private URL mInfoLink;
+    private Bitmap mImageLink;
 
     private static final String TAG = "BookInfo";
-    public BookInfo(String t, String a, URL i){
+    public BookInfo(String t, String a, URL l, Bitmap i){
         this.mTitle = t;
         this.mAuthors = a;
-        this.mInfoLink = i;
+        this.mInfoLink = l;
+        this.mImageLink = i;
     }
     static List<BookInfo> fromJsonResponse(String s){
         Log.i(TAG, "Procesando JSON");
@@ -31,6 +35,7 @@ public class BookInfo {
                 JSONObject book = listOfItems.getJSONObject(i);
                 JSONObject volumeInfo = book.getJSONObject("volumeInfo");
                 String title = (String) volumeInfo.get("title");
+                Bitmap image = null;
                 URL link = new URL((String) volumeInfo.get("infoLink"));
                 String authors = "";
                 if(volumeInfo.has("authors")){
@@ -41,14 +46,18 @@ public class BookInfo {
                     for(int j = 1; j < listOfAuthors.length(); j++){
                         authors += ", " + listOfAuthors.get(j).toString();
                     }
-                }
-                else{
-                    authors = "No tiene autores";
+
                 }
                 Log.i(TAG, "Title: " + title);
                 Log.i(TAG, "Authors: " + authors);
                 Log.i(TAG, "Link: " + link.toString());
-                res.add(new BookInfo(title, authors, link));
+                if(volumeInfo.has("imageLinks")){
+                    JSONObject imageInfo = volumeInfo.getJSONObject("imageLinks");
+                    image = BitmapFactory.decodeStream(new URL((String) imageInfo.get("thumbnail")).openConnection().getInputStream());
+                    Log.i(TAG, "Image: " + imageInfo.get("thumbnail").toString());
+                }
+
+                res.add(new BookInfo(title, authors, link, image));
             }
 
         } catch (Exception e) {
@@ -69,4 +78,6 @@ public class BookInfo {
     public URL getmInfoLink() {
         return mInfoLink;
     }
+
+    public Bitmap getmImageLink(){ return mImageLink; }
 }

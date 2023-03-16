@@ -2,16 +2,22 @@ package es.ucm.fdi.googlebooksclient;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.io.InputStream;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,11 +27,13 @@ public class BooksResultListAdapter extends RecyclerView.Adapter<BooksResultList
 
     public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         private TextView txtTitulo, txtAutor, txtLink;
+        private ImageView image;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             txtTitulo = itemView.findViewById(R.id.titulo);
             txtAutor = itemView.findViewById(R.id.autor);
             txtLink = itemView.findViewById(R.id.link);
+            image = itemView.findViewById(R.id.image);
             txtLink.setVisibility(View.INVISIBLE);
             itemView.setOnClickListener(this);
         }
@@ -53,6 +61,12 @@ public class BooksResultListAdapter extends RecyclerView.Adapter<BooksResultList
         holder.txtAutor.setText(mBooksData.get(position).getmAuthors());
         holder.txtTitulo.setText(mBooksData.get(position).getmTitle());
         holder.txtLink.setText(mBooksData.get(position).getmInfoLink().toString());
+        if(mBooksData.get(position).getmImageLink() != null){
+            holder.image.setImageBitmap(mBooksData.get(position).getmImageLink());
+        }
+        else{
+            holder.image.setVisibility(View.INVISIBLE);
+        }
     }
 
     @Override

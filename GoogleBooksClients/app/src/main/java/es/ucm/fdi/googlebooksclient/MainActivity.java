@@ -14,6 +14,7 @@ import android.view.inputmethod.InputMethod;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
@@ -81,7 +82,18 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-
+        mPrintType.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener(){
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, int i) {
+                if(i == R.id.RBRevistas){
+                    mAutor.setText("");
+                    mAutor.setEnabled(false);
+                }
+                else{
+                    mAutor.setEnabled(true);
+                }
+            }
+        });
         LoaderManager loaderManager = LoaderManager.getInstance(this);
         if(loaderManager.getLoader(0) != null){
             loaderManager.initLoader(0,null, bookLoaderCallbacks);
@@ -133,4 +145,5 @@ public class MainActivity extends AppCompatActivity {
         mAdapter.setBooksData(bookInfos);
         mAdapter.notifyDataSetChanged();
     }
+
 }
