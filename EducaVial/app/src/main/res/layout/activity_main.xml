@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    android:background="@drawable/background">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -17,13 +18,19 @@
 
         <TextView
             android:id="@+id/homeTitle"
-            android:textSize="50sp"
-            android:textColor="#ffc700"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
             android:fontFamily="@font/fredoka_one"
             android:gravity="center"
-            android:text="@string/homeTitle" />
+            android:text="@string/homeTitle"
+            android:textColor="#ffc700"
+            android:textSize="64sp"
+            android:shadowColor="#000000"
+            android:shadowRadius="5"
+            android:shadowDx="2"
+            android:shadowDy="10"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -54,29 +61,70 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
             android:orientation="horizontal">
 
-            <ImageButton
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/aprender"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/aprender"
-                android:src="@drawable/home_aprender"
-                />
-            <ImageButton
+                android:textSize="30sp"
+                android:textAllCaps="false"
+                android:layout_height="250dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="5dp"
+                android:layout_weight="0.5"
+                android:background="@drawable/forma_boton_aprender"
+                android:drawableTop="@drawable/home_aprender"
+                android:fontFamily="@font/overpass_bold"
+                android:paddingTop="25dp"
+
+                android:text="@string/aprender" />
+
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/evaluar"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/home_evaluar"
+                android:textSize="30sp"
+                android:textAllCaps="false"
+                android:layout_height="250dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="15dp"
+                android:layout_weight="0.5"
+                android:background="@drawable/forma_boton_evaluar"
+                android:drawableTop="@drawable/home_evaluar"
+                android:fontFamily="@font/overpass_bold"
+                android:paddingTop="25dp"
                 android:text="@string/evaluar" />
+
         </LinearLayout>
 
-        <Button
-            android:id="@+id/escanear"
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/escanear" />
+            android:orientation="horizontal"
+            android:layout_marginBottom="40dp"
+            android:gravity="center">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/escanear"
+                android:layout_width="wrap_content"
+                android:layout_height="120dp"
+                android:textAllCaps="false"
+                android:background="@drawable/forma_boton_escanear"
+                android:drawableTop="@drawable/home_boton_escanear"
+                android:fontFamily="@font/overpass_bold"
+                android:paddingTop="15dp"
+                android:paddingBottom="10dp"
+                android:textSize="20sp"
+                android:text="@string/escanear"
+                />
+        </LinearLayout>
 
     </LinearLayout>
 
