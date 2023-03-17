@@ -7,6 +7,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -103,12 +105,25 @@ public class MainActivity extends AppCompatActivity {
 
     public void searchBooks(View view){
         Log.i(TAG, "Capturando informaciones de busqueda");
-        mResult.setText(R.string.loading);
-        Bundle queryBundle = new Bundle();
-        queryBundle.putString(BookLoaderCallbacks.EXTRA_QUERY, queryString());
-        queryBundle.putString(BookLoaderCallbacks.EXTRA_PRINT_TYPE, printType());
-        LoaderManager.getInstance(this)
-                .restartLoader(0, queryBundle, bookLoaderCallbacks);
+        ConnectivityManager cm =
+                (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        boolean isConnected = activeNetwork != null &&
+                activeNetwork.isConnectedOrConnecting();
+
+        if(isConnected){
+            mResult.setText(R.string.loading);
+            Bundle queryBundle = new Bundle();
+            queryBundle.putString(BookLoaderCallbacks.EXTRA_QUERY, queryString());
+            queryBundle.putString(BookLoaderCallbacks.EXTRA_PRINT_TYPE, printType());
+            LoaderManager.getInstance(this)
+                    .restartLoader(0, queryBundle, bookLoaderCallbacks);
+        }
+        else{
+            mResult.setText(R.string.no_internet);
+        }
+
     }
 
     private String queryString(){

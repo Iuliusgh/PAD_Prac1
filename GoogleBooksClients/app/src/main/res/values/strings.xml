@@ -12,4 +12,5 @@
     <string name="alert_title">¡Alerta!</string>
     <string name="alert_message">¡Introduce al menos un campo de búsqueda!</string>
     <string name="alert_acept">Aceptar</string>
+    <string name="no_internet">No hay conexión a Internet</string>
 </resources>
