@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">EducaVial</string>
+    <string name="homeTitle">EducaVial</string>
+    <string name="aprender">Aprender</string>
+    <string name="evaluar">Evaluación</string>
+    <string name="escanear">Escanear</string>
+</resources>

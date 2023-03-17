@@ -7,6 +7,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -14,6 +16,7 @@ import android.view.inputmethod.InputMethod;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
@@ -26,7 +29,7 @@ import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity {
-    private EditText mAutor;
+    private EditText mAutor, mTitle;
     public static TextView mResult;
 
     private RadioGroup mPrintType;
@@ -42,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
         Log.d(TAG, "Inicializando variables");
         Button buscar = findViewById(R.id.button);
         mAutor = findViewById(R.id.autor);
+        mTitle = findViewById(R.id.titulo);
         mPrintType = findViewById(R.id.printType);
         mRecyclerView = findViewById(R.id.recyclerview);
         mResult = findViewById(R.id.textView);
@@ -63,9 +67,9 @@ public class MainActivity extends AppCompatActivity {
 
         Log.d(TAG, "Preparando mensaje de alerta");
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("¡Alerta!");
-        builder.setMessage("Introduce al menos uno de los siguientes campos: autor o título");
-        builder.setPositiveButton("Aceptar", null);
+        builder.setTitle(R.string.alert_title);
+        builder.setMessage(R.string.alert_message);
+        builder.setPositiveButton(R.string.alert_acept, null);
         AlertDialog dialog = builder.create();
 
 
@@ -73,14 +77,25 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Log.i(TAG, "Boton de busqueda pulsado");
-                if(mAutor.getText().toString().equals("")){
+                if(mAutor.getText().toString().equals("") && mTitle.getText().toString().equals("")){
                     dialog.show();
                 }else{
                     searchBooks(view);
                 }
             }
         });
-
+        mPrintType.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener(){
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, int i) {
+                if(i == R.id.RBRevistas){
+                    mAutor.setText("");
+                    mAutor.setEnabled(false);
+                }
+                else{
+                    mAutor.setEnabled(true);
+                }
+            }
+        });
         LoaderManager loaderManager = LoaderManager.getInstance(this);
         if(loaderManager.getLoader(0) != null){
             loaderManager.initLoader(0,null, bookLoaderCallbacks);
@@ -90,20 +105,48 @@ public class MainActivity extends AppCompatActivity {
 
     public void searchBooks(View view){
         Log.i(TAG, "Capturando informaciones de busqueda");
-        mResult.setText(R.string.loading);
-        Bundle queryBundle = new Bundle();
-        queryBundle.putString(BookLoaderCallbacks.EXTRA_QUERY, mAutor.getText().toString());
-        queryBundle.putString(BookLoaderCallbacks.EXTRA_PRINT_TYPE, printType());
-        LoaderManager.getInstance(this)
-                .restartLoader(0, queryBundle, bookLoaderCallbacks);
+        ConnectivityManager cm =
+                (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        boolean isConnected = activeNetwork != null &&
+                activeNetwork.isConnectedOrConnecting();
+
+        if(isConnected){
+            mResult.setText(R.string.loading);
+            Bundle queryBundle = new Bundle();
+            queryBundle.putString(BookLoaderCallbacks.EXTRA_QUERY, queryString());
+            queryBundle.putString(BookLoaderCallbacks.EXTRA_PRINT_TYPE, printType());
+            LoaderManager.getInstance(this)
+                    .restartLoader(0, queryBundle, bookLoaderCallbacks);
+        }
+        else{
+            mResult.setText(R.string.no_internet);
+        }
+
+    }
+
+    private String queryString(){
+        String res = "";
+        if(mAutor.getText().toString().equals("")){
+            res = "intitle:" + mTitle.getText().toString();
+        }
+        else if(mTitle.getText().toString().equals("")){
+            res = "inauthor:" + mAutor.getText().toString();
+        }
+        else{
+            res = "inauthor:" + mAutor.getText().toString() + " intitle:" + mTitle.getText().toString();
+        }
+        return res;
     }
 
     private String printType(){
         String res = null;
-        if(mPrintType.getCheckedRadioButtonId() == R.id.RBLibros){
+        int id = mPrintType.getCheckedRadioButtonId();
+        if(id == R.id.RBLibros){
             res = "BOOKS";
         }
-        else if(mPrintType.getCheckedRadioButtonId() == R.id.RBRevistas){
+        else if(id == R.id.RBRevistas){
             res = "MAGAZINES";
         }
         else{
@@ -117,4 +160,5 @@ public class MainActivity extends AppCompatActivity {
         mAdapter.setBooksData(bookInfos);
         mAdapter.notifyDataSetChanged();
     }
+
 }

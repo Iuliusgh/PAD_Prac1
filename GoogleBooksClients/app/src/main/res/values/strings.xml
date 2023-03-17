@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">GoogleBooksClient</string>
-    <string name="choose">Selecciona:</string>
     <string name="books">Solo libros</string>
     <string name="magazines">Solo revistas</string>
     <string name="both">Ambos</string>
@@ -8,5 +7,10 @@
     <string name="results">Resultados</string>
     <string name="loading">Cargando...</string>
     <string name="no_result">No se han encontrado resultados</string>
-    <string name="author">Introduce el query</string>
+    <string name="author">Introduce el autor</string>
+    <string name="title">Introduce el título</string>
+    <string name="alert_title">¡Alerta!</string>
+    <string name="alert_message">¡Introduce al menos un campo de búsqueda!</string>
+    <string name="alert_acept">Aceptar</string>
+    <string name="no_internet">No hay conexión a Internet</string>
 </resources>
