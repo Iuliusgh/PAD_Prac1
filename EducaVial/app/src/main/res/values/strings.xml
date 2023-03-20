@@ -4,4 +4,43 @@
     <string name="aprender">Aprender</string>
     <string name="evaluar">Evaluar</string>
     <string name="escanear">Escanear</string>
+    <string name="title_activity_ajustes">Ajustes</string>
+
+    <!-- Profile -->
+    <string name="profile_title">Perfil</string>
+    <string name="name">Nombre:</string>
+    <string name="email">Correo:</string>
+    <string name="learnt_trafic_sign">Señales aprendidas</string>
+
+
+    <!-- Menu item -->
+    <string name="help">Botón de ayuda</string>
+
+    <!-- Alert Dialog -->
+    <string name="alert_title">Ayuda</string>
+    <string name="alert_config_text">En esta pantalla puedes activar/desactivar una configuración</string>
+    <string name="alert_profile_text">Pantalla de perfil de usuario que muestra las opciones y datos del usuario </string>
+
+    <!-- Content description -->
+    <string name="profile_des">Boton para acceder al perfil</string>
+    <string name="config_des">Botón para acceder a ajustes</string>
+
+    <!-- Titles -->
+    <string name="preference_header">Preferencias</string>
+    <string name="accesibility_header">Accesibilidad</string>
+    <string name="tutorial_header">Tutorial</string>
+
+    <!-- Accesibility Preferences -->
+    <string name="voice_response_title">Respuesta por voz</string>
+    <string name="voice_response_summary">Permite al usuario responder las preguntas por voz</string>
+    <string name="authomatic_read_title">Lectura Automática</string>
+    <string name="authomatica_read_summary">Permite al usuario que el texto se pueda escuchar</string>
+
+    <!-- Preference Preferences -->
+    <string name="guide_title">Guias</string>
+    <string name="guide_summary">Textos pequeños que aparecen describiendo diversas funcionalidades</string>
+
+    <!-- Tutorial Preferences -->
+    <string name="tutorial_title">Tutorial</string>
+    <string name="tutorial_summary">Pulsa aquí para volver a ver el tutorial</string>
 </resources>

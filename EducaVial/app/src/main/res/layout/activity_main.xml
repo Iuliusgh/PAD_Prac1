@@ -43,6 +43,7 @@
                 android:layout_height="75dp"
                 android:layout_marginStart="15dp"
                 android:background="@drawable/forma_boton"
+                android:contentDescription="@string/profile_des"
                 android:src="@drawable/home_profile" />
 
             <Space
@@ -56,6 +57,7 @@
                 android:layout_height="75dp"
                 android:layout_marginEnd="15dp"
                 android:background="@drawable/forma_boton"
+                android:contentDescription="@string/config_des"
                 android:src="@drawable/home_settings" />
         </LinearLayout>
 
@@ -84,8 +86,6 @@
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/evaluar"
                 android:layout_width="wrap_content"
-                android:textSize="30sp"
-                android:textAllCaps="false"
                 android:layout_height="250dp"
                 android:layout_marginStart="5dp"
                 android:layout_marginEnd="15dp"
@@ -94,7 +94,9 @@
                 android:drawableTop="@drawable/home_evaluar"
                 android:fontFamily="@font/overpass_bold"
                 android:paddingTop="25dp"
-                android:text="@string/evaluar" />
+                android:text="@string/evaluar"
+                android:textAllCaps="false"
+                android:textSize="30sp" />
 
         </LinearLayout>
 
