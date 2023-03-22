@@ -12,6 +12,15 @@
         android:theme="@style/Theme.EducaVial"
         tools:targetApi="31">
         <activity
+            android:name=".BotonesTemaActivity"
+            android:exported="false" />
+        <activity
+            android:name=".LoginActivity"
+            android:exported="false" />
+        <activity
+            android:name=".TemarioActivity"
+            android:exported="false" />
+        <activity
             android:name=".PerfilActivity"
             android:exported="false" />
         <activity

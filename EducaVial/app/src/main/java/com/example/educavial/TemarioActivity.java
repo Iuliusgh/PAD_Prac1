@@ -11,21 +11,22 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
-public class PerfilActivity extends AppCompatActivity {
+public class TemarioActivity extends AppCompatActivity {
 
-    private final static String TAG = "PerfilActivity";
+    private final static String TAG = "TemarioActivity";
     private TextView message, title;
     private AlertDialog dialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_perfil);
+        setContentView(R.layout.activity_temario);
 
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             //actionBar.setHomeAsUpIndicator(R.drawable.volver);
             actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setTitle(R.string.profile_title);
+            actionBar.setTitle(R.string.syllabus_title);
         }
 
         Log.d(TAG, "Creando mensaje de ayuda");
@@ -33,7 +34,7 @@ public class PerfilActivity extends AppCompatActivity {
         View customLayout = getLayoutInflater().inflate(R.layout.custom_alert_dialog, null);
         message = (TextView) customLayout.findViewById(R.id.help_text);
         title = (TextView) customLayout.findViewById(R.id.help_title);
-        message.setText(R.string.alert_profile_text);
+        message.setText(R.string.alert_syllabus_text);
         title.setText(R.string.alert_title);
         builder.setView(customLayout);
         dialog = builder.create();

@@ -15,8 +15,7 @@ import androidx.preference.PreferenceFragmentCompat;
 public class AjustesActivity extends AppCompatActivity {
 
     private final static String TAG = "AjustesActivity";
-    private TextView message;
-
+    private TextView message, title;
     private AlertDialog dialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,11 +33,13 @@ public class AjustesActivity extends AppCompatActivity {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
-
         Log.d(TAG, "Creando mensaje de ayuda");
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         View customLayout = getLayoutInflater().inflate(R.layout.custom_alert_dialog, null);
         message = (TextView) customLayout.findViewById(R.id.help_text);
+        title = (TextView) customLayout.findViewById(R.id.help_title);
+        title.setText(R.string.alert_title);
+        message.setText(R.string.alert_config_text);
         builder.setView(customLayout);
         dialog = builder.create();
     }
@@ -46,7 +47,6 @@ public class AjustesActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu, menu);
         return true;
-
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -55,10 +55,8 @@ public class AjustesActivity extends AppCompatActivity {
                 this.finish();
                 return true;
             case R.id.help:
-                message.setText(R.string.alert_config_text);
                 dialog.show();
                 return true;
-
         }
         return super.onOptionsItemSelected(item);
     }

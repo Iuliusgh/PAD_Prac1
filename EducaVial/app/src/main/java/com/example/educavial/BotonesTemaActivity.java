@@ -11,15 +11,15 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
-public class PerfilActivity extends AppCompatActivity {
+public class BotonesTemaActivity extends AppCompatActivity {
 
-    private final static String TAG = "PerfilActivity";
+    private final static String TAG = "BotonesTemaActivity";
     private TextView message, title;
     private AlertDialog dialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_perfil);
+        setContentView(R.layout.activity_botones_tema);
 
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {

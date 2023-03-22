@@ -7,11 +7,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 
 public class MainActivity extends AppCompatActivity {
 
     private ImageButton settings, profile;
+    private Button learn;
 
     private final static String TAG = "MainActivity";
     @Override
@@ -27,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
         Log.d(TAG, "Inicializando variables");
         settings = findViewById(R.id.ajustes);
         profile = findViewById(R.id.perfil);
+        learn = findViewById(R.id.aprender);
 
         settings.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -41,6 +44,13 @@ public class MainActivity extends AppCompatActivity {
                 perfil();
             }
         });
+
+        learn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                temario();
+            }
+        });
     }
 
     private void config(){
@@ -50,6 +60,11 @@ public class MainActivity extends AppCompatActivity {
 
     private void perfil(){
         Intent i = new Intent(this, PerfilActivity.class);
+        startActivity(i);
+    }
+
+    private void temario(){
+        Intent i = new Intent(this, TemarioActivity.class);
         startActivity(i);
     }
 }

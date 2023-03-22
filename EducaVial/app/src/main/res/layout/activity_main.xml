@@ -44,7 +44,7 @@
                 android:layout_marginStart="15dp"
                 android:background="@drawable/forma_boton"
                 android:contentDescription="@string/profile_des"
-                android:src="@drawable/home_profile" />
+                android:src="@drawable/home_profile"/>
 
             <Space
                 android:layout_width="0dp"
