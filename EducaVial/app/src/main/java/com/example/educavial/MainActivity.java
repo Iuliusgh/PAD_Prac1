@@ -13,7 +13,7 @@ import android.widget.ImageButton;
 public class MainActivity extends AppCompatActivity {
 
     private ImageButton settings, profile;
-    private Button learn;
+    private Button learn, examination;
 
     private final static String TAG = "MainActivity";
     @Override
@@ -25,11 +25,16 @@ public class MainActivity extends AppCompatActivity {
         if (actionBar != null) {
             actionBar.hide();
         }
-
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
         Log.d(TAG, "Inicializando variables");
         settings = findViewById(R.id.ajustes);
         profile = findViewById(R.id.perfil);
         learn = findViewById(R.id.aprender);
+        examination = findViewById(R.id.evaluar);
 
         settings.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -51,6 +56,13 @@ public class MainActivity extends AppCompatActivity {
                 temario();
             }
         });
+
+        examination.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                evaluar();
+            }
+        });
     }
 
     private void config(){
@@ -65,6 +77,11 @@ public class MainActivity extends AppCompatActivity {
 
     private void temario(){
         Intent i = new Intent(this, TemarioActivity.class);
+        startActivity(i);
+    }
+
+    private void evaluar(){
+        Intent i = new Intent(this, EvaluacionActivity.class);
         startActivity(i);
     }
 }
