@@ -13,6 +13,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.MediaController;
 import android.widget.TextView;
 import android.widget.VideoView;
 
@@ -46,6 +47,10 @@ public class ReproducirActivity extends AppCompatActivity implements View.OnClic
         //Y les asignamos el controlador de eventos
         btnPlay.setOnClickListener(this);
         btnPause.setOnClickListener(this);
+
+        MediaController media = new MediaController(this);
+        media.setAnchorView(video);
+        video.setMediaController(media);
 
         Log.d(TAG, "Creando mensaje de ayuda");
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
