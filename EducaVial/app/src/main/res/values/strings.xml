@@ -33,6 +33,7 @@
     <string name="alert_profile_text">Pantalla de perfil de usuario que muestra las opciones y datos del usuario </string>
     <string name="alert_syllabus_text">Pulsa en un tema para empezar con él.</string>
     <string name="alert_button_theme_text"></string>
+    <string name="alert_video_text">En esta pantalla se muestra un video con el contenido con dos botones uno de pausar y otro de reanudar</string>
 
     <!-- Content description -->
     <string name="profile_des">Boton para acceder al perfil</string>
@@ -42,6 +43,7 @@
     <string name="preference_header">Preferencias</string>
     <string name="accesibility_header">Accesibilidad</string>
     <string name="tutorial_header">Tutorial</string>
+    <string name="content_header">Contenido</string>
 
     <!-- Accesibility Preferences -->
     <string name="voice_response_title">Respuesta por voz</string>

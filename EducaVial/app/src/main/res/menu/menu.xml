@@ -7,7 +7,7 @@
         android:id="@+id/help"
         android:title="@string/help"
         android:icon="@drawable/ayuda"
-        app:showAsAction="always"/>
+        app:showAsAction="always" />
 
 
 </menu>

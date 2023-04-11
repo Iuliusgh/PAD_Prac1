@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void config(){
-        Intent i = new Intent(this, ReproducirActivity.class);
+        Intent i = new Intent(this, AjustesActivity.class);
         startActivity(i);
     }
 

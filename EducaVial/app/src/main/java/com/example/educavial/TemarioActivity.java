@@ -4,11 +4,13 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 public class TemarioActivity extends AppCompatActivity {
@@ -16,6 +18,7 @@ public class TemarioActivity extends AppCompatActivity {
     private final static String TAG = "TemarioActivity";
     private TextView message, title;
     private AlertDialog dialog;
+    private Button tema2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +41,15 @@ public class TemarioActivity extends AppCompatActivity {
         title.setText(R.string.alert_title);
         builder.setView(customLayout);
         dialog = builder.create();
+
+        tema2 = findViewById(R.id.theme_2);
+
+        tema2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                tema2();
+            }
+        });
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -55,5 +67,10 @@ public class TemarioActivity extends AppCompatActivity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void tema2(){
+        Intent i = new Intent(this, ReproducirActivity.class);
+        startActivity(i);
     }
 }
