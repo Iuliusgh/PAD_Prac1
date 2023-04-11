@@ -32,62 +32,16 @@
 
     <VideoView
         android:id="@+id/videoView"
-        android:layout_width="722dp"
-        android:layout_height="229dp"
-        android:layout_marginStart="20dp"
+        android:layout_width="fill_parent"
+        android:layout_height="360dp"
+        android:layout_marginStart="1dp"
         android:layout_marginTop="100dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginBottom="30dp"
-        app:layout_constraintBottom_toBottomOf="@+id/linearLayout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.501"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.435" />
-
-    <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginBottom="5dp"
-        android:orientation="horizontal"
+        android:layout_marginEnd="1dp"
+        android:layout_marginBottom="100dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.494" />
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/buttonPlay"
-            android:layout_width="120dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_toStartOf="@+id/buttonPause"
-            android:layout_toLeftOf="@+id/buttonPause"
-            android:background="@drawable/forma_boton_video"
-            android:drawableTop="@drawable/play"
-            android:padding="4dp"
-            android:shadowColor="@color/black"
-            android:text="PLAY" />
-
-        <Space
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" />
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/buttonPause"
-            android:layout_width="120dp"
-            android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/buttonPlay"
-            android:layout_alignBottom="@+id/buttonPlay"
-            android:layout_centerHorizontal="true"
-            android:background="@drawable/forma_boton_video"
-            android:drawableTop="@drawable/pause"
-            android:padding="4dp"
-            android:text="PAUSE" />
-
-    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -5,6 +5,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
+import android.content.res.Configuration;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
@@ -17,9 +18,7 @@ import android.widget.MediaController;
 import android.widget.TextView;
 import android.widget.VideoView;
 
-public class ReproducirActivity extends AppCompatActivity implements View.OnClickListener {
-    private Button btnPlay;
-    private Button btnPause;
+public class ReproducirActivity extends AppCompatActivity {
     private VideoView video;
     private AlertDialog dialog;
     private TextView message, title;
@@ -36,17 +35,13 @@ public class ReproducirActivity extends AppCompatActivity implements View.OnClic
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setTitle(R.string.content_header);
         }
+
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            getSupportActionBar().hide();
+        }
         video=(VideoView) findViewById(R.id.videoView);
         String path = "android.resource://" + getPackageName() + "/"+ R.raw.video;
         video.setVideoURI(Uri.parse(path));
-
-        //Obtenemos los tres botones de la interfaz
-        btnPlay= (Button)findViewById(R.id.buttonPlay);
-        btnPause= (Button)findViewById(R.id.buttonPause);
-
-        //Y les asignamos el controlador de eventos
-        btnPlay.setOnClickListener(this);
-        btnPause.setOnClickListener(this);
 
         MediaController media = new MediaController(this);
         media.setAnchorView(video);
@@ -61,23 +56,6 @@ public class ReproducirActivity extends AppCompatActivity implements View.OnClic
         title.setText(R.string.alert_title);
         builder.setView(customLayout);
         dialog = builder.create();
-    }
-
-    @Override
-    public void onClick(View v) {
-        //Comprobamos el identificador del boton que ha llamado al evento para ver
-        //cual de los botones es y ejecutar la acción correspondiente
-        switch(v.getId()){
-            case R.id.buttonPlay:
-                //Iniciamos el video
-                video.start();
-                break;
-            case R.id.buttonPause:
-                //Pausamos el video
-                video.pause();
-                break;
-
-        }
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
