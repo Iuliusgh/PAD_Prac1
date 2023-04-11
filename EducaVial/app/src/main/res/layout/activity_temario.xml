@@ -55,7 +55,7 @@
                 android:layout_marginBottom="5dp"
                 android:background="@drawable/forma_boton_temario_2"
                 android:fontFamily="@font/overpass"
-                android:text="@string/lorem_ipsum"
+                android:text="@string/theme_2"
                 android:textAllCaps="false"
                 android:textColor="@color/white"
                 android:textSize="24dp"/>

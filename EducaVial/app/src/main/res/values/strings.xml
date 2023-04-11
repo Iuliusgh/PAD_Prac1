@@ -5,6 +5,7 @@
     <string name="evaluar">Evaluar</string>
     <string name="escanear">Escanear</string>
     <string name="title_activity_ajustes">Ajustes</string>
+    <string name="title_activity_reproducir">Reproducir</string>
 
     <!-- Profile -->
     <string name="profile_title">Perfil</string>
@@ -17,6 +18,7 @@
     <string name="syllabus_title">Temario</string>
     <string name="scroll_desc">Todos los temarios de la aplicación</string>
     <string name="theme_1">Tema 1: Señales</string>
+    <string name="theme_2">Tema 2: Carreteras</string>
     <string name="lorem_ipsum">Lorem ipsum dolor</string>
 
     <!-- Examination -->
