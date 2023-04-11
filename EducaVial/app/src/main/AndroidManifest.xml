@@ -37,6 +37,10 @@
             android:exported="false"
             android:label="@string/title_activity_ajustes" />
         <activity
+            android:name=".ReproducirActivity"
+            android:exported="false"
+            android:label="@string/title_activity_reproducir" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
