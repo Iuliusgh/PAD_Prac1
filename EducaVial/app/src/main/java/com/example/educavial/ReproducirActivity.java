@@ -23,6 +23,7 @@ public class ReproducirActivity extends AppCompatActivity {
     private AlertDialog dialog;
     private TextView message, title;
     private final static String TAG = "ReproducirActivity";
+    private int currentPosition = 0; // save current position of video playback
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,9 +37,6 @@ public class ReproducirActivity extends AppCompatActivity {
             actionBar.setTitle(R.string.content_header);
         }
 
-        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            getSupportActionBar().hide();
-        }
         video=(VideoView) findViewById(R.id.videoView);
         String path = "android.resource://" + getPackageName() + "/"+ R.raw.video;
         video.setVideoURI(Uri.parse(path));
@@ -56,6 +54,40 @@ public class ReproducirActivity extends AppCompatActivity {
         title.setText(R.string.alert_title);
         builder.setView(customLayout);
         dialog = builder.create();
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            getSupportActionBar().hide();
+        } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT){
+            getSupportActionBar().show();
+        }
+    }
+
+    // save the current position of the video playback when the activity is paused
+    @Override
+    protected void onPause() {
+        super.onPause();
+        currentPosition = video.getCurrentPosition();
+        video.pause();
+    }
+
+    // restore the saved position of the video playback when the activity is resumed
+    @Override
+    protected void onResume() {
+        super.onResume();
+        video.seekTo(currentPosition);
+        video.start();
+    }
+
+    // save the current position of the video playback when the activity is stopped
+    @Override
+    protected void onStop() {
+        super.onStop();
+        currentPosition = video.getCurrentPosition();
+        video.stopPlayback();
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
