@@ -32,13 +32,16 @@ function App() {
   }, [search]);
 
   const handleSearch = () => {
-    if (author === "") {
+    if(title === "" && author === ""){
+      window.alert("¡Introduce al menos un campo!");
+    }
+    else if (author === "") {
       setSearch(`intitle:${title}`);
     }
     else if (title === "") {
       setSearch(`inauthor:${author}`);
     }
-    else {
+    else{
       setSearch(`inauthor:${author}+intitle:${title}`);
     }
   };
