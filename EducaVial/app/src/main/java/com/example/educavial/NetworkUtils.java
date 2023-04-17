@@ -1,4 +1,4 @@
-package es.ucm.fdi.googlebooksclient;
+package com.example.educavial;
 
 
 import android.net.Uri;
@@ -14,8 +14,8 @@ import java.net.URL;
 public class NetworkUtils {
     private static final String TAG = "NetworkUtils";
     private static final String BASE_URL =
-            "https://www.googleapis.com/books/v1/volumes?";
-    private static final String QUERY_PARAM = "q";
+            "https://es.wikipedia.org/w/api.php?action=query";
+    private static final String QUERY_PARAM = "action";
     private static final String MAX_RESULTS = "maxResults";
     private static final String PRINT_TYPE = "printType";
 
