@@ -1,16 +1,16 @@
 {
   "files": {
-    "main.css": "/PAD_Prac1/Practica3/static/css/main.7de8190c.css",
-    "main.js": "/PAD_Prac1/Practica3/static/js/main.d9de9da8.js",
-    "static/js/787.28cb0dcd.chunk.js": "/PAD_Prac1/Practica3/static/js/787.28cb0dcd.chunk.js",
-    "service-worker.js": "/PAD_Prac1/Practica3/service-worker.js",
-    "index.html": "/PAD_Prac1/Practica3/index.html",
-    "main.7de8190c.css.map": "/PAD_Prac1/Practica3/static/css/main.7de8190c.css.map",
-    "main.d9de9da8.js.map": "/PAD_Prac1/Practica3/static/js/main.d9de9da8.js.map",
-    "787.28cb0dcd.chunk.js.map": "/PAD_Prac1/Practica3/static/js/787.28cb0dcd.chunk.js.map"
+    "main.css": "/PAD_Prac1/static/css/main.7de8190c.css",
+    "main.js": "/PAD_Prac1/static/js/main.b7a4b31b.js",
+    "static/js/787.28cb0dcd.chunk.js": "/PAD_Prac1/static/js/787.28cb0dcd.chunk.js",
+    "service-worker.js": "/PAD_Prac1/service-worker.js",
+    "index.html": "/PAD_Prac1/index.html",
+    "main.7de8190c.css.map": "/PAD_Prac1/static/css/main.7de8190c.css.map",
+    "main.b7a4b31b.js.map": "/PAD_Prac1/static/js/main.b7a4b31b.js.map",
+    "787.28cb0dcd.chunk.js.map": "/PAD_Prac1/static/js/787.28cb0dcd.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.7de8190c.css",
-    "static/js/main.d9de9da8.js"
+    "static/js/main.b7a4b31b.js"
   ]
 }
