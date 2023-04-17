@@ -1,13 +1,18 @@
 package com.example.educavial;
 
 import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 
 public class MainActivity extends AppCompatActivity {
@@ -63,6 +68,40 @@ public class MainActivity extends AppCompatActivity {
                 evaluar();
             }
         });
+
+        SharedPreferences prefs = getSharedPreferences("my_prefs", MODE_PRIVATE);
+        boolean isFirstTime = prefs.getBoolean("is_first_time", true);
+
+        if (isFirstTime) {
+            // La aplicación está siendo iniciada por primera vez
+            // Mostrar un diálogo para solicitar correo y usuario
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.MyAlertDialogStyle);
+            View customLayout = getLayoutInflater().inflate(R.layout.custom_activity_dialog_main, null);
+            builder.setView(customLayout);
+            AlertDialog dialog = builder.create();
+
+            builder.setPositiveButton("Aceptar", new   DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    EditText coro = customLayout.findViewById(R.id.editTextTextEmailAddress);
+                    EditText usu = customLayout.findViewById(R.id.editTextTextPersonName);
+                    // Guardar el correo y usuario ingresados
+                    String correo = coro.getText().toString();
+                    String usuario = usu.getText().toString();
+
+                    SharedPreferences.Editor editor = prefs.edit();
+                    editor.putString("correo", correo);
+                    editor.putString("usuario", usuario);
+                    editor.putBoolean("is_first_time", false);
+                    editor.apply();
+
+                    dialog.dismiss();
+                }
+            });
+
+            builder.show();
+        }
     }
 
     private void config(){
