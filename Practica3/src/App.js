@@ -9,6 +9,7 @@ function App() {
   const [booksEmpty, setBooksEmpty] = useState(false);
   const [loading, setLoading] = useState(false);
   const [search, setSearch] = useState("");
+  const [online, setOnline] = useState(navigator.onLine);
 
   useEffect(() => {
     if (search !== "") {
@@ -31,8 +32,20 @@ function App() {
     }
   }, [search]);
 
+  useEffect(() => {
+    const handleOnlineStatus = () => {
+      setOnline(navigator.onLine);
+    };
+    window.addEventListener("online", handleOnlineStatus);
+    window.addEventListener("offline", handleOnlineStatus);
+    return () => {
+      window.removeEventListener("online", handleOnlineStatus);
+      window.removeEventListener("offline", handleOnlineStatus);
+    };
+  }, []);
+
   const handleSearch = () => {
-    if(title === "" && author === ""){
+    if (title === "" && author === "") {
       window.alert("¡Introduce al menos un campo!");
     }
     else if (author === "") {
@@ -41,7 +54,7 @@ function App() {
     else if (title === "") {
       setSearch(`inauthor:${author}`);
     }
-    else{
+    else {
       setSearch(`inauthor:${author}+intitle:${title}`);
     }
   };
@@ -57,26 +70,29 @@ function App() {
       </div>
       <div className='inputs'><button onClick={handleSearch}>Buscar</button></div>
 
-
-      {loading ? (
-        <p>Cargando libros...</p>
-      ) : (
-        booksEmpty ? (
-          <p>No se encontraron resultados</p>
+      {online ? (
+        loading ? (
+          <p>Cargando libros...</p>
         ) : (
-          <ul>
-            {books.map((book) => (
-              <li key={book.id}>
-                <p><a className='enlace' href={book.volumeInfo.infoLink}>{book.volumeInfo.title}</a> - {book.volumeInfo.authors}</p>
-                {book.volumeInfo.imageLinks ? (
-                  <a href={book.volumeInfo.infoLink}><img src={book.volumeInfo.imageLinks.thumbnail} alt={`Portada de '${book.volumeInfo.title}'`} /></a>
-                ) : (
-                  <p>No image disponible</p>
-                )}
-              </li>
-            ))}
-          </ul>
+          booksEmpty ? (
+            <p>No se encontraron resultados</p>
+          ) : (
+            <ul>
+              {books.map((book) => (
+                <li key={book.id}>
+                  <p><a className='enlace' href={book.volumeInfo.infoLink}>{book.volumeInfo.title}</a> - {book.volumeInfo.authors}</p>
+                  {book.volumeInfo.imageLinks ? (
+                    <a href={book.volumeInfo.infoLink}><img src={book.volumeInfo.imageLinks.thumbnail} alt={`Portada de '${book.volumeInfo.title}'`} /></a>
+                  ) : (
+                    <p>No image disponible</p>
+                  )}
+                </li>
+              ))}
+            </ul>
+          )
         )
+      ) : (
+        <p>No hay conexión a internet</p>
       )}
     </div>
   );
