@@ -38,7 +38,7 @@ public class ReproducirActivity extends AppCompatActivity {
         }
 
         video=(VideoView) findViewById(R.id.videoView);
-        String path = "android.resource://" + getPackageName() + "/"+ R.raw.video;
+        String path = "android.resource://" + getPackageName() + "/"+ R.raw.carreteras;
         video.setVideoURI(Uri.parse(path));
 
         MediaController media = new MediaController(this);
