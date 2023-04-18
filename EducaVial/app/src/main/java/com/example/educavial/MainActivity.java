@@ -18,7 +18,7 @@ import android.widget.ImageButton;
 public class MainActivity extends AppCompatActivity {
 
     private ImageButton settings, profile;
-    private Button learn, examination;
+    private Button learn, examination, scan;
 
     private final static String TAG = "MainActivity";
     @Override
@@ -40,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
         profile = findViewById(R.id.perfil);
         learn = findViewById(R.id.aprender);
         examination = findViewById(R.id.evaluar);
+        scan= findViewById(R.id.escanear);
 
         settings.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,6 +68,10 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 evaluar();
             }
+        });
+        scan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {escanear();}
         });
 
         SharedPreferences prefs = getSharedPreferences("my_prefs", MODE_PRIVATE);
@@ -121,6 +126,10 @@ public class MainActivity extends AppCompatActivity {
 
     private void evaluar(){
         Intent i = new Intent(this, EvaluacionActivity.class);
+        startActivity(i);
+    }
+    private void escanear(){
+        Intent i = new Intent(this,EscanearActivity.class);
         startActivity(i);
     }
 }
