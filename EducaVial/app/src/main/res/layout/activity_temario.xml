@@ -4,48 +4,40 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".TemarioActivity"
-    android:background="@color/background">
+    android:background="@color/background"
+    tools:context=".TemarioActivity">
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:contentDescription="@string/scroll_desc">
+        android:contentDescription="@string/scroll_desc"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
             android:gravity="center"
+            android:orientation="vertical"
             android:paddingTop="10dp"
             android:paddingBottom="10dp">
-
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/learnt_sign"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="5dp"
-                android:background="@drawable/forma_boton_temario_1"
-                android:fontFamily="@font/overpass"
-                android:text="@string/learnt_trafic_sign"
-                android:textAllCaps="false"
-                android:textColor="@color/white"
-                android:textSize="24dp"
-                />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/theme_1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="10dp"
                 android:layout_marginBottom="5dp"
                 android:background="@drawable/forma_boton_temario_2"
                 android:fontFamily="@font/overpass"
                 android:text="@string/theme_1"
                 android:textAllCaps="false"
                 android:textColor="@color/white"
-                android:textSize="24dp"/>
+                android:textSize="24dp" />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/theme_2"
@@ -58,7 +50,7 @@
                 android:text="@string/theme_2"
                 android:textAllCaps="false"
                 android:textColor="@color/white"
-                android:textSize="24dp"/>
+                android:textSize="24dp" />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/theme_3"
@@ -68,10 +60,10 @@
                 android:layout_marginBottom="5dp"
                 android:background="@drawable/forma_boton_temario_2"
                 android:fontFamily="@font/overpass"
-                android:text="@string/theme_3"
+                android:text="@string/lorem_ipsum"
                 android:textAllCaps="false"
                 android:textColor="@color/white"
-                android:textSize="24dp"/>
+                android:textSize="24dp" />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/theme_4"
@@ -81,10 +73,10 @@
                 android:layout_marginBottom="5dp"
                 android:background="@drawable/forma_boton_temario_2"
                 android:fontFamily="@font/overpass"
-                android:text="@string/theme_4"
+                android:text="@string/lorem_ipsum"
                 android:textAllCaps="false"
                 android:textColor="@color/white"
-                android:textSize="24dp"/>
+                android:textSize="24dp" />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/theme_5"
@@ -94,10 +86,10 @@
                 android:layout_marginBottom="5dp"
                 android:background="@drawable/forma_boton_temario_2"
                 android:fontFamily="@font/overpass"
-                android:text="@string/theme_5"
+                android:text="@string/lorem_ipsum"
                 android:textAllCaps="false"
                 android:textColor="@color/white"
-                android:textSize="24dp"/>
+                android:textSize="24dp" />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/theme_6"
@@ -107,10 +99,10 @@
                 android:layout_marginBottom="5dp"
                 android:background="@drawable/forma_boton_temario_2"
                 android:fontFamily="@font/overpass"
-                android:text="@string/theme_6"
+                android:text="@string/lorem_ipsum"
                 android:textAllCaps="false"
                 android:textColor="@color/white"
-                android:textSize="24dp"/>
+                android:textSize="24dp" />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/theme_7"
@@ -120,10 +112,49 @@
                 android:layout_marginBottom="5dp"
                 android:background="@drawable/forma_boton_temario_2"
                 android:fontFamily="@font/overpass"
-                android:text="@string/theme_7"
+                android:text="@string/lorem_ipsum"
                 android:textAllCaps="false"
                 android:textColor="@color/white"
-                android:textSize="24dp"/>
+                android:textSize="24dp" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/theme_8"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:background="@drawable/forma_boton_temario_2"
+                android:fontFamily="@font/overpass"
+                android:text="@string/lorem_ipsum"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="24dp" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/theme_9"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:background="@drawable/forma_boton_temario_2"
+                android:fontFamily="@font/overpass"
+                android:text="@string/lorem_ipsum"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="24dp" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/theme_10"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:background="@drawable/forma_boton_temario_2"
+                android:fontFamily="@font/overpass"
+                android:text="@string/lorem_ipsum"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="24dp" />
         </LinearLayout>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

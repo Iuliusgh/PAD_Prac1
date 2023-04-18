@@ -58,7 +58,7 @@
                 android:layout_marginEnd="15dp"
                 android:background="@drawable/forma_boton"
                 android:contentDescription="@string/config_des"
-                android:src="@drawable/home_settings" />
+                android:src="@drawable/tutorial" />
         </LinearLayout>
 
         <LinearLayout

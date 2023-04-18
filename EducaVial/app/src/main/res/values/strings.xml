@@ -5,24 +5,33 @@
     <string name="evaluar">Evaluar</string>
     <string name="escanear">Escanear</string>
     <string name="title_activity_ajustes">Ajustes</string>
+    <string name="title_activity_reproducir">Reproducir</string>
 
     <!-- Profile -->
     <string name="profile_title">Perfil</string>
     <string name="name">Nombre:</string>
     <string name="email">Correo:</string>
     <string name="learnt_trafic_sign">Señales aprendidas</string>
+    <string name="best_score">Puntuaciones</string>
 
     <!-- Syllabus -->
     <string name="syllabus_title">Temario</string>
     <string name="scroll_desc">Todos los temarios de la aplicación</string>
     <string name="theme_1">Tema 1: Señales</string>
     <string name="theme_2">Tema 2: Carreteras</string>
-    <string name="theme_3">Tema 3: Vehículos</string>
-    <string name="theme_4">Tema 4: Peatones</string>
-    <string name="theme_5">Tema 5: Velocidades</string>
-    <string name="theme_6">Tema 6: Marcas viales</string>
-    <string name="theme_7">Tema 7: Autopistas</string>
+    <string name="lorem_ipsum">Lorem ipsum dolor</string>
 
+    <!-- Theme -->
+    <string name="Theme_return">Anterior</string>
+    <string name="Theme_next">Siguiente</string>
+    <string name="theme_play">Reproducir el texto</string>
+    <string name="congratulation">¡Felicidades!</string>
+    <string name="cong_info">Has completado el temario, pulse el botón para volver al Temario</string>
+    <string name="return_to_syllabus">Volver</string>
+
+    <!-- Examination -->
+    <string name="examination_title">Evaluación</string>
+    <string name="examination_scroll_desc">Todas las evaluaciones disponibles de la aplicación</string>
 
     <!-- Menu item -->
     <string name="help">Botón de ayuda</string>
@@ -32,16 +41,20 @@
     <string name="alert_config_text">En esta pantalla puedes activar/desactivar una configuración</string>
     <string name="alert_profile_text">Pantalla de perfil de usuario que muestra las opciones y datos del usuario </string>
     <string name="alert_syllabus_text">Pulsa en un tema para empezar con él.</string>
+    <string name="alert_examination_text">Pulsa en un tema para evaluarte</string>
     <string name="alert_button_theme_text"></string>
+    <string name="alert_theme_text">Aquí muestra información de la señal, una vez aprendida pulsar siguiente.</string>
+    <string name="alert_video_text">En esta pantalla se muestra un video con el contenido con dos botones uno de pausar y otro de reanudar</string>
 
     <!-- Content description -->
     <string name="profile_des">Boton para acceder al perfil</string>
     <string name="config_des">Botón para acceder a ajustes</string>
 
-    <!-- Titles -->
+    <!-- Setting titles -->
     <string name="preference_header">Preferencias</string>
     <string name="accesibility_header">Accesibilidad</string>
     <string name="tutorial_header">Tutorial</string>
+    <string name="content_header">Contenido</string>
 
     <!-- Accesibility Preferences -->
     <string name="voice_response_title">Respuesta por voz</string>
