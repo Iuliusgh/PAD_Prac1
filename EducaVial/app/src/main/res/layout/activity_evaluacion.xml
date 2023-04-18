@@ -21,31 +21,17 @@
             android:paddingBottom="10dp">
 
             <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/learnt_sign"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="5dp"
-                android:background="@drawable/forma_boton_temario_1"
-                android:fontFamily="@font/overpass"
-                android:text="@string/best_score"
-                android:textAllCaps="false"
-                android:textColor="@color/white"
-                android:textSize="24dp"
-                />
-
-            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/theme_1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="10dp"
                 android:layout_marginBottom="5dp"
                 android:background="@drawable/forma_boton_temario_3"
                 android:fontFamily="@font/overpass"
                 android:text="@string/theme_1"
                 android:textAllCaps="false"
                 android:textColor="@color/white"
-                android:textSize="24dp"/>
+                android:textSize="24sp"/>
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/theme_2"
@@ -58,7 +44,7 @@
                 android:text="@string/lorem_ipsum"
                 android:textAllCaps="false"
                 android:textColor="@color/white"
-                android:textSize="24dp"/>
+                android:textSize="24sp"/>
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/theme_3"
@@ -71,7 +57,7 @@
                 android:text="@string/lorem_ipsum"
                 android:textAllCaps="false"
                 android:textColor="@color/white"
-                android:textSize="24dp"/>
+                android:textSize="24sp"/>
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/theme_4"
@@ -84,7 +70,7 @@
                 android:text="@string/lorem_ipsum"
                 android:textAllCaps="false"
                 android:textColor="@color/white"
-                android:textSize="24dp"/>
+                android:textSize="24sp"/>
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/theme_5"
@@ -97,7 +83,7 @@
                 android:text="@string/lorem_ipsum"
                 android:textAllCaps="false"
                 android:textColor="@color/white"
-                android:textSize="24dp"/>
+                android:textSize="24sp"/>
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/theme_6"
@@ -110,7 +96,7 @@
                 android:text="@string/lorem_ipsum"
                 android:textAllCaps="false"
                 android:textColor="@color/white"
-                android:textSize="24dp"/>
+                android:textSize="24sp"/>
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/theme_7"
@@ -123,7 +109,46 @@
                 android:text="@string/lorem_ipsum"
                 android:textAllCaps="false"
                 android:textColor="@color/white"
-                android:textSize="24dp"/>
+                android:textSize="24sp"/>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/theme_8"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:background="@drawable/forma_boton_temario_3"
+                android:fontFamily="@font/overpass"
+                android:text="@string/lorem_ipsum"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="24sp"/>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/theme_9"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:background="@drawable/forma_boton_temario_3"
+                android:fontFamily="@font/overpass"
+                android:text="@string/lorem_ipsum"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="24sp"/>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/theme_10"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:background="@drawable/forma_boton_temario_3"
+                android:fontFamily="@font/overpass"
+                android:text="@string/lorem_ipsum"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="24sp"/>
         </LinearLayout>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

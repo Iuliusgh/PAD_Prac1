@@ -21,9 +21,18 @@
     <string name="theme_2">Tema 2: Carreteras</string>
     <string name="lorem_ipsum">Lorem ipsum dolor</string>
 
+    <!-- Theme -->
+    <string name="Theme_return">Anterior</string>
+    <string name="Theme_next">Siguiente</string>
+    <string name="theme_play">Reproducir el texto</string>
+    <string name="congratulation">¡Felicidades!</string>
+    <string name="cong_info">Has completado el temario, pulse el botón para volver al Temario</string>
+    <string name="return_to_syllabus">Volver</string>
+
     <!-- Examination -->
     <string name="examination_title">Evaluación</string>
     <string name="examination_scroll_desc">Todas las evaluaciones disponibles de la aplicación</string>
+
     <!-- Menu item -->
     <string name="help">Botón de ayuda</string>
 
@@ -34,6 +43,7 @@
     <string name="alert_syllabus_text">Pulsa en un tema para empezar con él.</string>
     <string name="alert_examination_text">Pulsa en un tema para evaluarte</string>
     <string name="alert_button_theme_text"></string>
+    <string name="alert_theme_text">Aquí muestra información de la señal, una vez aprendida pulsar siguiente.</string>
     <string name="alert_video_text">En esta pantalla se muestra un video con el contenido con dos botones uno de pausar y otro de reanudar</string>
 
     <!-- Content description -->
