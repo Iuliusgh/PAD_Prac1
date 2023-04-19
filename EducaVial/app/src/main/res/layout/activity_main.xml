@@ -58,7 +58,7 @@
                 android:layout_marginEnd="15dp"
                 android:background="@drawable/forma_boton"
                 android:contentDescription="@string/config_des"
-                android:src="@drawable/tutorial" />
+                android:src="@drawable/home_settings" />
         </LinearLayout>
 
         <LinearLayout
@@ -123,7 +123,7 @@
                 android:fontFamily="@font/overpass_bold"
                 android:paddingTop="15dp"
                 android:paddingBottom="10dp"
-                android:textSize="20sp"
+                android:textSize="17sp"
                 android:text="@string/escanear"
                 />
         </LinearLayout>
