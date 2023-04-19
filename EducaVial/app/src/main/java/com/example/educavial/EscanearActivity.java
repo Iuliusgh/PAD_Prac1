@@ -20,6 +20,7 @@ import android.Manifest;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.util.Size;
 import android.view.MotionEvent;
@@ -27,19 +28,28 @@ import android.view.ScaleGestureDetector;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.educavial.ml.Model;
 import com.google.common.util.concurrent.ListenableFuture;
 
+import org.tensorflow.lite.DataType;
+import org.tensorflow.lite.support.tensorbuffer.TensorBuffer;
+
+import java.io.IOException;
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 
 public class EscanearActivity extends AppCompatActivity {
-        PreviewView previewView;
-        Camera camera;
-        ListenableFuture<ProcessCameraProvider> cameraProviderFuture;
-        ScaleGestureDetector scaleGestureDetector;
-        ImageButton scan;
+        private PreviewView previewView;
+        private Camera camera;
+        private ListenableFuture<ProcessCameraProvider> cameraProviderFuture;
+        private ScaleGestureDetector scaleGestureDetector;
+        private ImageButton scan;
+        private int analysisSize = 128;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -132,24 +142,168 @@ public class EscanearActivity extends AppCompatActivity {
     }
     public void analyze() {
         ImageView imageView = findViewById(R.id.imageView2);
-        int[] location = new int[2];
-        imageView.getLocationInSurface(location);
         Bitmap bitmap = previewView.getBitmap();
-        Bitmap senal = Bitmap.createBitmap(128,128, Bitmap.Config.ARGB_8888);
-        int[] pixels= new int[128*128];
-        bitmap.getPixels(pixels,0,128,location[0],location[1],128,128);
-        senal.setPixels(pixels,0,128,0,0,128,128);
-        detectarSeñal(senal);
+        Bitmap senal = Bitmap.createBitmap(imageView.getWidth(),imageView.getHeight(), Bitmap.Config.ARGB_8888);
+        int[] pixels= new int[imageView.getWidth()*imageView.getHeight()];
+        bitmap.getPixels(pixels,0,senal.getWidth(),imageView.getLeft(),imageView.getTop(),senal.getWidth(),senal.getHeight());
+        senal.setPixels(pixels,0,senal.getWidth(),0,0,senal.getWidth(),senal.getHeight());
+        String analysisResult= analizarSenal(senal);
+        inflateSenalLayout(senal,analysisResult);
     }
 
-    private void detectarSeñal(Bitmap senal) {
+    private void inflateSenalLayout(Bitmap senal, String analysisResult) {
         AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(this, R.style.MyAlertDialogStyle);
         View customLayout = getLayoutInflater().inflate(R.layout.escaneo_correcto_layout, null);
         builder.setView(customLayout);
         AlertDialog dialog = builder.create();
-        ImageView imageView = customLayout.findViewById(R.id.imageView3);
-        Canvas canvas =new Canvas(senal);
-        imageView.draw(canvas);
+        ImageView imageView = customLayout.findViewById(R.id.senalEscaneada);
+        imageView.setImageBitmap(senal);
+        TextView textView=customLayout.findViewById(R.id.resultado);
+        textView.setText(analysisResult);
+        dialog.show();
+    }
+    private String analizarSenal(Bitmap senal){
+        String ret = "No se ha podido identificar la señal";
+        Bitmap scaledSignal = Bitmap.createScaledBitmap(senal,analysisSize,analysisSize,false);
+        ByteBuffer byteBuffer = ByteBuffer.allocateDirect(4 * analysisSize*analysisSize*3);
+        byteBuffer.order(ByteOrder.nativeOrder());
+        int[] intValues = new int[analysisSize*analysisSize];
+        scaledSignal.getPixels(intValues,0,scaledSignal.getWidth(),0,0,scaledSignal.getWidth(),scaledSignal.getHeight());
+        int pixelIndex =0;
+        for (int i=0;i<analysisSize;i++){
+            for (int j=0;j<analysisSize;j++){
+                int val = intValues[pixelIndex++];
+                byteBuffer.putFloat(((val>>16)&0xFF)*(1.f));
+                byteBuffer.putFloat(((val>>8)&0xFF)*(1.f));
+                byteBuffer.putFloat((val&0xFF)*(1.f));
+            }
+        }
+        try {
+            Model model = Model.newInstance(getApplicationContext());
 
+            // Creates inputs for reference.
+            TensorBuffer inputFeature0 = TensorBuffer.createFixedSize(new int[]{1, 128, 128, 3}, DataType.FLOAT32);
+
+            inputFeature0.loadBuffer(byteBuffer);
+
+            // Runs model inference and gets result.
+            Model.Outputs outputs = model.process(inputFeature0);
+            TensorBuffer outputFeature0 = outputs.getOutputFeature0AsTensorBuffer();
+            float[] confidence = outputFeature0.getFloatArray();
+            int max=0;
+            float maxConfidence=0;
+            for (int i =0;i<confidence.length;i++){
+                if(confidence[i]>maxConfidence){
+                    maxConfidence=confidence[i];
+                    max=i;
+                }
+            }
+            String[] classes={"R-1",
+                    "R-2",
+                    "R-100",
+                    "R-101",
+                    "R-105",
+                    "R-106",
+                    "R-107",
+                    "R-108",
+                    "R-111",
+                    "R-113",
+                    "R-114",
+                    "R-116",
+                    "R-117",
+                    "R-200",
+                    "R-201",
+                    "R-205",
+                    "R-300",
+                    "R-301-30",
+                    "R-301-50",
+                    "R-301-70",
+                    "R-301-90",
+                    "R-301-100",
+                    "R-301-120",
+                    "R-302",
+                    "R-303",
+                    "R-304",
+                    "R-305",
+                    "R-307",
+                    "R-308",
+                    "R-400a",
+                    "R-400b",
+                    "R-400c",
+                    "R-400d",
+                    "R-402",
+                    "R-407a",
+                    "R-411",
+                    "R-413",
+                    "P-1",
+                    "P-1a",
+                    "P-1b",
+                    "P-1c",
+                    "P-3",
+                    "P-4",
+                    "P-13a",
+                    "P-13b",
+                    "P-14a",
+                    "P-14b",
+                    "P-15",
+                    "P-15a",
+                    "P-17",
+                    "P-19",
+                    "P-20",
+                    "P-21",
+                    "P-23",
+                    "P-24",
+                    "P-25",
+                    "P-26",
+                    "P-27",
+                    "P-34",
+                    "P-50",
+                    "S-1",
+                    "S-1a",
+                    "S-2",
+                    "S-2a",
+                    "S-5",
+                    "S-11",
+                    "S-11a",
+                    "S-13",
+                    "S-15a",
+                    "S-17",
+                    "S-18",
+                    "S-19",
+                    "S-22",
+                    "S-24",
+                    "S-25",
+                    "S-26a",
+                    "S-26b",
+                    "S-26c",
+                    "S-50a",
+                    "S-50b",
+                    "S-52b",
+                    "S-60b",
+                    "S-61a",
+                    "S-102",
+                    "S-105",
+                    "S-107",
+                    "S-122",
+                    "S-123",
+                    "Unknown",
+                    "S-7-40",
+                    "S-7-80",
+                    "S-17-minus",
+                    "R-301-20",
+                    "R-301-40",
+                    "R-301-60",
+                    "R-301-80",
+                    "R-403a",
+                    "R-401a",
+                    "R-403c"
+            };
+            ret = classes[max];
+            // Releases model resources if no longer used.
+            model.close();
+        } catch (IOException e) {
+            // TODO Handle the exception
+        }
+        return ret;
     }
 }
