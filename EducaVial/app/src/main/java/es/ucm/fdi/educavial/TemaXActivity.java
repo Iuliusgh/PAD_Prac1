@@ -154,7 +154,7 @@ public class TemaXActivity extends AppCompatActivity {
         aux.setPositiveButton(R.string.return_to_syllabus, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                end();
+                finish();
             }
         });
         endDialog = aux.create();
@@ -173,12 +173,6 @@ public class TemaXActivity extends AppCompatActivity {
     private void changeContent(){
         titulo.setText(cont.get(pos));
         texto.setText(cont.get(pos));
-    }
-
-
-    private void end(){
-        Intent i = new Intent(this, TemarioActivity.class);
-        startActivity(i);
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {

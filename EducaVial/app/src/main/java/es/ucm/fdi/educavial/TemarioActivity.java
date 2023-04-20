@@ -71,9 +71,7 @@ public class TemarioActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                //this.finish();
-                Intent i = new Intent(this, MainActivity.class);
-                startActivity(i);
+                this.finish();
                 return true;
             case R.id.help:
                 dialog.show();
