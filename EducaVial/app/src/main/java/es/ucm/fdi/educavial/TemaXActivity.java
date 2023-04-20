@@ -3,9 +3,11 @@ package es.ucm.fdi.educavial;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.preference.PreferenceManager;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
@@ -45,6 +47,7 @@ public class TemaXActivity extends AppCompatActivity {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(R.layout.activity_tema_xactivity);
 
+        Log.d(TAG, "Creando actionBar");
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             //actionBar.setHomeAsUpIndicator(R.drawable.volver);
@@ -52,15 +55,9 @@ public class TemaXActivity extends AppCompatActivity {
             actionBar.setTitle(R.string.syllabus_title);
         }
 
-        imagen = findViewById(R.id.imagen);
-        titulo = findViewById(R.id.titulo);
-        texto = findViewById(R.id.texto);
-
-        imagen.setImageResource(R.drawable.stop);
-
-        pos = 0;
+        Log.d(TAG, "Inicializando el progress Bar");
         bar = findViewById(R.id.progressBar);
-        bar.setScaleY(1.5f);
+        bar.setScaleY(2.5f);
         bar.setMax(MAX_BAR_VALUE);
         bar.setProgressTintList(ColorStateList.valueOf(Color.BLACK));
 
@@ -68,16 +65,24 @@ public class TemaXActivity extends AppCompatActivity {
         cont.add("Señal 1");
         cont.add("Señal 2");
 
+        pos = 0;
         barValue = MAX_BAR_VALUE / cont.size();
 
+        Log.d(TAG, "Inicializando imagen, título y texto");
+        imagen = findViewById(R.id.imagen);
+        titulo = findViewById(R.id.titulo);
+        texto = findViewById(R.id.texto);
+        imagen.setImageResource(R.drawable.stop);
         titulo.setText(cont.get(pos));
         texto.setText(cont.get(pos));
 
+        Log.d(TAG, "Inicializando el botón anterior");
         ant = findViewById(R.id.ant);
         ant.setEnabled(false);
         ant.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Log.i(TAG, "Botón anterior pulsado");
                 pos--;
                 if(pos == 0){
                     ant.setEnabled(false);
@@ -87,10 +92,12 @@ public class TemaXActivity extends AppCompatActivity {
             }
         });
 
+        Log.d(TAG, "Inicializando el botón siguiente");
         sig = findViewById(R.id.sig);
         sig.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Log.i(TAG, "Botón siguiente pulsado");
                 pos++;
                 bar.setProgress( bar.getProgress() + barValue);
                 if(pos == cont.size()){
@@ -103,6 +110,8 @@ public class TemaXActivity extends AppCompatActivity {
                 }
             }
         });
+
+        Log.d(TAG, "Inicializando Text To Speech");
         textToSpeech = new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
             @Override
             public void onInit(int i) {
@@ -112,15 +121,17 @@ public class TemaXActivity extends AppCompatActivity {
             }
         });
 
+        Log.d(TAG, "Inicializando el botón de reproducir");
         play = findViewById(R.id.reproducir);
         play.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if(textToSpeech != null && textToSpeech.isSpeaking()){
+                    Log.i(TAG, "Parar de reproducir el texto");
                     textToSpeech.stop();
                 }
                 else{
-                    String text = "We and our partners store or access information on a device, such as cookies, and process personal data, such as unique identifiers and standard information sent by a device, for ads and personalized content, ad and content measurement, and information about the user. public, as well as to develop and improve products. With your permission, we and our partners may use precise geographic location data and identification through device characteristics. You can click to give your consent to us and our partners to carry out the processing described above. Alternatively, you can access more detailed information and change your preferences before giving or denying your consent. Please note that some processing of your personal data may not require your consent, but you have the right to object to such processing. Your preferences will apply only to this website. You can change your preferences at any time by re-entering this website or by visiting our privacy policy.";
+                    Log.i(TAG, "Reproducir el texto");
                     Bundle params = new Bundle();
                     params.putString(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID, "hello");
                     textToSpeech.speak(titulo.getText().toString() + texto.getText().toString(), TextToSpeech.QUEUE_FLUSH, params, "hello");
@@ -128,6 +139,15 @@ public class TemaXActivity extends AppCompatActivity {
             }
         });
 
+        Log.d(TAG, "Mostrar/Ocultar el botón de reproducir en funcion del valor de authomatic_read");
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        boolean showButton = sharedPreferences.getBoolean("authomatic_read", false);
+        if(showButton)
+            play.setVisibility(View.VISIBLE);
+        else
+            play.setVisibility(View.INVISIBLE);
+
+        Log.d(TAG, "Creando mensaje del fin");
         AlertDialog.Builder aux = new AlertDialog.Builder(this);
         aux.setTitle(R.string.congratulation);
         aux.setMessage(R.string.cong_info);
@@ -137,9 +157,7 @@ public class TemaXActivity extends AppCompatActivity {
                 end();
             }
         });
-
         endDialog = aux.create();
-
 
         Log.d(TAG, "Creando mensaje de ayuda");
         AlertDialog.Builder builder = new AlertDialog.Builder(this);

@@ -3,14 +3,14 @@
     <PreferenceCategory app:title="@string/accesibility_header">
 
         <SwitchPreferenceCompat
-            app:key="authomatic_read"
+            app:key="@string/authomatic_read_key"
             app:summary="@string/authomatica_read_summary"
             app:title="@string/authomatic_read_title" />
     </PreferenceCategory>
 
     <PreferenceCategory app:title="@string/tutorial_header">
         <SwitchPreferenceCompat
-            app:key="tutorial"
+            app:key="@string/tutorial_key"
             app:summary="@string/tutorial_summary"
             app:title="@string/tutorial_title" />
     </PreferenceCategory>
