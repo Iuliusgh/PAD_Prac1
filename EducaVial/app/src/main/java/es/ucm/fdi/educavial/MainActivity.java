@@ -88,6 +88,7 @@ public class MainActivity extends AppCompatActivity {
             View customLayout = getLayoutInflater().inflate(R.layout.custom_activity_dialog_main, null);
             builder.setView(customLayout);
             AlertDialog dialog = builder.create();
+            dialog.setCancelable(false);
 
             builder.setPositiveButton("Aceptar", new   DialogInterface.OnClickListener() {
                 @Override
