@@ -4,11 +4,13 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 public class EvaluacionActivity extends AppCompatActivity {
@@ -16,6 +18,7 @@ public class EvaluacionActivity extends AppCompatActivity {
     private final static String TAG = "EvaluacionActivity";
     private TextView message, title;
     private AlertDialog dialog;
+    private Button tema1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +32,14 @@ public class EvaluacionActivity extends AppCompatActivity {
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setTitle(R.string.examination_title);
         }
+
+        tema1 = findViewById(R.id.theme_1);
+        tema1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                tema1();
+            }
+        });
 
         Log.d(TAG, "Creando mensaje de ayuda");
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -56,5 +67,10 @@ public class EvaluacionActivity extends AppCompatActivity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void tema1(){
+        Intent i = new Intent(this, TestActivity.class);
+        startActivity(i);
     }
 }
