@@ -4,22 +4,28 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.lifecycle.LiveData;
 
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Toast;
+
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
     private ImageButton settings, profile;
     private Button learn, examination, scan;
+    private AlertDialog dialog1;
 
     private final static String TAG = "MainActivity";
     @Override
@@ -87,8 +93,6 @@ public class MainActivity extends AppCompatActivity {
             AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.MyAlertDialogStyle);
             View customLayout = getLayoutInflater().inflate(R.layout.custom_activity_dialog_main, null);
             builder.setView(customLayout);
-            AlertDialog dialog = builder.create();
-            dialog.setCanceledOnTouchOutside(false);
 
             builder.setPositiveButton("Aceptar", new   DialogInterface.OnClickListener() {
                 @Override
@@ -99,17 +103,26 @@ public class MainActivity extends AppCompatActivity {
                     String correo = coro.getText().toString();
                     String usuario = usu.getText().toString();
 
-                    SharedPreferences.Editor editor = prefs.edit();
-                    editor.putString("correo", correo);
-                    editor.putString("usuario", usuario);
-                    editor.putBoolean("is_first_time", false);
-                    editor.apply();
+                    if (TextUtils.isEmpty(correo)) {
+                        Toast.makeText(MainActivity.this, "Los campos no pueden estar vacíos", Toast.LENGTH_SHORT).show();
+                        recreate();
+                    } else if (TextUtils.isEmpty(usuario)) {
+                        Toast.makeText(MainActivity.this, "Los campos no pueden estar vacíos", Toast.LENGTH_SHORT).show();
+                        recreate();
+                    } else {
+                        SharedPreferences.Editor editor = prefs.edit();
+                        editor.putString("correo", correo);
+                        editor.putString("usuario", usuario);
+                        editor.putBoolean("is_first_time", false);
+                        editor.apply();
 
-                    dialog.dismiss();
+                        dialog1.dismiss();
+                    }
                 }
             });
-
-            builder.show();
+            dialog1 = builder.create();
+            dialog1.setCancelable(false);
+            dialog1.show();
         }
     }
 
