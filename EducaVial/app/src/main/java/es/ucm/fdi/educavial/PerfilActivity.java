@@ -46,6 +46,9 @@ public class PerfilActivity extends AppCompatActivity {
         dialog = builder.create();
 
         SharedPreferences prefs = getSharedPreferences("my_prefs", MODE_PRIVATE);
+
+        profile = findViewById(R.id.EditarPerfil);
+
         String correo = prefs.getString("correo", "");
         String usuario = prefs.getString("usuario", "");
 
@@ -55,10 +58,6 @@ public class PerfilActivity extends AppCompatActivity {
 
         email.setText(correo);
         user.setText(usuario);
-
-        profile = findViewById(R.id.EditarPerfil);
-
-
 
         profile.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -85,6 +84,7 @@ public class PerfilActivity extends AppCompatActivity {
                         editor.putString("usuario", usuario);
                         editor.putBoolean("is_first_time", false);
                         editor.apply();
+                        recreate();
 
                         dialog1.dismiss();
                     }
