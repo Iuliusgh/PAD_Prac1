@@ -2,25 +2,29 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:background="@drawable/forma_boton_video">
 
         <TextView
             android:id="@+id/textoResultadoEscaneo"
             android:layout_width="wrap_content"
             android:layout_height="100dp"
             android:layout_gravity="center"
-            android:text="Resultado del escaneo" />
+            android:text="Resultado del escaneo"
+            android:textColor="@color/black"/>
 
         <ImageView
             android:id="@+id/senalEscaneada"
             android:layout_width="128dp"
             android:layout_gravity="center"
             android:layout_height="128dp"
+            android:background="@drawable/alert_dialog_shape"
             />
     <TextView
         android:id="@+id/resultado"
         android:layout_width="wrap_content"
         android:layout_height="100dp"
-        android:layout_gravity="center" />
+        android:layout_gravity="center"
+        android:textColor="@color/black"/>
     </LinearLayout>
 

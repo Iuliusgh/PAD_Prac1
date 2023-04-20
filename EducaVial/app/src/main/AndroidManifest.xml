@@ -23,7 +23,8 @@
             android:exported="false" />
         <activity
             android:name=".TemaXActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:parentActivityName=".TemarioActivity"/>
         <activity
             android:name=".EvaluacionActivity"
             android:exported="false" />
@@ -35,7 +36,8 @@
             android:exported="false" />
         <activity
             android:name=".TemarioActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:parentActivityName=".MainActivity"/>
         <activity
             android:name=".PerfilActivity"
             android:exported="false" />

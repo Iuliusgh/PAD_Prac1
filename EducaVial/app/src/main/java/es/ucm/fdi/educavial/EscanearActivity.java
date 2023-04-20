@@ -15,6 +15,7 @@ import androidx.core.content.ContextCompat;
 import androidx.lifecycle.LifecycleOwner;
 
 import android.Manifest;
+import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -151,7 +152,14 @@ public class EscanearActivity extends AppCompatActivity {
         AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(this, R.style.MyAlertDialogStyle);
         View customLayout = getLayoutInflater().inflate(R.layout.escaneo_correcto_layout, null);
         builder.setView(customLayout);
+        builder.setPositiveButton("Volver a escanear", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+            }
+        });
         AlertDialog dialog = builder.create();
+        dialog.setCancelable(false);
         ImageView imageView = customLayout.findViewById(R.id.senalEscaneada);
         imageView.setImageBitmap(senal);
         TextView textView=customLayout.findViewById(R.id.resultado);
@@ -294,7 +302,8 @@ public class EscanearActivity extends AppCompatActivity {
                     "R-401a",
                     "R-403c"
             };
-            ret = classes[max];
+            if (max<80) ret="No se ha podido reconocer la señal, prueba otra vez";
+            else ret = "La señal es "+classes[max]+" con "+String.valueOf(max)+" de confidence";
             // Releases model resources if no longer used.
             model.close();
         } catch (IOException e) {
