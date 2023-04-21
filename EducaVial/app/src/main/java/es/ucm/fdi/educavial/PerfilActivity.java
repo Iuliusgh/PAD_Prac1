@@ -8,6 +8,7 @@ import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -15,6 +16,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class PerfilActivity extends AppCompatActivity {
 
@@ -72,26 +74,43 @@ public class PerfilActivity extends AppCompatActivity {
                 coro.setText(prefs.getString("correo",""));
                 usu.setText(prefs.getString("usuario",""));
 
-                builder1.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+                builder1.setPositiveButton("Aceptar",null );
+                dialog1 = builder1.create();
+                View.OnClickListener myListener = new View.OnClickListener() {
                     @Override
-                    public void onClick(DialogInterface dialog, int which) {
+                    public void onClick(View v) {
                         // Guardar el correo y usuario ingresados
                         String correo = coro.getText().toString();
                         String usuario = usu.getText().toString();
 
-                        SharedPreferences.Editor editor = prefs.edit();
-                        editor.putString("correo", correo);
-                        editor.putString("usuario", usuario);
-                        editor.putBoolean("is_first_time", false);
-                        editor.apply();
-                        recreate();
+                        if (TextUtils.isEmpty(correo)) {
+                            Toast.makeText(PerfilActivity.this, "Los campos no pueden estar vacíos", Toast.LENGTH_SHORT).show();
 
-                        dialog1.dismiss();
+                        } else if (TextUtils.isEmpty(usuario)) {
+                            Toast.makeText(PerfilActivity.this, "Los campos no pueden estar vacíos", Toast.LENGTH_SHORT).show();
+                            
+                        } else {
+                            SharedPreferences.Editor editor = prefs.edit();
+                            editor.putString("correo", correo);
+                            editor.putString("usuario", usuario);
+                            editor.putBoolean("is_first_time", false);
+                            editor.apply();
+                            recreate();
+
+                            dialog1.dismiss();
+                        }
                     }
-                });
-                dialog1 = builder1.create();
+                };
                 if (dialog1 != null) {
                     dialog1.setCanceledOnTouchOutside(false);
+                    dialog1.setOnShowListener(new DialogInterface.OnShowListener() {
+                        @Override
+                        public void onShow(DialogInterface dialog) {
+                            Button b = dialog1.getButton(DialogInterface.BUTTON_POSITIVE);
+                            b.setOnClickListener(myListener);
+                        }
+                    });
+
                     dialog1.show();
                 }
             }

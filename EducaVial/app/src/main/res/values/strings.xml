@@ -51,6 +51,7 @@
     <string name="alert_button_theme_text"></string>
     <string name="alert_theme_text">Aquí muestra información de la señal, una vez aprendida pulsar siguiente.</string>
     <string name="alert_video_text">En esta pantalla se muestra un video con el contenido con dos botones uno de pausar y otro de reanudar</string>
+    <string name="alert_scanner_text">En esta pantalla puedes escanear una señal y obtener información sobre ella. Cuadra la señal dentro del rectángulo para obtener mejores resultados.</string>
 
     <!-- Content description -->
     <string name="profile_des">Boton para acceder al perfil</string>
