@@ -28,6 +28,12 @@
     <string name="congratulation">¡Felicidades!</string>
     <string name="cong_info">Has completado el temario, pulse el botón para volver al Temario</string>
     <string name="return_to_syllabus">Volver</string>
+    <string name="content_1_title">Señal de STOP</string>
+    <string name="content_1_text">La señal de STOP indica la obligación de detener el vehículo por completo en ese punto. Suele ir acompañada de una marca de pintura sobre la calzada que indica la línea de detención antes de la cual debemos detener el vehículo. La señal de STOP es de forma octogonal con fondo rojo y la palabra STOP en letras blancas.</string>
+    <string name="content_2_title">Señal de Velocidad máxima 30 km/h</string>
+    <string name="content_2_text">Esta señal nos indica la prohibición de circular a una velocidad superior de 30 km/h. Obliga desde el lugar en que esté situada hasta la próxima señal de «Fin de la limitación de velocidad», de «Fin de prohibiciones» u otra de «velocidad máxima», salvo que esté colocada en el mismo poste que una señal de advertencia de peligro o en el mismo panel que ésta, en cuyo caso la prohibición finaliza cuando termine el peligro señalado. Esta señal tiene forma circular y es de color rojo y blanco.</string>
+    <string name="content_3_title">Señal de Prohibido el paso a personas</string>
+    <string name="content_3_text">Esta señal de seguridad prohíbe el paso a cualquier persona que no pertenezca a la empresa en donde está situada la señal. La señal de Prohibido el paso a personas tiene forma circular y es de color rojo y blanco.</string>
 
     <!-- Examination -->
     <string name="examination_title">Evaluación</string>
