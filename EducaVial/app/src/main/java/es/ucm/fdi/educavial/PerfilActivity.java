@@ -72,9 +72,11 @@ public class PerfilActivity extends AppCompatActivity {
                 coro.setText(prefs.getString("correo",""));
                 usu.setText(prefs.getString("usuario",""));
 
-                builder1.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+                builder1.setPositiveButton("Aceptar",null );
+                dialog1 = builder1.create();
+                View.OnClickListener myListener = new View.OnClickListener() {
                     @Override
-                    public void onClick(DialogInterface dialog, int which) {
+                    public void onClick(View v) {
                         // Guardar el correo y usuario ingresados
                         String correo = coro.getText().toString();
                         String usuario = usu.getText().toString();
@@ -88,11 +90,17 @@ public class PerfilActivity extends AppCompatActivity {
 
                         dialog1.dismiss();
                     }
-                });
-                dialog1 = builder1.create();
+                };
                 if (dialog1 != null) {
                     dialog1.setCanceledOnTouchOutside(false);
                     dialog1.show();
+                    dialog1.setOnShowListener(new DialogInterface.OnShowListener() {
+                        @Override
+                        public void onShow(DialogInterface dialog) {
+                            Button b = dialog1.getButton(DialogInterface.BUTTON_POSITIVE);
+                            b.setOnClickListener(myListener);
+                        }
+                    });
                 }
             }
         });

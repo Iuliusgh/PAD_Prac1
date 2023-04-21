@@ -83,7 +83,7 @@ public class EscanearActivity extends AppCompatActivity {
         View customLayout = getLayoutInflater().inflate(R.layout.custom_alert_dialog, null);
         message = (TextView) customLayout.findViewById(R.id.help_text);
         title = (TextView) customLayout.findViewById(R.id.help_title);
-        message.setText(R.string.alert_video_text);
+        message.setText(R.string.alert_scanner_text);
         title.setText(R.string.alert_title);
         builder.setView(customLayout);
         dialog = builder.create();
