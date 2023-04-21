@@ -3,6 +3,7 @@ package com.example.educavial;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProviders;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -44,7 +45,6 @@ public class TemaXActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(R.layout.activity_tema_xactivity);
-
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             //actionBar.setHomeAsUpIndicator(R.drawable.volver);

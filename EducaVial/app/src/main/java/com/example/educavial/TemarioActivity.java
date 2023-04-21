@@ -3,6 +3,7 @@ package com.example.educavial;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProviders;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -24,7 +25,6 @@ public class TemarioActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_temario);
-
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             //actionBar.setHomeAsUpIndicator(R.drawable.volver);

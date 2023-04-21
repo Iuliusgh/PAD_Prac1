@@ -3,6 +3,8 @@ package com.example.educavial;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
@@ -12,17 +14,20 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
-public class PerfilActivity extends AppCompatActivity {
+import java.util.List;
 
+public class PerfilActivity extends AppCompatActivity {
+    private   Userviewmodel userviewmodel;
     private final static String TAG = "PerfilActivity";
     private TextView message, title;
+    private TextView user_name;
     private AlertDialog dialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(R.layout.activity_perfil);
-
+        //user_name=findViewById(R.id.user_name);
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             //actionBar.setHomeAsUpIndicator(R.drawable.volver);
@@ -39,6 +44,21 @@ public class PerfilActivity extends AppCompatActivity {
         title.setText(R.string.alert_title);
         builder.setView(customLayout);
         dialog = builder.create();
+        /*userviewmodel = ViewModelProviders.of(this).get(Userviewmodel.class);
+        User juan=new User("xd","lopez");
+        userviewmodel.deleteAllUsers();
+        userviewmodel.insertUser(juan);
+        userviewmodel.getUserlist().observe(this, new Observer<List<User>>() {
+            @Override
+            public void onChanged(List<User> taskList) {
+                if (!taskList.isEmpty()) {
+                    // Mostrar el título de la primera tarea en el TextView
+                    user_name.setText(taskList.get(0).username);
+
+                }
+            }
+        });*/
+
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {

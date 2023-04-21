@@ -24,8 +24,8 @@ public class TemaRepository {
 
     private static class insertAsyncTask extends AsyncTask<Tema,Void,Void> {
         private TemaDAO taskDao;
-        insertAsyncTask(TemaDAO taskDao){
-            taskDao=taskDao;
+        insertAsyncTask(TemaDAO temadao){
+            taskDao=temadao;
         }
         @Override
         protected Void doInBackground(Tema... tema){
