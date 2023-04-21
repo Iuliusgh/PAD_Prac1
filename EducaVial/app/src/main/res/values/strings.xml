@@ -55,6 +55,8 @@
     <string name="accesibility_header">Accesibilidad</string>
     <string name="tutorial_header">Tutorial</string>
     <string name="content_header">Contenido</string>
+    <string name="authomatic_read_key">authomatic_read</string>
+    <string name="tutorial_key">tutorial</string>
 
     <!-- Accesibility Preferences -->
     <string name="voice_response_title">Respuesta por voz</string>
