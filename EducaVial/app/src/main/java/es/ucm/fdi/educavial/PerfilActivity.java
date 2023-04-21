@@ -8,6 +8,7 @@ import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -15,6 +16,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class PerfilActivity extends AppCompatActivity {
 
@@ -81,19 +83,26 @@ public class PerfilActivity extends AppCompatActivity {
                         String correo = coro.getText().toString();
                         String usuario = usu.getText().toString();
 
-                        SharedPreferences.Editor editor = prefs.edit();
-                        editor.putString("correo", correo);
-                        editor.putString("usuario", usuario);
-                        editor.putBoolean("is_first_time", false);
-                        editor.apply();
-                        recreate();
+                        if (TextUtils.isEmpty(correo)) {
+                            Toast.makeText(PerfilActivity.this, "Los campos no pueden estar vacíos", Toast.LENGTH_SHORT).show();
 
-                        dialog1.dismiss();
+                        } else if (TextUtils.isEmpty(usuario)) {
+                            Toast.makeText(PerfilActivity.this, "Los campos no pueden estar vacíos", Toast.LENGTH_SHORT).show();
+                            
+                        } else {
+                            SharedPreferences.Editor editor = prefs.edit();
+                            editor.putString("correo", correo);
+                            editor.putString("usuario", usuario);
+                            editor.putBoolean("is_first_time", false);
+                            editor.apply();
+                            recreate();
+
+                            dialog1.dismiss();
+                        }
                     }
                 };
                 if (dialog1 != null) {
                     dialog1.setCanceledOnTouchOutside(false);
-                    dialog1.show();
                     dialog1.setOnShowListener(new DialogInterface.OnShowListener() {
                         @Override
                         public void onShow(DialogInterface dialog) {
@@ -101,6 +110,8 @@ public class PerfilActivity extends AppCompatActivity {
                             b.setOnClickListener(myListener);
                         }
                     });
+
+                    dialog1.show();
                 }
             }
         });
