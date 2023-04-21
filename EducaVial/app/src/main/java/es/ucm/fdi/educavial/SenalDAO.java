@@ -3,6 +3,7 @@ import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.Query;
+import androidx.room.Update;
 
 import java.util.List;
 
@@ -16,6 +17,14 @@ public interface SenalDAO {
 
     @Query("SELECT * FROM senal")
     LiveData<List<Senal>> GetAllSenals();
+
+    @Query("SELECT * FROM senal WHERE codigo = :codigo")
+    Senal getSenalBycodigo(String codigo);
+    @Query("UPDATE senal SET aprendido = :valor WHERE codigo = :id")
+    void updateValorBooleanoById(String id, boolean valor);
+
+
+
 }
 
 
