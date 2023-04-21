@@ -105,9 +105,11 @@ public class MainActivity extends AppCompatActivity {
             View customLayout = getLayoutInflater().inflate(R.layout.custom_activity_dialog_main, null);
             builder.setView(customLayout);
 
-            builder.setPositiveButton("Aceptar", new   DialogInterface.OnClickListener() {
+            builder.setPositiveButton("Aceptar",null );
+            dialog1 = builder.create();
+            View.OnClickListener myListener = new View.OnClickListener() {
                 @Override
-                public void onClick(DialogInterface dialog, int which) {
+                public void onClick(View v) {
                     EditText coro = customLayout.findViewById(R.id.editTextTextEmailAddress);
                     EditText usu = customLayout.findViewById(R.id.editTextTextPersonName);
                     // Guardar el correo y usuario ingresados
@@ -116,24 +118,34 @@ public class MainActivity extends AppCompatActivity {
 
                     if (TextUtils.isEmpty(correo)) {
                         Toast.makeText(MainActivity.this, "Los campos no pueden estar vacíos", Toast.LENGTH_SHORT).show();
-                        recreate();
+
                     } else if (TextUtils.isEmpty(usuario)) {
                         Toast.makeText(MainActivity.this, "Los campos no pueden estar vacíos", Toast.LENGTH_SHORT).show();
-                        recreate();
+
                     } else {
                         SharedPreferences.Editor editor = prefs.edit();
                         editor.putString("correo", correo);
                         editor.putString("usuario", usuario);
                         editor.putBoolean("is_first_time", false);
                         editor.apply();
+                        recreate();
 
                         dialog1.dismiss();
                     }
                 }
-            });
-            dialog1 = builder.create();
-            dialog1.setCancelable(false);
-            dialog1.show();
+            };
+            if (dialog1 != null) {
+                dialog1.setCanceledOnTouchOutside(false);
+                dialog1.setOnShowListener(new DialogInterface.OnShowListener() {
+                    @Override
+                    public void onShow(DialogInterface dialog) {
+                        Button b = dialog1.getButton(DialogInterface.BUTTON_POSITIVE);
+                        b.setOnClickListener(myListener);
+                    }
+                });
+
+                dialog1.show();
+            }
         }
     }
 

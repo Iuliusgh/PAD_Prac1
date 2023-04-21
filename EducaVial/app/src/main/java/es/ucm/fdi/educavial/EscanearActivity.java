@@ -19,7 +19,10 @@ import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.Size;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
 import android.view.View;
@@ -47,14 +50,20 @@ public class EscanearActivity extends AppCompatActivity {
         private ScaleGestureDetector scaleGestureDetector;
         private ImageButton scan;
         private int analysisSize = 128;
+        private AlertDialog dialog;
+    private TextView message, title;
+    private final static String TAG = "ReproducirActivity";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_escanear);
         ActionBar actionBar =getSupportActionBar();
-        if (actionBar!=null){
-            actionBar.hide();
+        if (actionBar != null) {
+            //actionBar.setHomeAsUpIndicator(R.drawable.volver);
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setTitle(R.string.escanear);
         }
+
         if (ActivityCompat.checkSelfPermission(EscanearActivity.this, Manifest.permission.CAMERA) !=
                 PackageManager.PERMISSION_GRANTED) {
             // You can directly ask for the permission.
@@ -68,6 +77,16 @@ public class EscanearActivity extends AppCompatActivity {
                 analyze();
             }
         });
+
+        Log.d(TAG, "Creando mensaje de ayuda");
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        View customLayout = getLayoutInflater().inflate(R.layout.custom_alert_dialog, null);
+        message = (TextView) customLayout.findViewById(R.id.help_text);
+        title = (TextView) customLayout.findViewById(R.id.help_title);
+        message.setText(R.string.alert_scanner_text);
+        title.setText(R.string.alert_title);
+        builder.setView(customLayout);
+        dialog = builder.create();
 
     }
     @Override
@@ -310,5 +329,25 @@ public class EscanearActivity extends AppCompatActivity {
             // TODO Handle the exception
         }
         return ret;
+    }
+
+
+
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                this.finish();
+                return true;
+            case R.id.help:
+                dialog.show();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

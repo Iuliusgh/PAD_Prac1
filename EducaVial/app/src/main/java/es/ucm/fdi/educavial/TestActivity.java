@@ -3,6 +3,7 @@ package es.ucm.fdi.educavial;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
 
 import android.graphics.PorterDuff;
 import android.os.Bundle;
@@ -18,7 +19,7 @@ public class TestActivity extends AppCompatActivity {
 
     private final static String TAG = "TestActivity";
     private TextView message, title;
-    private Button bt1, bt2, bt3;
+    private AppCompatButton bt1, bt2, bt3;
     private ImageButton ibt1, ibt2, ibt3;
     private AlertDialog dialog;
 
@@ -42,6 +43,8 @@ public class TestActivity extends AppCompatActivity {
         ibt1 = findViewById(R.id.botonSenal1);
         ibt2 = findViewById(R.id.botonSenal2);
         ibt3 = findViewById(R.id.botonSenal3);
+
+
 
         addListener(bt1);
         addListener(bt2);

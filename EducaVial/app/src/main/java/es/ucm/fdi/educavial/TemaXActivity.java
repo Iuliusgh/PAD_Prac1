@@ -37,6 +37,8 @@ public class TemaXActivity extends AppCompatActivity {
     private int pos, barValue;
     private ImageButton play;
     private ArrayList<String> cont = new ArrayList<String>();
+    private ArrayList<String> contTitulo = new ArrayList<String>();
+    private ArrayList<Integer> img = new ArrayList<Integer>();
     private ShapeableImageView imagen;
     private ProgressBar bar;
     TextToSpeech textToSpeech;
@@ -52,7 +54,7 @@ public class TemaXActivity extends AppCompatActivity {
         if (actionBar != null) {
             //actionBar.setHomeAsUpIndicator(R.drawable.volver);
             actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setTitle(R.string.syllabus_title);
+            actionBar.setTitle(R.string.theme_1);
         }
 
         Log.d(TAG, "Inicializando el progress Bar");
@@ -61,9 +63,16 @@ public class TemaXActivity extends AppCompatActivity {
         bar.setMax(MAX_BAR_VALUE);
         bar.setProgressTintList(ColorStateList.valueOf(Color.BLACK));
 
-        cont.add("Señal 0");
-        cont.add("Señal 1");
-        cont.add("Señal 2");
+        Log.d(TAG, "Inicializando el contenido del temario");
+        img.add(R.drawable.stop);
+        img.add(R.drawable.senal_v_30);
+        img.add(R.drawable.p_anda);
+        cont.add(getResources().getString(R.string.content_1_text));
+        cont.add(getResources().getString(R.string.content_2_text));
+        cont.add(getResources().getString(R.string.content_3_text));
+        contTitulo.add(getResources().getString(R.string.content_1_title));
+        contTitulo.add(getResources().getString(R.string.content_2_title));
+        contTitulo.add(getResources().getString(R.string.content_3_title));
 
         pos = 0;
         barValue = MAX_BAR_VALUE / cont.size();
@@ -73,8 +82,8 @@ public class TemaXActivity extends AppCompatActivity {
         titulo = findViewById(R.id.titulo);
         texto = findViewById(R.id.texto);
         imagen.setImageResource(R.drawable.stop);
-        titulo.setText(cont.get(pos));
-        texto.setText(cont.get(pos));
+        titulo.setText(R.string.content_1_title);
+        texto.setText(R.string.content_1_text);
 
         Log.d(TAG, "Inicializando el botón anterior");
         ant = findViewById(R.id.ant);
@@ -117,6 +126,7 @@ public class TemaXActivity extends AppCompatActivity {
             public void onInit(int i) {
                 if(i!=TextToSpeech.ERROR){
                     textToSpeech.setLanguage(Locale.getDefault());
+                    textToSpeech.setSpeechRate(0.7f);
                 }
             }
         });
@@ -171,8 +181,9 @@ public class TemaXActivity extends AppCompatActivity {
     }
 
     private void changeContent(){
-        titulo.setText(cont.get(pos));
+        titulo.setText(contTitulo.get(pos));
         texto.setText(cont.get(pos));
+        imagen.setImageResource(img.get(pos));
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -190,5 +201,14 @@ public class TemaXActivity extends AppCompatActivity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onStop()
+    {
+        super.onStop();
+        if(textToSpeech != null){
+            textToSpeech.shutdown();
+        }
     }
 }
