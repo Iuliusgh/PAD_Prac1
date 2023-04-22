@@ -5,6 +5,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
@@ -50,6 +51,14 @@ public class PerfilActivity extends AppCompatActivity {
         SharedPreferences prefs = getSharedPreferences("my_prefs", MODE_PRIVATE);
 
         profile = findViewById(R.id.EditarPerfil);
+        Button listaSenal=findViewById(R.id.listaSenales);
+        listaSenal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getApplicationContext(), ListaSenalesActivity.class);
+                startActivity(i);
+            }
+        });
 
         String correo = prefs.getString("correo", "");
         String usuario = prefs.getString("usuario", "");

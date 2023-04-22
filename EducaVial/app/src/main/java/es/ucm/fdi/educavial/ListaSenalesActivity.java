@@ -3,13 +3,27 @@ package es.ucm.fdi.educavial;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.content.res.AppCompatResources;
+import androidx.appcompat.widget.AppCompatButton;
+import androidx.core.content.res.ResourcesCompat;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelProviders;
 
+import android.app.Activity;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.ViewGroup;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 public class ListaSenalesActivity extends AppCompatActivity {
     private AlertDialog dialog;
+    private Senalviewmodel viewModel;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -20,6 +34,32 @@ public class ListaSenalesActivity extends AppCompatActivity {
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setTitle(R.string.learnt_trafic_sign);
         }
+        LinearLayout parentLinearLayout=findViewById(R.id.lista);
+        viewModel= ViewModelProviders.of(this).get(Senalviewmodel.class);
+        viewModel.getSenallist().observe(this,senalList->{
+            int tam=senalList.size();
+            for (int i=0;i<tam/3;i++){
+                LinearLayout row = new LinearLayout(this);
+                row.setOrientation(LinearLayout.HORIZONTAL);
+                row.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+                for (int j=0;j<3;j++){
+                    AppCompatButton senal =  new AppCompatButton(this);
+                    senal.setCompoundDrawablesWithIntrinsicBounds(null, AppCompatResources.getDrawable(this,R.drawable.placeholder),null,null);
+                    senal.setText(senalList.get(i*3+j).nombre);
+                    //senal.setText("Señal");
+                    senal.setBackgroundColor(Color.TRANSPARENT);
+                    senal.setTextColor(Color.BLACK);
+                    senal.setTextSize(5);
+                    senal.setLayoutParams(new LinearLayout.LayoutParams(
+                            LinearLayout.LayoutParams.WRAP_CONTENT,
+                            LinearLayout.LayoutParams.WRAP_CONTENT
+                            ,1));
+                    row.addView(senal);
+                }
+                parentLinearLayout.addView(row);
+            }
+        });
+
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {

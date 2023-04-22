@@ -40,12 +40,11 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         //ejemplo de uso
 
-        Senalviewmodel viewmodel = Senalviewmodel.getInstance(this.getApplication());
         /*Senal senal = viewmodel.getSenalBycodigo("R-1");
         viewmodel.updateValorBooleanoById("R-1",true);
         Senal senal2 = viewmodel.getSenalBycodigo("R-1");
-        Log.d("ssenal2",senal2.codigo);
-        LiveData<List<Senal>> senalListLiveData=viewmodel.getSenallist();
+        Log.d("ssenal2",senal2.codigo);*/
+        /*LiveData<List<Senal>> senalListLiveData=viewmodel.getSenallist();
         senalListLiveData.observeForever(new Observer<List<Senal>>() {
             @Override
             public void onChanged(List<Senal> senalList) {
