@@ -78,9 +78,16 @@
     <!-- Tutorial Preferences -->
     <string name="tutorial_title">Tutorial</string>
     <string name="tutorial_summary">Pulsa aquí para volver a ver el tutorial</string>
+
     <!-- Test  -->
     <string name="stop"> Señal de stop</string>
     <string name="velocidad"> Señal de velocidad\n máxima 30 km/h</string>
     <string name="prohibido"> Señal de paso\n prohibido</string>
+    <string name="cong_title">¡Acierto!</string>
+    <string name="cong_text">¡Sigue así, lo estás haciendo muy bien! </string>
+    <string name="f_title">¡Fallo!</string>
+    <string name="f_text">¡Sigue Intentándolo!</string>
+    <string name="again">Reintentar</string>
+    <string name="cont">Continuar</string>
 
 </resources>

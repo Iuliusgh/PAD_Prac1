@@ -11,6 +11,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import es.ucm.fdi.educavial.R;
+
 public class BotonesTemaActivity extends AppCompatActivity {
 
     private final static String TAG = "BotonesTemaActivity";

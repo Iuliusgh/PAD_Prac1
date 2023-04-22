@@ -5,6 +5,9 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelProviders;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -19,6 +22,8 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import es.ucm.fdi.educavial.R;
+
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -26,7 +31,6 @@ public class MainActivity extends AppCompatActivity {
     private ImageButton settings, profile;
     private Button learn, examination, scan;
     private AlertDialog dialog1;
-
     private final static String TAG = "MainActivity";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +38,28 @@ public class MainActivity extends AppCompatActivity {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         setContentView(R.layout.activity_main);
+        //ejemplo de uso
 
+        Senalviewmodel viewmodel = Senalviewmodel.getInstance(this.getApplication());
+        /*Senal senal = viewmodel.getSenalBycodigo("R-1");
+        viewmodel.updateValorBooleanoById("R-1",true);
+        Senal senal2 = viewmodel.getSenalBycodigo("R-1");
+        Log.d("ssenal2",senal2.codigo);
+        LiveData<List<Senal>> senalListLiveData=viewmodel.getSenallist();
+        senalListLiveData.observeForever(new Observer<List<Senal>>() {
+            @Override
+            public void onChanged(List<Senal> senalList) {
+                // Recorre la lista y obtiene el ID de cada objeto Senal
+                for (Senal senal : senalList) {
+                    Log.d("tamaño:","tamaño: "+senal.codigo);
+                    // Haga lo que sea necesario con el ID de la Senal
+                }
+                Log.d("tamaño:","tamaño: "+senalList.size());
+            }
+        });
+        */
+
+        // para mostrar por consola el nombre de las señales,solo la primera vez
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.hide();

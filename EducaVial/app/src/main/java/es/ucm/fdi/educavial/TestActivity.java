@@ -3,9 +3,11 @@ package es.ucm.fdi.educavial;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.AppCompatButton;
+import androidx.core.content.res.ResourcesCompat;
 
+import android.content.DialogInterface;
 import android.graphics.PorterDuff;
+import android.media.Image;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -15,13 +17,22 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import pl.droidsonroids.gif.GifDrawable;
+import pl.droidsonroids.gif.GifImageView;
+
 public class TestActivity extends AppCompatActivity {
 
     private final static String TAG = "TestActivity";
-    private TextView message, title;
-    private AppCompatButton bt1, bt2, bt3;
+    private TextView message, title, endDialogText, endDialogTitle;
+    private Button bt1, bt2, bt3, dialogBtn;
     private ImageButton ibt1, ibt2, ibt3;
-    private AlertDialog dialog;
+    private AlertDialog dialog, endDialog;
+    private Object ant;
+    private GifImageView gif;
+
+    private boolean resultado = true;
+
+    private int cont = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +55,12 @@ public class TestActivity extends AppCompatActivity {
         ibt2 = findViewById(R.id.botonSenal2);
         ibt3 = findViewById(R.id.botonSenal3);
 
-
+        ibt1.setImageResource(R.drawable.stop);
+        ibt1.setContentDescription(getResources().getString(R.string.stop));
+        ibt2.setImageResource(R.drawable.senal_v_30);
+        ibt2.setContentDescription(getResources().getString(R.string.velocidad));
+        ibt3.setImageResource(R.drawable.p_anda);
+        ibt3.setContentDescription(getResources().getString(R.string.prohibido));
 
         addListener(bt1);
         addListener(bt2);
@@ -62,6 +78,28 @@ public class TestActivity extends AppCompatActivity {
         title.setText(R.string.alert_title);
         builder.setView(customLayout);
         dialog = builder.create();
+
+        Log.d(TAG, "Creando mensaje del fin");
+        AlertDialog.Builder aux = new AlertDialog.Builder(this);
+        View customDialogLayout = getLayoutInflater().inflate(R.layout.custom_alert_dialog_test, null);
+        gif = (GifImageView) customDialogLayout.findViewById(R.id.gif);
+        gif.setImageResource(R.drawable.happy);
+        endDialogTitle = (TextView) customDialogLayout.findViewById(R.id.title);
+        endDialogText = (TextView) customDialogLayout.findViewById(R.id.text);
+        dialogBtn = (Button) customDialogLayout.findViewById(R.id.button);
+        dialogBtn.setText(R.string.cont);
+        dialogBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                endDialog.dismiss();
+                finish();
+            }
+        });
+        endDialogTitle.setText(R.string.cong_title);
+        endDialogText.setText(R.string.cong_text);
+        aux.setView(customDialogLayout);
+
+        endDialog = aux.create();
     }
 
     private void addListener(Object obj){
@@ -70,7 +108,29 @@ public class TestActivity extends AppCompatActivity {
             res.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    res.setBackgroundResource(R.drawable.forma_boton_seleccionada);
+                    disable(res);
+                    if(res.isEnabled()){
+                        res.setBackgroundResource(R.drawable.forma_boton_seleccionada);
+                        res.setEnabled(false);
+                    }
+
+                    if(cont % 2 == 0){
+                        if(res.getText().equals(((ImageButton)ant).getContentDescription())){
+                            res.setBackgroundResource(R.drawable.forma_boton_correcto);
+                            ((ImageButton) ant).setBackgroundResource(R.drawable.forma_boton_correcto);
+                        }
+                        else{
+                            res.setBackgroundResource(R.drawable.forma_boton_incorrecta);
+                            ((ImageButton) ant).setBackgroundResource(R.drawable.forma_boton_incorrecta);
+                            resultado = false;
+                        }
+                        enable(res);
+                    }
+                    if(cont == 6){
+                        fail();
+                        endDialog.show();
+                    }
+                    ant = res;
                 }
             });
         }
@@ -79,11 +139,97 @@ public class TestActivity extends AppCompatActivity {
             res.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    res.setBackgroundResource(R.drawable.forma_boton_seleccionada);
+                    disable(res);
+                    if(res.isEnabled()){
+                        res.setEnabled(false);
+                        res.setBackgroundResource(R.drawable.forma_boton_seleccionada);
+                    }
+                    if(cont % 2 == 0) {
+                        if(res.getContentDescription().equals(((Button)ant).getText())){
+                            res.setBackgroundResource(R.drawable.forma_boton_correcto);
+                            ((Button) ant).setBackgroundResource(R.drawable.forma_boton_correcto);
+                        }
+                        else{
+                            res.setBackgroundResource(R.drawable.forma_boton_incorrecta);
+                            ((Button) ant).setBackgroundResource(R.drawable.forma_boton_incorrecta);
+                            resultado = false;
+                        }
+                        enable(res);
+                    }
+                    if(cont == 6){
+                        fail();
+                        endDialog.show();
+                    }
+                    ant = res;
                 }
             });
         }
 
+    }
+
+    private void disable(Object btn){
+        if(btn instanceof ImageButton){
+            if(ibt1 != ((ImageButton) btn) && !ibt1.getBackground().getConstantState().equals(getResources().getDrawable(R.drawable.forma_boton_seleccionada).getConstantState()))
+                ibt1.setEnabled(false);
+            if(ibt2 != ((ImageButton) btn) && !ibt2.getBackground().getConstantState().equals(getResources().getDrawable(R.drawable.forma_boton_seleccionada).getConstantState()))
+                ibt2.setEnabled(false);
+            if(ibt3 != ((ImageButton) btn) && !ibt3.getBackground().getConstantState().equals(getResources().getDrawable(R.drawable.forma_boton_seleccionada).getConstantState()))
+                ibt3.setEnabled(false);
+        }
+        else if(btn instanceof Button){
+            if(bt1 != ((Button) btn) && !bt1.getBackground().getConstantState().equals(getResources().getDrawable(R.drawable.forma_boton_seleccionada).getConstantState()))
+                bt1.setEnabled(false);
+            if(bt2 != ((Button) btn) && !bt2.getBackground().getConstantState().equals(getResources().getDrawable(R.drawable.forma_boton_seleccionada).getConstantState()))
+                bt2.setEnabled(false);
+            if(bt3 != ((Button) btn) && !bt3.getBackground().getConstantState().equals(getResources().getDrawable(R.drawable.forma_boton_seleccionada).getConstantState()))
+                bt3.setEnabled(false);
+        }
+        cont++;
+    }
+
+    private void enable(Object btn){
+        if(!ibt1.getBackground().getConstantState().equals(getResources().getDrawable(R.drawable.forma_boton_seleccionada).getConstantState())
+            && !ibt1.getBackground().getConstantState().equals(getResources().getDrawable(R.drawable.forma_boton_incorrecta).getConstantState())
+            && !ibt1.getBackground().getConstantState().equals(getResources().getDrawable(R.drawable.forma_boton_correcto).getConstantState()))
+            ibt1.setEnabled(true);
+        if(!ibt2.getBackground().getConstantState().equals(getResources().getDrawable(R.drawable.forma_boton_seleccionada).getConstantState())
+                && !ibt2.getBackground().getConstantState().equals(getResources().getDrawable(R.drawable.forma_boton_incorrecta).getConstantState())
+                && !ibt2.getBackground().getConstantState().equals(getResources().getDrawable(R.drawable.forma_boton_correcto).getConstantState()))
+            ibt2.setEnabled(true);
+        if(!ibt3.getBackground().getConstantState().equals(getResources().getDrawable(R.drawable.forma_boton_seleccionada).getConstantState())
+                && !ibt3.getBackground().getConstantState().equals(getResources().getDrawable(R.drawable.forma_boton_incorrecta).getConstantState())
+                && !ibt3.getBackground().getConstantState().equals(getResources().getDrawable(R.drawable.forma_boton_correcto).getConstantState()))
+            ibt3.setEnabled(true);
+        if(!bt1.getBackground().getConstantState().equals(getResources().getDrawable(R.drawable.forma_boton_seleccionada).getConstantState())
+                && !bt1.getBackground().getConstantState().equals(getResources().getDrawable(R.drawable.forma_boton_incorrecta).getConstantState())
+                && !bt1.getBackground().getConstantState().equals(getResources().getDrawable(R.drawable.forma_boton_correcto).getConstantState()))
+            bt1.setEnabled(true);
+        if(!bt2.getBackground().getConstantState().equals(getResources().getDrawable(R.drawable.forma_boton_seleccionada).getConstantState())
+                && !bt2.getBackground().getConstantState().equals(getResources().getDrawable(R.drawable.forma_boton_incorrecta).getConstantState())
+                && !bt2.getBackground().getConstantState().equals(getResources().getDrawable(R.drawable.forma_boton_correcto).getConstantState()))
+            bt2.setEnabled(true);
+        if(!bt3.getBackground().getConstantState().equals(getResources().getDrawable(R.drawable.forma_boton_seleccionada).getConstantState())
+                && !bt3.getBackground().getConstantState().equals(getResources().getDrawable(R.drawable.forma_boton_incorrecta).getConstantState())
+                && !bt3.getBackground().getConstantState().equals(getResources().getDrawable(R.drawable.forma_boton_correcto).getConstantState()))
+            bt3.setEnabled(true);
+    }
+
+    private void fail(){
+        if(!resultado){
+            endDialogTitle.setTextColor(ResourcesCompat.getColor(getResources(), R.color.red, null));
+            endDialogTitle.setText(R.string.f_title);
+            endDialogText.setTextColor(ResourcesCompat.getColor(getResources(), R.color.red, null));
+            endDialogText.setText(R.string.f_text);
+            dialogBtn.setText(R.string.again);
+            gif.setImageResource(R.drawable.sad);
+            dialogBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    endDialog.dismiss();
+                    recreate();
+                }
+            });
+        }
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
