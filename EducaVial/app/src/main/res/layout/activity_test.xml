@@ -51,7 +51,10 @@
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:srcCompat="@tools:sample/avatars" />
+        tools:srcCompat="@tools:sample/avatars"
+        android:scaleX="0.5"
+        android:scaleY="0.5"
+        />
 
     <ImageButton
         android:id="@+id/botonSenal2"
@@ -61,7 +64,10 @@
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/botonSenal1"
-        tools:srcCompat="@tools:sample/avatars" />
+        tools:srcCompat="@tools:sample/avatars"
+        android:scaleX="0.5"
+        android:scaleY="0.5"
+        />
 
     <ImageButton
         android:id="@+id/botonSenal3"
@@ -71,6 +77,9 @@
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/botonSenal2"
-        tools:srcCompat="@tools:sample/avatars" />
+        tools:srcCompat="@tools:sample/avatars"
+        android:scaleX="0.5"
+        android:scaleY="0.5"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
