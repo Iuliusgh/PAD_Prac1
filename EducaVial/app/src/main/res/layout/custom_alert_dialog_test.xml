@@ -16,7 +16,7 @@
         android:gravity="center"
         android:text="Lorem"
         android:textColor="#39D020"
-        android:textSize="64dp" />
+        android:textSize="64sp" />
 
     <pl.droidsonroids.gif.GifImageView
         android:id="@+id/gif"
@@ -33,7 +33,7 @@
         android:paddingBottom="15dp"
         android:gravity="center"
         android:textColor="#39D020"
-        android:textSize="30dp"
+        android:textSize="30sp"
         android:text="Lorem" />
 
     <LinearLayout
@@ -53,7 +53,7 @@
             android:layout_marginBottom="20dp"
             android:textAllCaps="false"
             android:textColor="@color/black"
-            android:textSize="30dp" />
+            android:textSize="30sp" />
     </LinearLayout>
 
 </LinearLayout>

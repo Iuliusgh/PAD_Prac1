@@ -89,5 +89,8 @@
     <string name="f_text">¡Sigue Intentándolo!</string>
     <string name="again">Reintentar</string>
     <string name="cont">Continuar</string>
+    <string name="exit_title">¡Cuidado!</string>
+    <string name="exit_text">Si vuelves atrás se perderá el progreso del test.</string>
+    <string name="exit">Salir</string>
 
 </resources>

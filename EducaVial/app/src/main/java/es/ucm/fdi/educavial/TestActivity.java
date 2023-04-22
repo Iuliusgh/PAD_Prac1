@@ -3,11 +3,10 @@ package es.ucm.fdi.educavial;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.core.content.res.ResourcesCompat;
 
 import android.content.DialogInterface;
-import android.graphics.PorterDuff;
-import android.media.Image;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -17,18 +16,30 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import pl.droidsonroids.gif.GifDrawable;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+import java.util.Random;
+
 import pl.droidsonroids.gif.GifImageView;
 
 public class TestActivity extends AppCompatActivity {
 
     private final static String TAG = "TestActivity";
-    private TextView message, title, endDialogText, endDialogTitle;
-    private Button bt1, bt2, bt3, dialogBtn;
+    private TextView message, title, endDialogText, endDialogTitle, exitDialogTitle, exitDialogText;
+    private AppCompatButton bt1, bt2, bt3;
+    private Button dialogBtn;
     private ImageButton ibt1, ibt2, ibt3;
-    private AlertDialog dialog, endDialog;
+    private AlertDialog dialog, endDialog, exitDialog;
     private Object ant;
     private GifImageView gif;
+    private final AppCompatButton[] buttons= new AppCompatButton[3];
+    private final ImageButton[] images=new ImageButton[3];
+    private final String[] buttonTexts = new String[3];
+    private final int[] drawableImages= new int[3];
 
     private boolean resultado = true;
 
@@ -47,6 +58,14 @@ public class TestActivity extends AppCompatActivity {
         }
 
         Log.d(TAG, "Inicializando los botones");
+
+        buttonTexts[0]=getResources().getString(R.string.prohibido);
+        buttonTexts[1]=getResources().getString(R.string.velocidad);
+        buttonTexts[2]=getResources().getString(R.string.stop);
+        drawableImages[0]=R.drawable.p_anda;
+        drawableImages[1]=R.drawable.senal_v_30;
+        drawableImages[2]=R.drawable.stop;
+
         bt1 = findViewById(R.id.button5);
         bt2 = findViewById(R.id.button6);
         bt3 = findViewById(R.id.button7);
@@ -55,12 +74,27 @@ public class TestActivity extends AppCompatActivity {
         ibt2 = findViewById(R.id.botonSenal2);
         ibt3 = findViewById(R.id.botonSenal3);
 
-        ibt1.setImageResource(R.drawable.stop);
-        ibt1.setContentDescription(getResources().getString(R.string.stop));
-        ibt2.setImageResource(R.drawable.senal_v_30);
-        ibt2.setContentDescription(getResources().getString(R.string.velocidad));
-        ibt3.setImageResource(R.drawable.p_anda);
-        ibt3.setContentDescription(getResources().getString(R.string.prohibido));
+        buttons[0]=bt1;
+        buttons[1]=bt2;
+        buttons[2]=bt3;
+
+        images[0]=ibt1;
+        images[1]=ibt2;
+        images[2]=ibt3;
+
+        List<AppCompatButton> buttonList = new ArrayList<AppCompatButton>(Arrays.asList(buttons));
+        Collections.shuffle(buttonList);
+        for (int i = 0; i<buttonList.size();i++){
+            buttonList.get(i).setText(buttonTexts[i]);
+        }
+
+        List<ImageButton> senalList = new ArrayList<ImageButton>(Arrays.asList(images));
+        Collections.shuffle(senalList);
+        for (int i = 0; i<senalList.size();i++){
+            senalList.get(i).setImageResource(drawableImages[i]);
+            senalList.get(i).setContentDescription(buttonTexts[i]);
+        }
+
 
         addListener(bt1);
         addListener(bt2);
@@ -100,11 +134,30 @@ public class TestActivity extends AppCompatActivity {
         aux.setView(customDialogLayout);
 
         endDialog = aux.create();
+
+        Log.d(TAG, "Creando mensaje de salida");
+        AlertDialog.Builder exit = new AlertDialog.Builder(this);
+        exit.setPositiveButton(getResources().getString(R.string.cont), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        exit.setNegativeButton(getResources().getString(R.string.exit), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+                finish();
+            }
+        });
+        exit.setTitle(R.string.exit_title);
+        exit.setMessage(R.string.exit_text);
+        exitDialog = exit.create();
     }
 
     private void addListener(Object obj){
-        if(obj instanceof Button){
-            Button res = ((Button)obj);
+        if(obj instanceof AppCompatButton){
+            AppCompatButton res = ((AppCompatButton)obj);
             res.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -145,13 +198,13 @@ public class TestActivity extends AppCompatActivity {
                         res.setBackgroundResource(R.drawable.forma_boton_seleccionada);
                     }
                     if(cont % 2 == 0) {
-                        if(res.getContentDescription().equals(((Button)ant).getText())){
+                        if(res.getContentDescription().equals(((AppCompatButton)ant).getText())){
                             res.setBackgroundResource(R.drawable.forma_boton_correcto);
-                            ((Button) ant).setBackgroundResource(R.drawable.forma_boton_correcto);
+                            ((AppCompatButton) ant).setBackgroundResource(R.drawable.forma_boton_correcto);
                         }
                         else{
                             res.setBackgroundResource(R.drawable.forma_boton_incorrecta);
-                            ((Button) ant).setBackgroundResource(R.drawable.forma_boton_incorrecta);
+                            ((AppCompatButton) ant).setBackgroundResource(R.drawable.forma_boton_incorrecta);
                             resultado = false;
                         }
                         enable(res);
@@ -169,19 +222,19 @@ public class TestActivity extends AppCompatActivity {
 
     private void disable(Object btn){
         if(btn instanceof ImageButton){
-            if(ibt1 != ((ImageButton) btn) && !ibt1.getBackground().getConstantState().equals(getResources().getDrawable(R.drawable.forma_boton_seleccionada).getConstantState()))
+            if(ibt1 != (btn) && !ibt1.getBackground().getConstantState().equals(getResources().getDrawable(R.drawable.forma_boton_seleccionada).getConstantState()))
                 ibt1.setEnabled(false);
-            if(ibt2 != ((ImageButton) btn) && !ibt2.getBackground().getConstantState().equals(getResources().getDrawable(R.drawable.forma_boton_seleccionada).getConstantState()))
+            if(ibt2 != (btn) && !ibt2.getBackground().getConstantState().equals(getResources().getDrawable(R.drawable.forma_boton_seleccionada).getConstantState()))
                 ibt2.setEnabled(false);
-            if(ibt3 != ((ImageButton) btn) && !ibt3.getBackground().getConstantState().equals(getResources().getDrawable(R.drawable.forma_boton_seleccionada).getConstantState()))
+            if(ibt3 != (btn) && !ibt3.getBackground().getConstantState().equals(getResources().getDrawable(R.drawable.forma_boton_seleccionada).getConstantState()))
                 ibt3.setEnabled(false);
         }
         else if(btn instanceof Button){
-            if(bt1 != ((Button) btn) && !bt1.getBackground().getConstantState().equals(getResources().getDrawable(R.drawable.forma_boton_seleccionada).getConstantState()))
+            if(bt1 != (btn) && !bt1.getBackground().getConstantState().equals(getResources().getDrawable(R.drawable.forma_boton_seleccionada).getConstantState()))
                 bt1.setEnabled(false);
-            if(bt2 != ((Button) btn) && !bt2.getBackground().getConstantState().equals(getResources().getDrawable(R.drawable.forma_boton_seleccionada).getConstantState()))
+            if(bt2 != (btn) && !bt2.getBackground().getConstantState().equals(getResources().getDrawable(R.drawable.forma_boton_seleccionada).getConstantState()))
                 bt2.setEnabled(false);
-            if(bt3 != ((Button) btn) && !bt3.getBackground().getConstantState().equals(getResources().getDrawable(R.drawable.forma_boton_seleccionada).getConstantState()))
+            if(bt3 != (btn) && !bt3.getBackground().getConstantState().equals(getResources().getDrawable(R.drawable.forma_boton_seleccionada).getConstantState()))
                 bt3.setEnabled(false);
         }
         cont++;
@@ -240,7 +293,7 @@ public class TestActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                this.finish();
+                exitDialog.show();
                 return true;
             case R.id.help:
                 dialog.show();
