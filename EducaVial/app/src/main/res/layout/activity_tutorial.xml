@@ -22,7 +22,7 @@
         android:shadowDx="10"
         android:shadowDy="10"
         android:shadowRadius="5"
-        android:text="@string/theme_2"
+        android:text="@string/tutorial_title"
         android:textColor="#FFFFFF"
         android:textSize="40sp"
         app:layout_constraintEnd_toEndOf="parent"

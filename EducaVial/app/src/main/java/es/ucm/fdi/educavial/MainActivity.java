@@ -8,6 +8,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.preference.PreferenceManager;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -28,7 +29,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    private ImageButton settings, profile;
+    private ImageButton settings, profile, tutorial_ad;
     private Button learn, examination, scan;
     private AlertDialog dialog1;
     private final static String TAG = "MainActivity";
@@ -72,6 +73,7 @@ public class MainActivity extends AppCompatActivity {
         Log.d(TAG, "Inicializando variables");
         settings = findViewById(R.id.ajustes);
         profile = findViewById(R.id.perfil);
+        tutorial_ad = findViewById(R.id.tutorial_ad);
         learn = findViewById(R.id.aprender);
         examination = findViewById(R.id.evaluar);
         scan= findViewById(R.id.escanear);
@@ -87,6 +89,26 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 perfil();
+            }
+        });
+
+
+
+        Log.d(TAG, "Mostrar/Ocultar el botón de reproducir tutorial en funcion del valor de tutorial");
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        boolean showButton = sharedPreferences.getBoolean("tutorial_ad",false);
+        if(showButton) {
+            tutorial_ad.setVisibility(View.VISIBLE);
+        }
+        else{
+            tutorial_ad.setVisibility(View.INVISIBLE);
+            recreate();
+        }
+
+        tutorial_ad.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                tutorial();
             }
         });
 
@@ -170,6 +192,11 @@ public class MainActivity extends AppCompatActivity {
 
     private void perfil(){
         Intent i = new Intent(this, PerfilActivity.class);
+        startActivity(i);
+    }
+
+    private void tutorial(){
+        Intent i = new Intent(this, TutorialActivity.class);
         startActivity(i);
     }
 

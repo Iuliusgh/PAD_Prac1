@@ -52,6 +52,20 @@
                 android:layout_weight="1" />
 
             <ImageButton
+                android:id="@+id/tutorial_ad"
+                android:layout_width="0dp"
+                android:layout_height="75dp"
+                android:layout_weight="1"
+                android:background="@drawable/forma_boton"
+                android:contentDescription="@string/tutorial_des"
+                android:src="@drawable/tutorial" />
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <ImageButton
                 android:id="@+id/ajustes"
                 android:layout_width="75dp"
                 android:layout_height="75dp"

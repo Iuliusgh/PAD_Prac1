@@ -22,10 +22,7 @@ public class AjustesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.settings_activity);
         if (savedInstanceState == null) {
-            getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.settings, new SettingsFragment())
-                    .commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.settings, new SettingsFragment()).commit();
         }
 
         Log.d(TAG, "Creando actionBar");

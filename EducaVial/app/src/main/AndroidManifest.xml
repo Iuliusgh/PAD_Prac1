@@ -46,6 +46,9 @@
             android:name=".PerfilActivity"
             android:exported="false" />
         <activity
+            android:name=".TutorialActivity"
+            android:exported="false" />
+        <activity
             android:name=".AjustesActivity"
             android:exported="false"
             android:label="@string/title_activity_ajustes" />

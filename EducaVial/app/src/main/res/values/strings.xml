@@ -4,6 +4,7 @@
     <string name="aprender">Aprender</string>
     <string name="evaluar">Evaluar</string>
     <string name="escanear">Escanear</string>
+    <string name="tutorial">Tutorial</string>
     <string name="title_activity_ajustes">Ajustes</string>
     <string name="title_activity_reproducir">Reproducir</string>
 
@@ -52,10 +53,12 @@
     <string name="alert_theme_text">Aquí muestra información de la señal, una vez aprendida pulsar siguiente.</string>
     <string name="alert_video_text">En esta pantalla se muestra un video con el contenido con dos botones uno de pausar y otro de reanudar</string>
     <string name="alert_scanner_text">En esta pantalla puedes escanear una señal y obtener información sobre ella. Cuadra la señal dentro del rectángulo para obtener mejores resultados.</string>
+    <string name="alert_tutorial_text">En esta pantalla se muestra un video explicativo sobre el uso de la aplicación.</string>
 
     <!-- Content description -->
     <string name="profile_des">Boton para acceder al perfil</string>
     <string name="config_des">Botón para acceder a ajustes</string>
+    <string name="tutorial_des">Botón para ver el tutorial</string>
 
     <!-- Setting titles -->
     <string name="preference_header">Preferencias</string>
@@ -63,7 +66,7 @@
     <string name="tutorial_header">Tutorial</string>
     <string name="content_header">Contenido</string>
     <string name="authomatic_read_key">authomatic_read</string>
-    <string name="tutorial_key">tutorial</string>
+    <string name="tutorial_key">tutorial_ad</string>
 
     <!-- Accesibility Preferences -->
     <string name="voice_response_title">Respuesta por voz</string>
