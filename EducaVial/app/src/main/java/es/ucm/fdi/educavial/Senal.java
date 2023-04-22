@@ -4,7 +4,7 @@ import androidx.room.*;
 public class Senal {
     @PrimaryKey(autoGenerate = true)
     public int id;
-    public Senal(){};
+    public Senal(){}
     protected String nombre;
     protected String descripcion;
     protected boolean aprendido;
