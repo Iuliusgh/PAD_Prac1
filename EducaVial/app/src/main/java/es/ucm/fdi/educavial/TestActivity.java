@@ -50,6 +50,7 @@ public class TestActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test);
 
+        Log.d(TAG, "Creando actionBar");
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             //actionBar.setHomeAsUpIndicator(R.drawable.volver);
@@ -57,8 +58,12 @@ public class TestActivity extends AppCompatActivity {
             actionBar.setTitle(R.string.examination_title);
         }
 
-        Log.d(TAG, "Inicializando los botones");
+        Log.d(TAG, "Escondiendo la barra de navegación");
+        View decorView = getWindow().getDecorView();
+        int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION;
+        decorView.setSystemUiVisibility(uiOptions);
 
+        Log.d(TAG, "Inicializando los botones");
         buttonTexts[0]=getResources().getString(R.string.prohibido);
         buttonTexts[1]=getResources().getString(R.string.velocidad);
         buttonTexts[2]=getResources().getString(R.string.stop);
@@ -108,7 +113,7 @@ public class TestActivity extends AppCompatActivity {
         View customLayout = getLayoutInflater().inflate(R.layout.custom_alert_dialog, null);
         message = (TextView) customLayout.findViewById(R.id.help_text);
         title = (TextView) customLayout.findViewById(R.id.help_title);
-        message.setText(R.string.alert_profile_text);
+        message.setText(R.string.alert_test_text);
         title.setText(R.string.alert_title);
         builder.setView(customLayout);
         dialog = builder.create();
@@ -134,6 +139,7 @@ public class TestActivity extends AppCompatActivity {
         aux.setView(customDialogLayout);
 
         endDialog = aux.create();
+        endDialog.setCanceledOnTouchOutside(false);
 
         Log.d(TAG, "Creando mensaje de salida");
         AlertDialog.Builder exit = new AlertDialog.Builder(this);

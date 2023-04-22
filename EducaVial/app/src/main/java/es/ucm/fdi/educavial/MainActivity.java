@@ -60,15 +60,19 @@ public class MainActivity extends AppCompatActivity {
         */
 
         // para mostrar por consola el nombre de las señales,solo la primera vez
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.hide();
-        }
+        Log.d(TAG, "Mostrar durante un segundo la pantalla con icono");
         try {
             Thread.sleep(1000);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
+
+        Log.d(TAG, "Ocultando el actionBar");
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.hide();
+        }
+
         Log.d(TAG, "Inicializando variables");
         settings = findViewById(R.id.ajustes);
         profile = findViewById(R.id.perfil);
@@ -95,14 +99,15 @@ public class MainActivity extends AppCompatActivity {
 
         Log.d(TAG, "Mostrar/Ocultar el botón de reproducir tutorial en funcion del valor de tutorial");
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        boolean showButton = sharedPreferences.getBoolean("tutorial_ad",false);
-        if(showButton) {
-            tutorial_ad.setVisibility(View.VISIBLE);
-        }
-        else{
-            tutorial_ad.setVisibility(View.INVISIBLE);
-            recreate();
-        }
+        sharedPreferences.registerOnSharedPreferenceChangeListener(new SharedPreferences.OnSharedPreferenceChangeListener() {
+            @Override
+            public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s) {
+                if(s.equals("tutorial_ad")){
+                    tutorial_btn(sharedPreferences);
+                }
+            }
+        });
+        tutorial_btn(sharedPreferences);
 
         tutorial_ad.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -185,31 +190,47 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void config(){
+        Log.i(TAG, "Botón de configuraciones pulsado");
         Intent i = new Intent(this, AjustesActivity.class);
         startActivity(i);
     }
 
     private void perfil(){
+        Log.i(TAG, "Botón de perfil pulsado");
         Intent i = new Intent(this, PerfilActivity.class);
         startActivity(i);
     }
 
     private void tutorial(){
+        Log.i(TAG, "Botón de tutorial pulsado");
         Intent i = new Intent(this, TutorialActivity.class);
         startActivity(i);
     }
 
     private void temario(){
+        Log.i(TAG, "Botón de aprender pulsado");
         Intent i = new Intent(this, TemarioActivity.class);
         startActivity(i);
     }
 
     private void evaluar(){
+        Log.i(TAG, "Botón de evaluar pulsado");
         Intent i = new Intent(this, EvaluacionActivity.class);
         startActivity(i);
     }
     private void escanear(){
+        Log.i(TAG, "Botón de escanear pulsado");
         Intent i = new Intent(this,EscanearActivity.class);
         startActivity(i);
+    }
+
+    private void tutorial_btn(SharedPreferences sharedPreferences){
+        boolean showButton = sharedPreferences.getBoolean("tutorial_ad",false);
+        if(showButton) {
+            tutorial_ad.setVisibility(View.VISIBLE);
+        }
+        else{
+            tutorial_ad.setVisibility(View.INVISIBLE);
+        }
     }
 }

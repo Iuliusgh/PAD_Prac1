@@ -57,6 +57,11 @@ public class TemaXActivity extends AppCompatActivity {
             actionBar.setTitle(R.string.theme_1);
         }
 
+        Log.d(TAG, "Escondiendo la barra de navegación");
+        View decorView = getWindow().getDecorView();
+        int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION;
+        decorView.setSystemUiVisibility(uiOptions);
+
         Log.d(TAG, "Inicializando el progress Bar");
         bar = findViewById(R.id.progressBar);
         bar.setScaleY(2.5f);
@@ -136,12 +141,11 @@ public class TemaXActivity extends AppCompatActivity {
         play.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Log.i(TAG, "Botón de reproducir pulsado");
                 if(textToSpeech != null && textToSpeech.isSpeaking()){
-                    Log.i(TAG, "Parar de reproducir el texto");
                     textToSpeech.stop();
                 }
                 else{
-                    Log.i(TAG, "Reproducir el texto");
                     Bundle params = new Bundle();
                     params.putString(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID, "hello");
                     textToSpeech.speak(titulo.getText().toString() + texto.getText().toString(), TextToSpeech.QUEUE_FLUSH, params, "hello");

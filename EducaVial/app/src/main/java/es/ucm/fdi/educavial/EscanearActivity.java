@@ -57,12 +57,19 @@ public class EscanearActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_escanear);
+
+        Log.d(TAG, "Creando actionBar");
         ActionBar actionBar =getSupportActionBar();
         if (actionBar != null) {
             //actionBar.setHomeAsUpIndicator(R.drawable.volver);
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setTitle(R.string.escanear);
         }
+
+        Log.d(TAG, "Escondiendo la barra de navegación");
+        View decorView = getWindow().getDecorView();
+        int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION;
+        decorView.setSystemUiVisibility(uiOptions);
 
         if (ActivityCompat.checkSelfPermission(EscanearActivity.this, Manifest.permission.CAMERA) !=
                 PackageManager.PERMISSION_GRANTED) {

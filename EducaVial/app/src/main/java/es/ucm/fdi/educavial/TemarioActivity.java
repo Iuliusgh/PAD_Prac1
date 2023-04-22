@@ -27,12 +27,19 @@ public class TemarioActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_temario);
+
+        Log.d(TAG, "Creando actionBar");
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             //actionBar.setHomeAsUpIndicator(R.drawable.volver);
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setTitle(R.string.syllabus_title);
         }
+
+        Log.d(TAG, "Escondiendo la barra de navegación");
+        View decorView = getWindow().getDecorView();
+        int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION;
+        decorView.setSystemUiVisibility(uiOptions);
 
         Log.d(TAG, "Creando mensaje de ayuda");
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -44,8 +51,8 @@ public class TemarioActivity extends AppCompatActivity {
         builder.setView(customLayout);
         dialog = builder.create();
 
+        Log.d(TAG, "Añadiendo listeners a cada tema");
         tema2 = findViewById(R.id.theme_2);
-
         tema2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -54,7 +61,6 @@ public class TemarioActivity extends AppCompatActivity {
         });
 
         tema1 = findViewById(R.id.theme_1);
-
         tema1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -81,11 +87,13 @@ public class TemarioActivity extends AppCompatActivity {
     }
 
     private void tema2(){
+        Log.d(TAG, "Tema 2 pulsado");
         Intent i = new Intent(this, ReproducirActivity.class);
         startActivity(i);
     }
 
     private void tema1(){
+        Log.d(TAG, "Tema 1 pulsado");
         Intent i = new Intent(this, TemaXActivity.class);
         startActivity(i);
     }
