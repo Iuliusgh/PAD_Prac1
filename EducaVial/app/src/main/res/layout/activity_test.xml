@@ -58,6 +58,15 @@
         android:background="@drawable/forma_img_redondo"
         tools:srcCompat="@tools:sample/avatars" />
 
+    <View
+        android:id="@+id/color_overlay1"
+        android:layout_width="140dp"
+        android:layout_height="138dp"
+        app:layout_constraintBottom_toTopOf="@id/botonSenal2"
+        app:layout_constraintEnd_toStartOf="@+id/guideline2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <ImageButton
         android:id="@+id/botonSenal2"
         android:layout_width="wrap_content"
@@ -72,6 +81,16 @@
         android:background="@drawable/forma_img_redondo"
         tools:srcCompat="@tools:sample/avatars" />
 
+    <View
+        android:id="@+id/color_overlay2"
+        android:layout_width="140dp"
+        android:layout_height="138dp"
+        app:layout_constraintBottom_toTopOf="@id/botonSenal3"
+        app:layout_constraintEnd_toStartOf="@+id/guideline2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/botonSenal1" />
+
+
     <ImageButton
         android:id="@+id/botonSenal3"
         android:layout_width="wrap_content"
@@ -85,5 +104,14 @@
         app:layout_constraintTop_toBottomOf="@id/botonSenal2"
         android:background="@drawable/forma_img_redondo"
         tools:srcCompat="@tools:sample/avatars" />
+
+    <View
+        android:id="@+id/color_overlay3"
+        android:layout_width="140dp"
+        android:layout_height="138dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/guideline2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/botonSenal2" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

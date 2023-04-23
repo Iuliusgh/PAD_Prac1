@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 
@@ -33,16 +34,15 @@ public class TestActivity extends AppCompatActivity {
     private AppCompatButton bt1, bt2, bt3;
     private Button dialogBtn;
     private ImageButton ibt1, ibt2, ibt3;
+    private View ov1,ov2,ov3;
     private AlertDialog dialog, endDialog, exitDialog;
-    private Object ant;
+    private Object ant, ant1;
     private GifImageView gif;
     private final AppCompatButton[] buttons= new AppCompatButton[3];
     private final ImageButton[] images=new ImageButton[3];
     private final String[] buttonTexts = new String[3];
     private final int[] drawableImages= new int[3];
-
     private boolean resultado = true;
-
     private int cont = 0;
 
     @Override
@@ -79,6 +79,10 @@ public class TestActivity extends AppCompatActivity {
         ibt2 = findViewById(R.id.botonSenal2);
         ibt3 = findViewById(R.id.botonSenal3);
 
+        ov1 = findViewById(R.id.color_overlay1);
+        ov2 = findViewById(R.id.color_overlay2);
+        ov3 = findViewById(R.id.color_overlay3);
+
         buttons[0]=bt1;
         buttons[1]=bt2;
         buttons[2]=bt3;
@@ -100,13 +104,12 @@ public class TestActivity extends AppCompatActivity {
             senalList.get(i).setContentDescription(buttonTexts[i]);
         }
 
-
-        addListener(bt1);
-        addListener(bt2);
-        addListener(bt3);
-        addListener(ibt1);
-        addListener(ibt2);
-        addListener(ibt3);
+        addListener(bt1,ov1);
+        addListener(bt2,ov2);
+        addListener(bt3,ov3);
+        addListener(ibt1,ov1);
+        addListener(ibt2,ov2);
+        addListener(ibt3,ov3);
 
         Log.d(TAG, "Creando mensaje de ayuda");
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -161,26 +164,31 @@ public class TestActivity extends AppCompatActivity {
         exitDialog = exit.create();
     }
 
-    private void addListener(Object obj){
+    private void addListener(Object obj, Object obj1){
         if(obj instanceof AppCompatButton){
             AppCompatButton res = ((AppCompatButton)obj);
             res.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+
                     disable(res);
                     if(res.isEnabled()){
                         res.setBackgroundResource(R.drawable.forma_boton_seleccionada);
                         res.setEnabled(false);
+
+
                     }
 
                     if(cont % 2 == 0){
                         if(res.getText().equals(((ImageButton)ant).getContentDescription())){
                             res.setBackgroundResource(R.drawable.forma_boton_correcto);
-                            ((ImageButton) ant).setBackgroundResource(R.drawable.forma_boton_correcto);
+                            ((View) ant1).setBackgroundResource(R.drawable.forma_boton_correcto);
+
                         }
                         else{
                             res.setBackgroundResource(R.drawable.forma_boton_incorrecta);
-                            ((ImageButton) ant).setBackgroundResource(R.drawable.forma_boton_incorrecta);
+                            ((View) ant1).setBackgroundResource(R.drawable.forma_boton_incorrecta);
+
                             resultado = false;
                         }
                         enable(res);
@@ -195,23 +203,28 @@ public class TestActivity extends AppCompatActivity {
         }
         else if(obj instanceof ImageButton){
             ImageButton res = ((ImageButton)obj);
+            View res1 = ((View)obj1);
             res.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     disable(res);
                     if(res.isEnabled()){
                         res.setEnabled(false);
-                        res.setBackgroundResource(R.drawable.forma_boton_seleccionada);
+                        res1.setBackgroundResource(R.drawable.forma_boton_seleccionada);
                     }
                     if(cont % 2 == 0) {
                         if(res.getContentDescription().equals(((AppCompatButton)ant).getText())){
-                            res.setBackgroundResource(R.drawable.forma_boton_correcto);
+                            res1.setBackgroundResource(R.drawable.forma_boton_correcto);
                             ((AppCompatButton) ant).setBackgroundResource(R.drawable.forma_boton_correcto);
+                            res.setBackgroundResource(R.drawable.forma_boton_correcto);
+
                         }
                         else{
-                            res.setBackgroundResource(R.drawable.forma_boton_incorrecta);
+                            res1.setBackgroundResource(R.drawable.forma_boton_incorrecta);
                             ((AppCompatButton) ant).setBackgroundResource(R.drawable.forma_boton_incorrecta);
+                            res.setBackgroundResource(R.drawable.forma_boton_incorrecta);
                             resultado = false;
+
                         }
                         enable(res);
                     }
@@ -220,6 +233,7 @@ public class TestActivity extends AppCompatActivity {
                         endDialog.show();
                     }
                     ant = res;
+                    ant1 = res1;
                 }
             });
         }
@@ -227,21 +241,28 @@ public class TestActivity extends AppCompatActivity {
     }
 
     private void disable(Object btn){
-        if(btn instanceof ImageButton){
-            if(ibt1 != (btn) && !ibt1.getBackground().getConstantState().equals(getResources().getDrawable(R.drawable.forma_boton_seleccionada).getConstantState()))
+        if(btn instanceof ImageButton) {
+            if (ibt1 != (btn) && !ibt1.getBackground().getConstantState().equals(getResources().getDrawable(R.drawable.forma_boton_seleccionada).getConstantState())) {
                 ibt1.setEnabled(false);
-            if(ibt2 != (btn) && !ibt2.getBackground().getConstantState().equals(getResources().getDrawable(R.drawable.forma_boton_seleccionada).getConstantState()))
+            }
+
+            if (ibt2 != (btn) && !ibt2.getBackground().getConstantState().equals(getResources().getDrawable(R.drawable.forma_boton_seleccionada).getConstantState())){
                 ibt2.setEnabled(false);
-            if(ibt3 != (btn) && !ibt3.getBackground().getConstantState().equals(getResources().getDrawable(R.drawable.forma_boton_seleccionada).getConstantState()))
+            }
+            if(ibt3 != (btn) && !ibt3.getBackground().getConstantState().equals(getResources().getDrawable(R.drawable.forma_boton_seleccionada).getConstantState())){
                 ibt3.setEnabled(false);
+            }
         }
         else if(btn instanceof Button){
-            if(bt1 != (btn) && !bt1.getBackground().getConstantState().equals(getResources().getDrawable(R.drawable.forma_boton_seleccionada).getConstantState()))
+            if(bt1 != (btn) && !bt1.getBackground().getConstantState().equals(getResources().getDrawable(R.drawable.forma_boton_seleccionada).getConstantState())){
                 bt1.setEnabled(false);
-            if(bt2 != (btn) && !bt2.getBackground().getConstantState().equals(getResources().getDrawable(R.drawable.forma_boton_seleccionada).getConstantState()))
+            }
+            if(bt2 != (btn) && !bt2.getBackground().getConstantState().equals(getResources().getDrawable(R.drawable.forma_boton_seleccionada).getConstantState())){
                 bt2.setEnabled(false);
-            if(bt3 != (btn) && !bt3.getBackground().getConstantState().equals(getResources().getDrawable(R.drawable.forma_boton_seleccionada).getConstantState()))
+            }
+            if(bt3 != (btn) && !bt3.getBackground().getConstantState().equals(getResources().getDrawable(R.drawable.forma_boton_seleccionada).getConstantState())){
                 bt3.setEnabled(false);
+            }
         }
         cont++;
     }
