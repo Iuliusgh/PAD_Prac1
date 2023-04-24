@@ -41,24 +41,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         //ejemplo de uso
 
-        /*Senal senal = viewmodel.getSenalBycodigo("R-1");
-        viewmodel.updateValorBooleanoById("R-1",true);
-        Senal senal2 = viewmodel.getSenalBycodigo("R-1");
-        Log.d("ssenal2",senal2.codigo);*/
-        /*LiveData<List<Senal>> senalListLiveData=viewmodel.getSenallist();
-        senalListLiveData.observeForever(new Observer<List<Senal>>() {
-            @Override
-            public void onChanged(List<Senal> senalList) {
-                // Recorre la lista y obtiene el ID de cada objeto Senal
-                for (Senal senal : senalList) {
-                    Log.d("tamaño:","tamaño: "+senal.codigo);
-                    // Haga lo que sea necesario con el ID de la Senal
-                }
-                Log.d("tamaño:","tamaño: "+senalList.size());
-            }
-        });
-        */
-
         // para mostrar por consola el nombre de las señales,solo la primera vez
         Log.d(TAG, "Mostrar durante un segundo la pantalla con icono");
         try {

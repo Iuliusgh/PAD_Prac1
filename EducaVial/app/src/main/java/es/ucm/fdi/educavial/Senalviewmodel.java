@@ -44,7 +44,7 @@ public class Senalviewmodel extends AndroidViewModel {
                 @Override
                 public void run() {
                     // Insertar datos iniciales en la base de datos
-                    repository.insert(new Senal("Ceda el paso", "Obligación para todo conductor de ceder el paso en la próxima intersección a los vehículos que circulen por la vía a la que se aproxime o al carril al que pretende incorporarse.",false,"R-1"));
+                    repository.insert(new Senal("Ceda el paso", "Obligación para todo conductor de ceder el paso en la próxima intersección a los vehículos que circulen por la vía a la que se aproxime o al carril al que pretende incorporarse.",false,"R-1","",""));
                     repository.insert(new Senal("STOP", "Obligación para todo conductor de detener su vehículo ante la  próxima línea de detención o,  si no existe, inmediatamente antes de la intersección,  y ceder el paso en ella a los vehículos que circulen por la vía a la que se aproxime.  Si, por circunstancias excepcionales,  desde el lugar donde se ha efectuado la detención no existe visibilidad suficiente,  el conductor deberá detenerse de nuevo en el lugar desde donde tenga visibilidad,  sin poner en peligro a ningún usuario de la vía.",false,"R-2"));
                     repository.insert(new Senal("Circulación prohibida", "Prohibida la circulación de toda clase de vehículos en ambos sentidos",false,"R-100"));
                     repository.insert(new Senal("Entrada prohibida", "prohíbe el acceso a toda clase de vehículos en una dirección determinada",false,"R-101"));

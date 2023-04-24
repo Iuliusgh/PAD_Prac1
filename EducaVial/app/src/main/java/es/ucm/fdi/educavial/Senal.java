@@ -10,11 +10,16 @@ public class Senal {
     protected boolean aprendido;
     protected String codigo;
 
-    public Senal(String nombre,String descripcion,boolean aprendido,String codigo){
+    protected String color;
+    protected String forma;
+
+    public Senal(String nombre,String descripcion,boolean aprendido,String codigo,String color, String forma){
         this.nombre=nombre;
         this.descripcion=descripcion;
         this.aprendido=aprendido;
         this.codigo=codigo;
+        this.color=color;
+        this.forma=forma;
     }
 
 }
