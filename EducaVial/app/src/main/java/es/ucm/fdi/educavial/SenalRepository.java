@@ -17,7 +17,19 @@ public class SenalRepository {
         senal=Senaldao.GetAllSenals();
     }
     public LiveData<List<Senal>> GetAllSenals(){
-        return Senaldao.GetAllSenals();
+        return senal;
+    }
+    public LiveData<List<Senal>> GetSenalsbycolor(){
+        senal=Senaldao.GetSenalsbycolor();
+        return senal;
+    }
+    public LiveData<List<Senal>> GetSenalsbynombre(){
+        senal=Senaldao.GetSenalsbynombre();
+        return senal;
+    }
+    public LiveData<List<Senal>> GetSenalsbyforma(){
+        senal=Senaldao.GetSenalsbyforma();
+        return senal;
     }
 
     public void deleteAllSenals() {

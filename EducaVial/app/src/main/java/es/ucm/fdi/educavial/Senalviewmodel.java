@@ -25,6 +25,18 @@ public class Senalviewmodel extends AndroidViewModel {
     LiveData<List<Senal>> getSenallist(){
         return Senallist;
     }
+    public LiveData<List<Senal>> GetSenalsbycolor(){
+        Senallist=repository.GetSenalsbycolor();
+        return Senallist;
+    }
+    public LiveData<List<Senal>> GetSenalsbynombre(){
+        Senallist=repository.GetSenalsbynombre();
+        return Senallist;
+    }
+    public LiveData<List<Senal>> GetSenalsbyforma(){
+        Senallist=repository.GetSenalsbyforma();
+        return Senallist;
+    }
     public void insertSenal(Senal senal){
         repository.insert(senal);
     }
@@ -115,7 +127,7 @@ public class Senalviewmodel extends AndroidViewModel {
                     repository.insert(new Senal("Estacionamiento para minusválidos", "Indica el lugar donde está autorizado el estacionamiento de\n vehículos.",false,"S-17","azul","cuadrado"));
                     repository.insert(new Senal("Velocidad máxima aconsejada", "Recomienda una velocidad de circulación, en kilómetros por hora,\n que se aconseja no sobrepasar aunque las condiciones\n meteorológicas y ambientales de la vía y de la circulación sean\n favorables. ",false,"S-7-80","azul","cuadrado"));
                     repository.insert(new Senal("Velocidad máxima aconsejada", "Recomienda una velocidad de circulación, en kilómetros por hora,\n que se aconseja no sobrepasar aunque las condiciones\n meteorológicas y ambientales de la vía y de la circulación sean\n favorables. ",false,"S-7-40","azul","cuadrado"));
-                    repository.insert(new Senal("Área de descanso", "Indica la situación de un área de descanso.",false,"S-123","azul","rectangulo"));
+                    repository.insert(new Senal("Area de descanso", "Indica la situación de un área de descanso.",false,"S-123","azul","rectangulo"));
                     repository.insert(new Senal("Otros servicios", "Señal genérica para cualquier otro servicio, que se inscribirá en el\n recuadro blanco.",false,"S-122","azul","rectangulo"));
                     repository.insert(new Senal("Campamento", "Indica la situación de un lugar donde está permitida la acampada.",false,"S-107","azul","rectangulo"));
                     repository.insert(new Senal("Surtidor de carburante", "Indica la situación de un surtidor o estación de servicio de\n carburante.",false,"S-105","azul","rectangulo"));
