@@ -1,18 +1,19 @@
 package es.ucm.fdi.educavial;
 
+
+
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.content.res.AppCompatResources;
 import androidx.appcompat.widget.AppCompatButton;
-import androidx.core.content.res.ResourcesCompat;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.app.Activity;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -20,6 +21,11 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 
 public class ListaSenalesActivity extends AppCompatActivity {
     private AlertDialog dialog;
@@ -44,14 +50,16 @@ public class ListaSenalesActivity extends AppCompatActivity {
                 row.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
                 for (int j=0;j<3;j++){
                     AppCompatButton senal =  new AppCompatButton(this);
+                    String signalCode=senalList.get(i*3+j).codigo.toLowerCase().replace("-","");
+                    setImageFromAPI(senal,signalCode);
                     senal.setCompoundDrawablesWithIntrinsicBounds(null, AppCompatResources.getDrawable(this,R.drawable.placeholder),null,null);
                     senal.setText(senalList.get(i*3+j).nombre);
-                    //senal.setText("Señal");
                     senal.setBackgroundColor(Color.TRANSPARENT);
                     senal.setTextColor(Color.BLACK);
-                    senal.setTextSize(5);
+                    senal.setMaxLines(5);
+                    senal.setTextSize(10);
                     senal.setLayoutParams(new LinearLayout.LayoutParams(
-                            LinearLayout.LayoutParams.WRAP_CONTENT,
+                            0,
                             LinearLayout.LayoutParams.WRAP_CONTENT
                             ,1));
                     row.addView(senal);
@@ -77,5 +85,23 @@ public class ListaSenalesActivity extends AppCompatActivity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+    private void setImageFromAPI(AppCompatButton button, String signalCode){
+        Runnable r = new Runnable() {
+            @Override
+            public void run() {
+                String APIResult=NetworkUtils.getSignalInfoJson(signalCode);
+                try {
+                    JSONObject jsonObject = new JSONObject(APIResult);
+                    JSONArray listOfItems = (JSONArray) jsonObject.get("query");
+                    int a = 3;
+                } catch (JSONException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        };
+
+
+
     }
 }
