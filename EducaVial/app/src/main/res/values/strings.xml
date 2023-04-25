@@ -96,4 +96,9 @@
     <string name="exit_text">Si vuelves atrás se perderá el progreso del test.</string>
     <string name="exit">Salir</string>
 
+    <!--Lista de señales-->
+    <string name="filtro_nombre">Nombre</string>
+    <string name="filtro_forma">Forma</string>
+    <string name="filtro_color">Color</string>
+
 </resources>
