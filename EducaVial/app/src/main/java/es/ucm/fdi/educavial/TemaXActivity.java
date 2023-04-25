@@ -57,11 +57,6 @@ public class TemaXActivity extends AppCompatActivity {
             actionBar.setTitle(R.string.theme_1);
         }
 
-        Log.d(TAG, "Escondiendo la barra de navegación");
-        View decorView = getWindow().getDecorView();
-        int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION;
-        decorView.setSystemUiVisibility(uiOptions);
-
         Log.d(TAG, "Inicializando el progress Bar");
         bar = findViewById(R.id.progressBar);
         bar.setScaleY(2.5f);

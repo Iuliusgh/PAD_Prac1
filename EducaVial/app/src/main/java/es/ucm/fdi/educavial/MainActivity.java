@@ -52,11 +52,6 @@ public class MainActivity extends AppCompatActivity {
             throw new RuntimeException(e);
         }
 
-        Log.d(TAG, "Escondiendo la barra de navegación");
-        View decorView = getWindow().getDecorView();
-        int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION;
-        decorView.setSystemUiVisibility(uiOptions);
-
         Log.d(TAG, "Ocultando el actionBar");
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {

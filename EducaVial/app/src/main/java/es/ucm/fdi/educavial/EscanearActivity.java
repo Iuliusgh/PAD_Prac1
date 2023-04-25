@@ -66,11 +66,6 @@ public class EscanearActivity extends AppCompatActivity {
             actionBar.setTitle(R.string.escanear);
         }
 
-        Log.d(TAG, "Escondiendo la barra de navegación");
-        View decorView = getWindow().getDecorView();
-        int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION;
-        decorView.setSystemUiVisibility(uiOptions);
-
         if (ActivityCompat.checkSelfPermission(EscanearActivity.this, Manifest.permission.CAMERA) !=
                 PackageManager.PERMISSION_GRANTED) {
             // You can directly ask for the permission.

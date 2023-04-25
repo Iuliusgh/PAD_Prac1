@@ -33,11 +33,6 @@ public class EvaluacionActivity extends AppCompatActivity {
             actionBar.setTitle(R.string.examination_title);
         }
 
-        Log.d(TAG, "Escondiendo la barra de navegación");
-        View decorView = getWindow().getDecorView();
-        int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION;
-        decorView.setSystemUiVisibility(uiOptions);
-
         tema1 = findViewById(R.id.theme_1);
         tema1.setOnClickListener(new View.OnClickListener() {
             @Override

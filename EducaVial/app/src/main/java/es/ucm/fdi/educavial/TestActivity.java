@@ -58,11 +58,6 @@ public class TestActivity extends AppCompatActivity {
             actionBar.setTitle(R.string.examination_title);
         }
 
-        Log.d(TAG, "Escondiendo la barra de navegación");
-        View decorView = getWindow().getDecorView();
-        int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION;
-        decorView.setSystemUiVisibility(uiOptions);
-
         Log.d(TAG, "Inicializando los botones");
         buttonTexts[0]=getResources().getString(R.string.prohibido);
         buttonTexts[1]=getResources().getString(R.string.velocidad);

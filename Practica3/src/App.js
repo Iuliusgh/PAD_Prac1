@@ -12,7 +12,7 @@ function App() {
   const [online, setOnline] = useState(navigator.onLine);
 
   useEffect(() => {
-    if (search !== "") {
+    if (search !== "" && online) {
       setLoading(true);
       axios
         .get(`https://www.googleapis.com/books/v1/volumes?q=${search}&maxResults=40&printType=BOOKS`)
