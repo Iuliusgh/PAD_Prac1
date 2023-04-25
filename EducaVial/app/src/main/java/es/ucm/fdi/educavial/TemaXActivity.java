@@ -167,6 +167,7 @@ public class TemaXActivity extends AppCompatActivity {
             }
         });
         endDialog = aux.create();
+        endDialog.setCancelable(false);
 
         Log.d(TAG, "Creando mensaje de ayuda");
         AlertDialog.Builder builder = new AlertDialog.Builder(this);

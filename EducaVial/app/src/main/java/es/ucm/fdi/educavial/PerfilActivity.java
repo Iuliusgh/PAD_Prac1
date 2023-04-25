@@ -3,6 +3,7 @@ package es.ucm.fdi.educavial;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -64,7 +65,14 @@ public class PerfilActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
-
+        AppCompatButton tutorial_ad=findViewById(R.id.rewatchTutorial);
+        tutorial_ad.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getApplicationContext(), TutorialActivity.class);
+                startActivity(i);
+            }
+        });
         String correo = prefs.getString("correo", "");
         String usuario = prefs.getString("usuario", "");
 

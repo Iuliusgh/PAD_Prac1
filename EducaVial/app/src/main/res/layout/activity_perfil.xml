@@ -110,6 +110,22 @@
             android:textAllCaps="false"
             android:textColor="@color/black"
             android:textSize="24dp" />
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/rewatchTutorial"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/forma_boton_senales_a"
+            android:drawableRight="@drawable/tutorial"
+            android:fontFamily="@font/overpass"
+            android:paddingStart="20dp"
+            android:paddingEnd="10dp"
+            android:text="@string/rewatch"
+            android:textAlignment="viewStart"
+            android:textAllCaps="false"
+            android:textColor="@color/black"
+            android:textSize="24dp" />
+
 
         <Button
             android:id="@+id/EditarPerfil"
@@ -117,6 +133,7 @@
             android:layout_height="wrap_content"
             android:text="Editar perfil"
             android:layout_marginTop="20dp"/>
+
 
 
     </LinearLayout>
