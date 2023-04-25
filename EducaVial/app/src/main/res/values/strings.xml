@@ -14,6 +14,7 @@
     <string name="email">Correo:</string>
     <string name="learnt_trafic_sign">Señales aprendidas</string>
     <string name="best_score">Puntuaciones</string>
+    <string name="rewatch">Volver a ver el tutorial</string>
 
     <!-- Syllabus -->
     <string name="syllabus_title">Temario</string>
