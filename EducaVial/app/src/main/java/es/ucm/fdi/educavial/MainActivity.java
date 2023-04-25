@@ -8,6 +8,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.loader.app.LoaderManager;
 import androidx.preference.PreferenceManager;
 
 import android.content.DialogInterface;
@@ -33,6 +34,8 @@ public class MainActivity extends AppCompatActivity {
     private Button learn, examination, scan;
     private AlertDialog dialog1;
     private final static String TAG = "MainActivity";
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,6 +51,11 @@ public class MainActivity extends AppCompatActivity {
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
+
+        Log.d(TAG, "Escondiendo la barra de navegación");
+        View decorView = getWindow().getDecorView();
+        int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION;
+        decorView.setSystemUiVisibility(uiOptions);
 
         Log.d(TAG, "Ocultando el actionBar");
         ActionBar actionBar = getSupportActionBar();
@@ -169,6 +177,8 @@ public class MainActivity extends AppCompatActivity {
                 dialog1.show();
             }
         }
+
+
     }
 
     private void config(){

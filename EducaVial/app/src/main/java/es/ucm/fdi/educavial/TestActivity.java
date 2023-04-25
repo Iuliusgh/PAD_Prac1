@@ -120,6 +120,7 @@ public class TestActivity extends AppCompatActivity {
         title.setText(R.string.alert_title);
         builder.setView(customLayout);
         dialog = builder.create();
+        dialog.getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
 
         Log.d(TAG, "Creando mensaje del fin");
         AlertDialog.Builder aux = new AlertDialog.Builder(this);

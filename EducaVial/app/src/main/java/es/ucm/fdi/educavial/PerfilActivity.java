@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -40,6 +41,13 @@ public class PerfilActivity extends AppCompatActivity {
             actionBar.setTitle(R.string.profile_title);
         }
 
+
+
+        Log.d(TAG, "Escondiendo la barra de navegación");
+        View decorView = getWindow().getDecorView();
+        int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION;
+        decorView.setSystemUiVisibility(uiOptions);
+
         Log.d(TAG, "Creando mensaje de ayuda");
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         View customLayout = getLayoutInflater().inflate(R.layout.custom_alert_dialog, null);
@@ -49,6 +57,9 @@ public class PerfilActivity extends AppCompatActivity {
         title.setText(R.string.alert_title);
         builder.setView(customLayout);
         dialog = builder.create();
+
+        dialog.getWindow().getDecorView().setSystemUiVisibility(
+                View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
 
         SharedPreferences prefs = getSharedPreferences("my_prefs", MODE_PRIVATE);
 

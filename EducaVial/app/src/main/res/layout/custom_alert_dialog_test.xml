@@ -16,7 +16,7 @@
         android:gravity="center"
         android:text="Lorem"
         android:textColor="#39D020"
-        android:textSize="64sp" />
+        android:textSize="62sp" />
 
     <pl.droidsonroids.gif.GifImageView
         android:id="@+id/gif"
