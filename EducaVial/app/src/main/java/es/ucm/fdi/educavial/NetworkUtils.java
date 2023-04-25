@@ -15,10 +15,12 @@ import java.net.URLEncoder;
 public class NetworkUtils {
     private static final String TAG = "NetworkUtils";
     private static final String BASE_URL =
-            "https://es.wikipedia.org/w/api.php?";
+            "https://en.wikipedia.org/w/api.php?";
     private static final String QUERY_PARAM = "action";
     private static final String TITLES = "titles";
     private static final String PROP = "prop";
+
+    private static final String IIPROP = "iiprop";
     private static final String FORMAT = "format";
     //https://en.wikipedia.org/w/api.php?action=query&titles=File:Spain_traffic_signal_s14a.svg&prop=imageinfo&iiprop=url&format=json
 
@@ -29,7 +31,8 @@ public class NetworkUtils {
         Uri builtURI = Uri.parse(BASE_URL).buildUpon()
                 .appendQueryParameter(QUERY_PARAM, "query")
                 .appendQueryParameter(TITLES, "File"+Uri.decode(":")+"Spain_traffic_signal_"+signalName+".svg")
-                .appendQueryParameter(PROP, "url")
+                .appendQueryParameter(PROP, "imageinfo")
+                .appendQueryParameter(IIPROP, "url")
                 .appendQueryParameter(FORMAT, "json")
                 .build();
         try {
