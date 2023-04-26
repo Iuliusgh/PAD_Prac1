@@ -8,11 +8,4 @@
             app:title="@string/authomatic_read_title" />
     </PreferenceCategory>
 
-    <PreferenceCategory app:title="@string/tutorial_header">
-        <SwitchPreferenceCompat
-            app:key="@string/tutorial_key"
-            app:summary="@string/tutorial_summary"
-            app:title="@string/tutorial_title" />
-    </PreferenceCategory>
-
 </PreferenceScreen>

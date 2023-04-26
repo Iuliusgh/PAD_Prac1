@@ -56,6 +56,7 @@
     <string name="alert_scanner_text">En esta pantalla puedes escanear una señal y obtener información sobre ella. Cuadra la señal dentro del rectángulo para obtener mejores resultados.</string>
     <string name="alert_tutorial_text">En esta pantalla se muestra un video explicativo sobre el uso de la aplicación.</string>
     <string name="alert_test_text">Una vez completado te muestra correcto o incorrecto</string>
+    <string name="alert_list_signal_text">Aqui puedes visualizar la lista de señales aprendidas</string>
     <!-- Content description -->
     <string name="profile_des">Boton para acceder al perfil</string>
     <string name="config_des">Botón para acceder a ajustes</string>
@@ -102,5 +103,6 @@
     <string name="filtro_forma">Forma</string>
     <string name="filtro_color">Color</string>
     <string name="loading">Cargando...</string>
+
 
 </resources>
