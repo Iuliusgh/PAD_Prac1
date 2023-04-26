@@ -2,56 +2,53 @@ package es.ucm.fdi.educavial;
 
 
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
+import static com.android.volley.Request.Method.GET;
+
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.content.res.AppCompatResources;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.loader.app.LoaderManager;
 
-import android.app.Activity;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.media.Image;
+import android.graphics.drawable.PictureDrawable;
+import android.graphics.drawable.ScaleDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.target.CustomTarget;
-import com.bumptech.glide.request.target.SimpleTarget;
-import com.bumptech.glide.request.transition.Transition;
+import com.android.volley.Cache;
+import com.android.volley.Network;
+import com.android.volley.RequestQueue;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.BasicNetwork;
+import com.android.volley.toolbox.DiskBasedCache;
+import com.android.volley.toolbox.HurlStack;
+import com.android.volley.toolbox.StringRequest;
+import com.caverock.androidsvg.SVG;
+import com.caverock.androidsvg.SVGParseException;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
 
-import okhttp3.Call;
-import okhttp3.Callback;
 import okhttp3.HttpUrl;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
 
 
 public class ListaSenalesActivity extends AppCompatActivity {
@@ -66,11 +63,18 @@ public class ListaSenalesActivity extends AppCompatActivity {
 
     private static final String IIPROP = "iiprop";
     private static final String FORMAT = "format";
-    private ArrayList<String> res = new ArrayList<String>();
+    private String[] res = new String[91];
+    ArrayList<Bitmap> fotos=new ArrayList<Bitmap>();
+    ArrayList<AppCompatButton> senales=new ArrayList<AppCompatButton>();
+    boolean terminado=false;
 
     private int b[] = new int[1];
 
     private Button btn2;
+
+    private int numRequests = 0; //counts volley requests
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,83 +85,9 @@ public class ListaSenalesActivity extends AppCompatActivity {
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setTitle(R.string.learnt_trafic_sign);
         }
-        btn2 = findViewById(R.id.button2);
+        btn2 = findViewById(R.id.filtro_nombre);
         LinearLayout parentLinearLayout=findViewById(R.id.lista);
-        viewModel= ViewModelProviders.of(this).get(Senalviewmodel.class);
-        viewModel.getSenallist().observe(this,senalList->{
-            int tam=senalList.size();
-            for (int i = 0; i <tam/3; i++){
-                LinearLayout row = new LinearLayout(this);
-                row.setOrientation(LinearLayout.HORIZONTAL);
-                row.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-                for (int j=0;j<3;j++){
-                    AppCompatButton senal =  new AppCompatButton(this);
-                    String signalCode=senalList.get(i *3+j).codigo.toLowerCase().replaceFirst("-","");
-
-                    //setImageFromAPI(senal, signalCode);
-
-
-                    OkHttpClient client = new OkHttpClient();
-                    HttpUrl.Builder urlBuilder = HttpUrl.parse(BASE_URL).newBuilder();
-                    urlBuilder.addQueryParameter(QUERY_PARAM, "query");
-                    urlBuilder.addQueryParameter(TITLES, "File"+ Uri.decode(":")+"Spain_traffic_signal_"+signalCode+".svg");
-                    urlBuilder.addQueryParameter(PROP, "imageinfo");
-                    urlBuilder.addQueryParameter(IIPROP, "url");
-                    urlBuilder.addQueryParameter(FORMAT, "json");
-                    String urlWithQueryParams = urlBuilder.build().toString();
-                    Request request = new Request.Builder()
-                            .url(urlWithQueryParams).build();
-                    client.newCall(request).enqueue(new Callback() {
-                        @Override
-                        public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                            Log.i("OkHttpClient", "fallo de conexion");
-                        }
-
-                        @Override
-                        public void onResponse(Call call, final Response response)
-                                throws IOException {
-                            try {
-                                String responseData = response.body().string();
-                                Log.d("onResponse", responseData);
-                                JSONObject jsonObject = new JSONObject(responseData);
-                                JSONObject queryObject = jsonObject.getJSONObject("query");
-                                JSONObject pagesObject = queryObject.getJSONObject("pages");
-                                JSONObject menosUnoObject = pagesObject.getJSONObject("-1");
-                                JSONArray imageinfoArray = (JSONArray) menosUnoObject.get("imageinfo");
-                                JSONObject info = imageinfoArray.getJSONObject(0);
-                                res.add(info.getString("url"));
-                                Log.d("onResponse image", info.getString("url"));
-                                b[0]++;
-
-
-                                /*try {
-                                    Bitmap bitmap = BitmapFactory.decodeStream(new URL(res).openConnection().getInputStream());
-                                    Drawable drawable = new BitmapDrawable(getResources(), bitmap);
-                                    senal.setCompoundDrawablesWithIntrinsicBounds(null, drawable,null,null);
-                                } catch (IOException e) {
-                                    throw new RuntimeException(e);
-                                }*/
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    });
-
-
-                    senal.setText(senalList.get(i *3+j).nombre);
-                    senal.setBackgroundColor(Color.TRANSPARENT);
-                    senal.setTextColor(Color.BLACK);
-                    senal.setMaxLines(5);
-                    senal.setTextSize(10);
-                    senal.setLayoutParams(new LinearLayout.LayoutParams(
-                            0,
-                            LinearLayout.LayoutParams.WRAP_CONTENT
-                            ,1));
-                    row.addView(senal);
-                }
-                parentLinearLayout.addView(row);
-            }
-        });
+        initUI(parentLinearLayout);
         LoaderManager loaderManager = LoaderManager.getInstance(this);
         if(loaderManager.getLoader(0) != null){
             loaderManager.initLoader(0,null, signalLoaderCallbacks);
@@ -166,13 +96,118 @@ public class ListaSenalesActivity extends AppCompatActivity {
         btn2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                for(String a: res){
-                    Log.d("Urls " + b[0], a);
-                }
-
 
             }
         });
+    }
+    private void initUI(LinearLayout parentLinearLayout){
+        RequestQueue requestQueue;
+        Cache cache = new DiskBasedCache(getCacheDir(),1024*1024);//1MB
+        Network network = new BasicNetwork(new HurlStack());
+        requestQueue = new RequestQueue(cache,network);
+        requestQueue.start();
+
+
+        viewModel= ViewModelProviders.of(this).get(Senalviewmodel.class);
+        viewModel.getSenallist().observe(this,senalList->{
+            int tam=senalList.size();
+            int index=0;
+            for (int i = 0; i <Math.ceil((double)tam/3); i++){
+                LinearLayout row = new LinearLayout(this);
+                row.setOrientation(LinearLayout.HORIZONTAL);
+                row.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+                for (int j=0;j<3&&(3*i)+j<tam;j++){
+                    AppCompatButton senal =  new AppCompatButton(this);
+                    String signalCode=senalList.get(i *3+j).codigo.toLowerCase().replaceFirst("-","");
+                    final int aux=index;
+                    HttpUrl.Builder urlBuilder = HttpUrl.parse(BASE_URL).newBuilder();
+                    urlBuilder.addQueryParameter(QUERY_PARAM, "query");
+                    urlBuilder.addQueryParameter(TITLES, "File"+ Uri.decode(":")+"Spain_traffic_signal_"+signalCode+".svg");
+                    urlBuilder.addQueryParameter(PROP, "imageinfo");
+                    urlBuilder.addQueryParameter(IIPROP, "url");
+                    urlBuilder.addQueryParameter(FORMAT, "json");
+                    String urlWithQueryParams = urlBuilder.build().toString();
+                    StringRequest stringRequest = new StringRequest(GET, urlWithQueryParams,
+                            new com.android.volley.Response.Listener<String>() {
+                                @Override
+                                public void onResponse(String response) {
+                                    try {
+                                        JSONObject jsonObject = new JSONObject(response);
+                                        JSONObject queryObject = jsonObject.getJSONObject("query");
+                                        JSONObject pagesObject = queryObject.getJSONObject("pages");
+                                        JSONObject menosUnoObject = pagesObject.getJSONObject("-1");
+                                        JSONArray imageinfoArray = (JSONArray) menosUnoObject.get("imageinfo");
+                                        JSONObject info = imageinfoArray.getJSONObject(0);
+                                        String url = info.getString("url");
+                                        res[aux]=url;
+                                    }
+                                    catch (JSONException e){
+                                        e.printStackTrace();
+                                    }
+                                    numRequests--;
+                                    if(numRequests==0) {
+                                        Log.i("Volley", "Requests completed");
+                                        new Thread(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                try {
+                                                    for (int l=0;l<tam;l++) {
+                                                        InputStream inputStream = new URL(res[l]).openStream();
+                                                        SVG svg = SVG.getFromInputStream(inputStream);
+                                                        Drawable drawable = new PictureDrawable(svg.renderToPicture());
+                                                        Bitmap bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(),drawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
+                                                        Canvas c=new Canvas(bitmap);
+                                                        drawable.setBounds(0,0,c.getWidth(),c.getHeight());
+                                                        drawable.draw(c);
+                                                        fotos.add(bitmap);
+                                                    }
+                                                    runOnUiThread(new Runnable() {
+                                                        @Override
+                                                        public void run() {
+                                                            setFotos();
+                                                        }
+                                                    });
+                                                } catch (IOException | SVGParseException e) {
+                                                    throw new RuntimeException(e);
+                                                }
+                                            }
+                                        }).start();
+                                    }
+                                }
+                            },
+                            new com.android.volley.Response.ErrorListener() {
+                                @Override
+                                public void onErrorResponse(VolleyError error) {
+                                    Log.i("Volley", "fallo de conexion");
+                                }
+                            });
+                    requestQueue.add(stringRequest);
+                    index++;
+                    numRequests++;
+                    senal.setText(senalList.get(i *3+j).nombre);
+                    senal.setBackgroundColor(Color.TRANSPARENT);
+                    senal.setTextColor(Color.BLACK);
+                    senal.setMaxLines(5);
+                    senal.setTextSize(10);
+                    senal.setLayoutParams(new LinearLayout.LayoutParams(0,LinearLayout.LayoutParams.WRAP_CONTENT,1));
+                    row.addView(senal);
+                    senales.add(senal);
+                }
+                parentLinearLayout.addView(row);
+            }
+        });
+    }
+
+    private void setFotos() {
+            if (numRequests == 0) {
+                int w=senales.get(0).getWidth();
+                int h=senales.get(0).getWidth();
+                for (int i = 0; i < fotos.size(); i++) {
+                    double r=(double) fotos.get(i).getHeight()/(double) fotos.get(i).getWidth();
+                    Drawable d= new BitmapDrawable(Bitmap.createScaledBitmap(fotos.get(i),  w, (int) (h*r),false));
+                    senales.get(i).setCompoundDrawablesWithIntrinsicBounds(null, d, null, null);
+                }
+            }
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {

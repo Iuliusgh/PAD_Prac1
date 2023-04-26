@@ -188,7 +188,7 @@ public class EscanearActivity extends AppCompatActivity {
         dialog.show();
     }
     private String analizarSenal(Bitmap senal){
-        String ret = "No se ha podido identificar la señal";
+        String ret = "";
         Bitmap scaledSignal = Bitmap.createScaledBitmap(senal,analysisSize,analysisSize,false);
         ByteBuffer byteBuffer = ByteBuffer.allocateDirect(4 * analysisSize*analysisSize*3);
         byteBuffer.order(ByteOrder.nativeOrder());
@@ -323,8 +323,8 @@ public class EscanearActivity extends AppCompatActivity {
                     "R-401a",
                     "R-403c"
             };
-            if (max<80) ret="No se ha podido reconocer la señal, prueba otra vez";
-            else ret = "La señal es "+classes[max]+" con "+String.valueOf(max)+" de confidence";
+            if (maxConfidence<0.8) ret="No se ha podido reconocer la señal, prueba otra vez.";
+            else ret = "La señal es "+classes[max];
             // Releases model resources if no longer used.
             model.close();
         } catch (IOException e) {

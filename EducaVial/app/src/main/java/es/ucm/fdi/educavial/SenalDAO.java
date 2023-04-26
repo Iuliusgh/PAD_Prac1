@@ -15,7 +15,7 @@ public interface SenalDAO {
     @Query("DELETE FROM senal")
     void deleteAllSenals();
 
-    @Query("SELECT * FROM senal ")
+    @Query("SELECT * FROM senal")
     LiveData<List<Senal>> GetAllSenals();
 
     @Query("SELECT * FROM senal WHERE codigo = :codigo")
