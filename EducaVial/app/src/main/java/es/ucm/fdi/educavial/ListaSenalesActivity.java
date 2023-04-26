@@ -54,7 +54,6 @@ import okhttp3.HttpUrl;
 public class ListaSenalesActivity extends AppCompatActivity {
     private AlertDialog dialog;
     private Senalviewmodel viewModel;
-    private SignalLoaderCallbacks signalLoaderCallbacks = new SignalLoaderCallbacks(this);
     private static final String BASE_URL =
             "https://en.wikipedia.org/w/api.php?";
     private static final String QUERY_PARAM = "action";
@@ -63,12 +62,11 @@ public class ListaSenalesActivity extends AppCompatActivity {
 
     private static final String IIPROP = "iiprop";
     private static final String FORMAT = "format";
-    private String[] res = new String[91];
+    private final String[] res = new String[91];
     ArrayList<Bitmap> fotos=new ArrayList<Bitmap>();
     ArrayList<AppCompatButton> senales=new ArrayList<AppCompatButton>();
-    boolean terminado=false;
 
-    private int b[] = new int[1];
+
 
     private Button btn2;
 
@@ -88,10 +86,6 @@ public class ListaSenalesActivity extends AppCompatActivity {
         btn2 = findViewById(R.id.filtro_nombre);
         LinearLayout parentLinearLayout=findViewById(R.id.lista);
         initUI(parentLinearLayout);
-        LoaderManager loaderManager = LoaderManager.getInstance(this);
-        if(loaderManager.getLoader(0) != null){
-            loaderManager.initLoader(0,null, signalLoaderCallbacks);
-        }
 
         btn2.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -200,8 +194,8 @@ public class ListaSenalesActivity extends AppCompatActivity {
 
     private void setFotos() {
             if (numRequests == 0) {
-                int w=senales.get(0).getWidth();
-                int h=senales.get(0).getWidth();
+                int w=senales.get(2).getWidth();
+                int h=senales.get(2).getWidth();
                 for (int i = 0; i < fotos.size(); i++) {
                     double r=(double) fotos.get(i).getHeight()/(double) fotos.get(i).getWidth();
                     Drawable d= new BitmapDrawable(Bitmap.createScaledBitmap(fotos.get(i),  w, (int) (h*r),false));
@@ -226,11 +220,5 @@ public class ListaSenalesActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-    private void setImageFromAPI(AppCompatButton button, String signalCode){
 
-        Bundle queryBundle = new Bundle();
-        queryBundle.putString(SignalLoaderCallbacks.EXTRA_QUERY, signalCode);
-        LoaderManager.getInstance(this)
-                .restartLoader(0, queryBundle, signalLoaderCallbacks);
-    }
 }
