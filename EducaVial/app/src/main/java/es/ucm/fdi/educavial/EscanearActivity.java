@@ -13,6 +13,7 @@ import androidx.camera.view.PreviewView;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.ViewModelProviders;
 
 import android.Manifest;
 import android.content.DialogInterface;
@@ -26,6 +27,7 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -44,19 +46,24 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 
 public class EscanearActivity extends AppCompatActivity {
-        private PreviewView previewView;
-        private Camera camera;
-        private ListenableFuture<ProcessCameraProvider> cameraProviderFuture;
-        private ScaleGestureDetector scaleGestureDetector;
-        private ImageButton scan;
-        private int analysisSize = 128;
-        private AlertDialog dialog;
+    private PreviewView previewView;
+    private Camera camera;
+    private Senalviewmodel viewModel;
+    private ListenableFuture<ProcessCameraProvider> cameraProviderFuture;
+    private ScaleGestureDetector scaleGestureDetector;
+    private ImageButton scan;
+    private int analysisSize = 128;
+    private AlertDialog dialog;
     private TextView message, title;
     private final static String TAG = "ReproducirActivity";
+
+    private boolean sol = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_escanear);
+
+        viewModel= ViewModelProviders.of(this).get(Senalviewmodel.class);
 
         Log.d(TAG, "Creando actionBar");
         ActionBar actionBar =getSupportActionBar();
@@ -173,19 +180,31 @@ public class EscanearActivity extends AppCompatActivity {
         AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(this, R.style.MyAlertDialogStyle);
         View customLayout = getLayoutInflater().inflate(R.layout.escaneo_correcto_layout, null);
         builder.setView(customLayout);
-        builder.setPositiveButton("Volver a escanear", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                dialogInterface.dismiss();
-            }
-        });
         AlertDialog dialog = builder.create();
         dialog.setCancelable(false);
         ImageView imageView = customLayout.findViewById(R.id.senalEscaneada);
         imageView.setImageBitmap(senal);
-        TextView textView=customLayout.findViewById(R.id.resultado);
-        textView.setText(analysisResult);
+        TextView info = (TextView) customLayout.findViewById(R.id.info);
+        TextView title = (TextView) customLayout.findViewById(R.id.resultado);
+        if(sol){
+            Senal s = viewModel.getSenalBycodigo(analysisResult);
+            title.setText(s.nombre);
+            info.setText(s.descripcion);
+        }
+        else{
+            title.setText("");
+            info.setText(analysisResult);
+        }
+
+        Button retur = (Button) customLayout.findViewById(R.id.escanear_volver);
+
         dialog.show();
+        retur.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
     }
     private String analizarSenal(Bitmap senal){
         String ret = "";
@@ -324,7 +343,10 @@ public class EscanearActivity extends AppCompatActivity {
                     "R-403c"
             };
             if (maxConfidence<0.8) ret="No se ha podido reconocer la señal, prueba otra vez.";
-            else ret = "La señal es "+classes[max];
+            else{
+                sol = true;
+                ret = classes[max];
+            }
             // Releases model resources if no longer used.
             model.close();
         } catch (IOException e) {
