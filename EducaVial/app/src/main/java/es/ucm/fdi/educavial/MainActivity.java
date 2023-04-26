@@ -153,7 +153,7 @@ public class MainActivity extends AppCompatActivity {
                         editor.putString("usuario", usuario);
                         editor.putBoolean("is_first_time", false);
                         editor.apply();
-                        recreate();
+                        //recreate();
 
                         dialog1.dismiss();
                     }
