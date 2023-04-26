@@ -36,11 +36,6 @@ public class TemarioActivity extends AppCompatActivity {
             actionBar.setTitle(R.string.syllabus_title);
         }
 
-        Log.d(TAG, "Escondiendo la barra de navegación");
-        View decorView = getWindow().getDecorView();
-        int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION;
-        decorView.setSystemUiVisibility(uiOptions);
-
         Log.d(TAG, "Creando mensaje de ayuda");
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         View customLayout = getLayoutInflater().inflate(R.layout.custom_alert_dialog, null);

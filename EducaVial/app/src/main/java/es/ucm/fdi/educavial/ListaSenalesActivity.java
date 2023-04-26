@@ -27,6 +27,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.android.volley.Cache;
 import com.android.volley.Network;
@@ -38,6 +39,7 @@ import com.android.volley.toolbox.HurlStack;
 import com.android.volley.toolbox.StringRequest;
 import com.caverock.androidsvg.SVG;
 import com.caverock.androidsvg.SVGParseException;
+import com.google.android.material.imageview.ShapeableImageView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -52,7 +54,11 @@ import okhttp3.HttpUrl;
 
 
 public class ListaSenalesActivity extends AppCompatActivity {
-    private AlertDialog dialog;
+    private static final String TAG = "ListaSenalesActivity";
+    private AlertDialog dialog, senalDialog;
+    private Button volver;
+    private TextView senal_titulo, senal_info;
+    private ShapeableImageView senal_imagen;
     private Senalviewmodel viewModel;
     private SignalLoaderCallbacks signalLoaderCallbacks = new SignalLoaderCallbacks(this);
     private static final String BASE_URL =
@@ -66,10 +72,6 @@ public class ListaSenalesActivity extends AppCompatActivity {
     private String[] res = new String[91];
     ArrayList<Bitmap> fotos=new ArrayList<Bitmap>();
     ArrayList<AppCompatButton> senales=new ArrayList<AppCompatButton>();
-    boolean terminado=false;
-
-    private int b[] = new int[1];
-
     private Button btn2;
 
     private int numRequests = 0; //counts volley requests
@@ -97,6 +99,22 @@ public class ListaSenalesActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
+            }
+        });
+
+        Log.d(TAG, "Creando mensaje de ayuda");
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        View customLayout = getLayoutInflater().inflate(R.layout.custom_alert_dialog_senial, null);
+        senal_info = (TextView) customLayout.findViewById(R.id.senal_info);
+        senal_titulo = (TextView) customLayout.findViewById(R.id.senal_titulo);
+        volver = (Button) customLayout.findViewById(R.id.senal_volver);
+        senal_imagen = (ShapeableImageView) customLayout.findViewById(R.id.senal_imagen);
+        builder.setView(customLayout);
+        senalDialog = builder.create();
+        volver.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                senalDialog.dismiss();
             }
         });
     }
@@ -185,10 +203,29 @@ public class ListaSenalesActivity extends AppCompatActivity {
                     index++;
                     numRequests++;
                     senal.setText(senalList.get(i *3+j).nombre);
+                    senal.setContentDescription(Integer.toString(index - 1) + "|" + senalList.get(i *3+j).codigo);
                     senal.setBackgroundColor(Color.TRANSPARENT);
                     senal.setTextColor(Color.BLACK);
                     senal.setMaxLines(5);
                     senal.setTextSize(10);
+                    senal.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            String[] parts = senal.getContentDescription().toString().split("\\|");
+                            Senal s = viewModel.getSenalBycodigo(parts[1]);
+                            senal_titulo.setText(s.nombre);
+                            senal_info.setText(s.descripcion);
+                            if(numRequests == 0){
+                                int w=senales.get(2).getWidth();
+                                int h=senales.get(2).getWidth();
+                                int i = Integer.parseInt(parts[0]);
+                                double r=(double) fotos.get(i).getHeight()/(double) fotos.get(i).getWidth();
+                                Drawable d= new BitmapDrawable(Bitmap.createScaledBitmap(fotos.get(i),  w, (int) (h*r),false));
+                                senal_imagen.setImageDrawable(d);
+                            }
+                            senalDialog.show();
+                        }
+                    });
                     senal.setLayoutParams(new LinearLayout.LayoutParams(0,LinearLayout.LayoutParams.WRAP_CONTENT,1));
                     row.addView(senal);
                     senales.add(senal);
@@ -200,8 +237,8 @@ public class ListaSenalesActivity extends AppCompatActivity {
 
     private void setFotos() {
             if (numRequests == 0) {
-                int w=senales.get(0).getWidth();
-                int h=senales.get(0).getWidth();
+                int w=senales.get(2).getWidth();
+                int h=senales.get(2).getWidth();
                 for (int i = 0; i < fotos.size(); i++) {
                     double r=(double) fotos.get(i).getHeight()/(double) fotos.get(i).getWidth();
                     Drawable d= new BitmapDrawable(Bitmap.createScaledBitmap(fotos.get(i),  w, (int) (h*r),false));
