@@ -28,6 +28,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewParent;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -52,6 +53,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 import okhttp3.HttpUrl;
 
@@ -77,7 +81,7 @@ public class ListaSenalesActivity extends AppCompatActivity {
 
 
 
-    private Button btn2;
+    private Button filtroNombre, filtroForma,filtroColor;
 
     private int numRequests = 0; //counts volley requests
 
@@ -85,7 +89,6 @@ public class ListaSenalesActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        viewModel= ViewModelProviders.of(this).get(Senalviewmodel.class);
         setContentView(R.layout.activity_lista_senales);
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
@@ -93,15 +96,126 @@ public class ListaSenalesActivity extends AppCompatActivity {
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setTitle(R.string.learnt_trafic_sign);
         }
-        btn2 = findViewById(R.id.filtro_nombre);
+        filtroNombre = findViewById(R.id.filtro_nombre);
+        filtroColor=findViewById(R.id.filtro_color);
+        filtroForma=findViewById(R.id.filtro_forma);
         LinearLayout parentLinearLayout=findViewById(R.id.lista);
         initUI(parentLinearLayout);
 
-        btn2.setOnClickListener(new View.OnClickListener() {
+        filtroNombre.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                viewModel.GetSenalsbynombre().observe(ListaSenalesActivity.this,senalList->{
-                    senalList.get(0);
+                viewModel.GetSenalsbynombre().observe(ListaSenalesActivity.this, senalList -> {
+                    Collections.sort(senales,(MyButton a, MyButton b)->{
+                        int idA=a.getIdButton();
+                        int idB=b.getIdButton();
+                        int indexA=-1;
+                        int indexB=-1;
+                        for(int i=0;i<senalList.size();i++){
+                            if(senalList.get(i).getId()==idA){
+                                indexA=i;
+                            }
+                            if(senalList.get(i).getId()==idB){
+                                indexB=i;
+                            }
+                        }
+                       return Integer.compare(indexA,indexB);
+                    });
+                    parentLinearLayout.removeAllViews();
+                    int tam=senalList.size();
+                    for (int i = 0; i <Math.ceil((double)tam/3); i++) {
+                        LinearLayout row = new LinearLayout(ListaSenalesActivity.this);
+                        row.setOrientation(LinearLayout.HORIZONTAL);
+                        row.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+                        for (int j = 0; j < 3 && (3 * i) + j < tam; j++) {
+                            MyButton senal= new MyButton(ListaSenalesActivity.this);
+                            senal.copy(senales.get(i * 3 + j));
+                            senal.setBackgroundColor(Color.TRANSPARENT);
+                            senal.setTextColor(Color.BLACK);
+                            senal.setTextSize(10);
+                            senal.setLayoutParams(new LinearLayout.LayoutParams(0,LinearLayout.LayoutParams.WRAP_CONTENT,1));
+                            row.addView(senal);
+                        }
+                        parentLinearLayout.addView(row);
+                    }
+                });
+            }
+            });
+        filtroColor.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                viewModel.GetSenalsbycolor().observe(ListaSenalesActivity.this, senalList -> {
+                    Collections.sort(senales,(MyButton a, MyButton b)->{
+                        int idA=a.getIdButton();
+                        int idB=b.getIdButton();
+                        int indexA=-1;
+                        int indexB=-1;
+                        for(int i=0;i<senalList.size();i++){
+                            if(senalList.get(i).getId()==idA){
+                                indexA=i;
+                            }
+                            if(senalList.get(i).getId()==idB){
+                                indexB=i;
+                            }
+                        }
+                        return Integer.compare(indexA,indexB);
+                    });
+                    parentLinearLayout.removeAllViews();
+                    int tam=senalList.size();
+                    for (int i = 0; i <Math.ceil((double)tam/3); i++) {
+                        LinearLayout row = new LinearLayout(ListaSenalesActivity.this);
+                        row.setOrientation(LinearLayout.HORIZONTAL);
+                        row.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+                        for (int j = 0; j < 3 && (3 * i) + j < tam; j++) {
+                            MyButton senal= new MyButton(ListaSenalesActivity.this);
+                            senal.copy(senales.get(i * 3 + j));
+                            senal.setBackgroundColor(Color.TRANSPARENT);
+                            senal.setTextColor(Color.BLACK);
+                            senal.setTextSize(10);
+                            senal.setLayoutParams(new LinearLayout.LayoutParams(0,LinearLayout.LayoutParams.WRAP_CONTENT,1));
+                            row.addView(senal);
+                        }
+                        parentLinearLayout.addView(row);
+                    }
+                });
+            }
+        });
+        filtroForma.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                viewModel.GetSenalsbyforma().observe(ListaSenalesActivity.this, senalList -> {
+                    Collections.sort(senales,(MyButton a, MyButton b)->{
+                        int idA=a.getIdButton();
+                        int idB=b.getIdButton();
+                        int indexA=-1;
+                        int indexB=-1;
+                        for(int i=0;i<senalList.size();i++){
+                            if(senalList.get(i).getId()==idA){
+                                indexA=i;
+                            }
+                            if(senalList.get(i).getId()==idB){
+                                indexB=i;
+                            }
+                        }
+                        return Integer.compare(indexA,indexB);
+                    });
+                    parentLinearLayout.removeAllViews();
+                    int tam=senalList.size();
+                    for (int i = 0; i <Math.ceil((double)tam/3); i++) {
+                        LinearLayout row = new LinearLayout(ListaSenalesActivity.this);
+                        row.setOrientation(LinearLayout.HORIZONTAL);
+                        row.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+                        for (int j = 0; j < 3 && (3 * i) + j < tam; j++) {
+                            MyButton senal= new MyButton(ListaSenalesActivity.this);
+                            senal.copy(senales.get(i * 3 + j));
+                            senal.setBackgroundColor(Color.TRANSPARENT);
+                            senal.setTextColor(Color.BLACK);
+                            senal.setTextSize(10);
+                            senal.setLayoutParams(new LinearLayout.LayoutParams(0,LinearLayout.LayoutParams.WRAP_CONTENT,1));
+                            row.addView(senal);
+                        }
+                        parentLinearLayout.addView(row);
+                    }
                 });
             }
         });
@@ -130,6 +244,8 @@ public class ListaSenalesActivity extends AppCompatActivity {
         requestQueue = new RequestQueue(cache,network);
         requestQueue.start();
 
+
+        viewModel= ViewModelProviders.of(this).get(Senalviewmodel.class);
         viewModel.getSenallist().observe(this,senalList->{
             int tam=senalList.size();
             int index=0;
@@ -150,6 +266,7 @@ public class ListaSenalesActivity extends AppCompatActivity {
                     senal.setCodigo(senalList.get(i *3+j).codigo);
                     senal.setDescripcionSenal(senalList.get(i *3+j).descripcion);
                     senal.setAprendida(senalList.get(i*3+j).aprendido);
+                    senal.setIdButton(senalList.get(i*3+j).id);
                     String urlWithQueryParams = urlBuilder.build().toString();
                     StringRequest stringRequest = new StringRequest(GET, urlWithQueryParams,
                             new com.android.volley.Response.Listener<String>() {
@@ -213,7 +330,6 @@ public class ListaSenalesActivity extends AppCompatActivity {
 
                     senal.setBackgroundColor(Color.TRANSPARENT);
                     senal.setTextColor(Color.BLACK);
-                    senal.setMaxLines(5);
                     senal.setTextSize(10);
                     senal.setOnClickListener(new View.OnClickListener() {
                         @Override

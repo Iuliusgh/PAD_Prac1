@@ -22,5 +22,8 @@ public class Senal {
         this.forma=forma;
     }
 
+    public int getId() {
+        return id;
+    }
 }
 

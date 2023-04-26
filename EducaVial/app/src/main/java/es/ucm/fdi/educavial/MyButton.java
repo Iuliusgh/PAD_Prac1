@@ -53,4 +53,13 @@ public class MyButton extends AppCompatButton {
     public void setAprendida(boolean aprendida) {
         this.aprendida = aprendida;
     }
+    void copy(MyButton src){
+        setIdButton(src.getIdButton());
+        setAprendida(src.isAprendida());
+        setCodigo(src.getCodigo());
+        setPosicionEnLista(getPosicionEnLista());
+        setDescripcionSenal(getDescripcionSenal());
+        this.setCompoundDrawablesWithIntrinsicBounds(null,src.getCompoundDrawables()[1],null,null);
+        this.setText(src.getText());
+    }
 }
