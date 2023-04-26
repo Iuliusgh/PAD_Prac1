@@ -101,5 +101,6 @@
     <string name="filtro_nombre">Nombre</string>
     <string name="filtro_forma">Forma</string>
     <string name="filtro_color">Color</string>
+    <string name="loading">Cargando...</string>
 
 </resources>

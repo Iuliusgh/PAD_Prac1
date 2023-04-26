@@ -5,6 +5,8 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.core.content.res.ResourcesCompat;
+import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModelProviders;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -44,6 +46,7 @@ public class TestActivity extends AppCompatActivity {
     private final int[] drawableImages= new int[3];
     private boolean resultado = true;
     private int cont = 0;
+     private Senalviewmodel viewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -158,6 +161,10 @@ public class TestActivity extends AppCompatActivity {
         exit.setTitle(R.string.exit_title);
         exit.setMessage(R.string.exit_text);
         exitDialog = exit.create();
+
+
+        viewModel= ViewModelProviders.of(this).get(Senalviewmodel.class);
+
     }
 
     private void addListener(Object obj, Object obj1){
@@ -192,6 +199,7 @@ public class TestActivity extends AppCompatActivity {
                     if(cont == 6){
                         fail();
                         endDialog.show();
+
                     }
                     ant = res;
                 }
@@ -305,6 +313,11 @@ public class TestActivity extends AppCompatActivity {
                     recreate();
                 }
             });
+        }
+        else{
+            viewModel.updateValorBooleanoById("R-2",true);
+            viewModel.updateValorBooleanoById("R-301-30", true);
+            viewModel.updateValorBooleanoById("R-116", true);
         }
     }
 

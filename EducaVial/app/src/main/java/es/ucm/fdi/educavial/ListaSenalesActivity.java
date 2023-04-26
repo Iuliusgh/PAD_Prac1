@@ -12,8 +12,11 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.loader.app.LoaderManager;
 
 import android.graphics.Bitmap;
+import android.graphics.BlendMode;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.ColorFilter;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.PictureDrawable;
@@ -70,7 +73,7 @@ public class ListaSenalesActivity extends AppCompatActivity {
     private static final String FORMAT = "format";
     private final String[] res = new String[91];
     ArrayList<Bitmap> fotos=new ArrayList<Bitmap>();
-    ArrayList<AppCompatButton> senales=new ArrayList<AppCompatButton>();
+    ArrayList<MyButton> senales=new ArrayList<MyButton>();
 
 
 
@@ -96,7 +99,9 @@ public class ListaSenalesActivity extends AppCompatActivity {
         btn2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                viewModel.GetSenalsbynombre().observe(ListaSenalesActivity.this,senalList->{
+                    senalList.get(0);
+                });
             }
         });
 
@@ -109,6 +114,7 @@ public class ListaSenalesActivity extends AppCompatActivity {
         senal_imagen = (ShapeableImageView) customLayout.findViewById(R.id.senal_imagen);
         builder.setView(customLayout);
         senalDialog = builder.create();
+        senalDialog.setCancelable(false);
         volver.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -133,7 +139,7 @@ public class ListaSenalesActivity extends AppCompatActivity {
                 row.setOrientation(LinearLayout.HORIZONTAL);
                 row.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
                 for (int j=0;j<3&&(3*i)+j<tam;j++){
-                    AppCompatButton senal =  new AppCompatButton(this);
+                    MyButton senal =  new MyButton(this);
                     String signalCode=senalList.get(i *3+j).codigo.toLowerCase().replaceFirst("-","");
                     final int aux=index;
                     HttpUrl.Builder urlBuilder = HttpUrl.parse(BASE_URL).newBuilder();
@@ -142,6 +148,9 @@ public class ListaSenalesActivity extends AppCompatActivity {
                     urlBuilder.addQueryParameter(PROP, "imageinfo");
                     urlBuilder.addQueryParameter(IIPROP, "url");
                     urlBuilder.addQueryParameter(FORMAT, "json");
+                    senal.setCodigo(senalList.get(i *3+j).codigo);
+                    senal.setDescripcionSenal(senalList.get(i *3+j).descripcion);
+                    senal.setAprendida(senalList.get(i*3+j).aprendido);
                     String urlWithQueryParams = urlBuilder.build().toString();
                     StringRequest stringRequest = new StringRequest(GET, urlWithQueryParams,
                             new com.android.volley.Response.Listener<String>() {
@@ -198,10 +207,11 @@ public class ListaSenalesActivity extends AppCompatActivity {
                                 }
                             });
                     requestQueue.add(stringRequest);
+                    senal.setPosicionEnLista(index);
                     index++;
                     numRequests++;
                     senal.setText(senalList.get(i *3+j).nombre);
-                    senal.setContentDescription(Integer.toString(index - 1) + "|" + senalList.get(i *3+j).codigo);
+
                     senal.setBackgroundColor(Color.TRANSPARENT);
                     senal.setTextColor(Color.BLACK);
                     senal.setMaxLines(5);
@@ -209,17 +219,13 @@ public class ListaSenalesActivity extends AppCompatActivity {
                     senal.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            String[] parts = senal.getContentDescription().toString().split("\\|");
-                            Senal s = viewModel.getSenalBycodigo(parts[1]);
-                            senal_titulo.setText(s.nombre);
-                            senal_info.setText(s.descripcion);
+                            senal_titulo.setText(senal.getText());
+                            senal_info.setText(senal.getDescripcionSenal());
                             if(numRequests == 0){
                                 int w=senales.get(2).getWidth();
                                 int h=senales.get(2).getWidth();
-                                int i = Integer.parseInt(parts[0]);
-                                double r=(double) fotos.get(i).getHeight()/(double) fotos.get(i).getWidth();
-                                Drawable d= new BitmapDrawable(Bitmap.createScaledBitmap(fotos.get(i),  w, (int) (h*r),false));
-                                senal_imagen.setImageDrawable(d);
+                                int i = senal.getPosicionEnLista();
+                                senal_imagen.setImageDrawable(senal.getCompoundDrawables()[1]);
                             }
                             senalDialog.show();
                         }
@@ -239,9 +245,14 @@ public class ListaSenalesActivity extends AppCompatActivity {
                 int h=senales.get(2).getWidth();
                 for (int i = 0; i < fotos.size(); i++) {
                     double r=(double) fotos.get(i).getHeight()/(double) fotos.get(i).getWidth();
+
                     Drawable d= new BitmapDrawable(Bitmap.createScaledBitmap(fotos.get(i),  w, (int) (h*r),false));
+                    if(!senales.get(i).isAprendida()){
+                        d.setColorFilter(getColor(R.color.senal_bloqueada), PorterDuff.Mode.MULTIPLY);
+                    }
                     senales.get(i).setCompoundDrawablesWithIntrinsicBounds(null, d, null, null);
                 }
+                findViewById(androidx.constraintlayout.widget.R.id.constraint).setVisibility(View.INVISIBLE);
             }
     }
 

@@ -11,4 +11,5 @@
     <color name="line">#797979</color>
     <color name="red">#FF1100</color>
     <color name="transparent">#00FFC8C8</color>
+    <color name="senal_bloqueada">#FF242424</color>
 </resources>
