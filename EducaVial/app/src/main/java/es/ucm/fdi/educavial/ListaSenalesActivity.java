@@ -85,6 +85,7 @@ public class ListaSenalesActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        viewModel= ViewModelProviders.of(this).get(Senalviewmodel.class);
         setContentView(R.layout.activity_lista_senales);
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
@@ -129,8 +130,6 @@ public class ListaSenalesActivity extends AppCompatActivity {
         requestQueue = new RequestQueue(cache,network);
         requestQueue.start();
 
-
-        viewModel= ViewModelProviders.of(this).get(Senalviewmodel.class);
         viewModel.getSenallist().observe(this,senalList->{
             int tam=senalList.size();
             int index=0;

@@ -35,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
     private AlertDialog dialog1;
     private final static String TAG = "MainActivity";
 
+    private Senalviewmodel viewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,9 +43,7 @@ public class MainActivity extends AppCompatActivity {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         setContentView(R.layout.activity_main);
-        //ejemplo de uso
-
-        // para mostrar por consola el nombre de las señales,solo la primera vez
+        viewModel=ViewModelProviders.of(this).get(Senalviewmodel.class);
         Log.d(TAG, "Mostrar durante un segundo la pantalla con icono");
         try {
             Thread.sleep(1000);

@@ -52,9 +52,6 @@ public class Senalviewmodel extends AndroidViewModel {
     }
     private void insertarDatosIniciales() {
         if(!seInsertaronDatosIniciales) {
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
                     // Insertar datos iniciales en la base de datos
                     repository.insert(new Senal("Intersección con prioridad ", "Peligro por la proximidad de una intersección con una vía, cuyos  usuarios deben ceder el paso. ",false,"P-1","rojo","triangulo"));
                     repository.insert(new Senal("Intersección con prioridad sobre vía a la derecha", "Peligro por la proximidad de una intersección con una vía a la  derecha, cuyos usuarios deben ceder el paso. ",false,"P-1a","rojo","triangulo"));
@@ -152,8 +149,7 @@ public class Senalviewmodel extends AndroidViewModel {
                     editor.putBoolean(KEY_INSERTED_INITIAL_DATA, true);
                     editor.apply();
                     seInsertaronDatosIniciales = true;
-                }
-            }).start();
+
         }
     }
     private boolean getInsertedInitialDataFlag() {
