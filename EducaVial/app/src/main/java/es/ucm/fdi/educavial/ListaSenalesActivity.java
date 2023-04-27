@@ -552,6 +552,8 @@ public class ListaSenalesActivity extends AppCompatActivity implements SearchVie
             }
         });
 
+        findViewById(R.id.scroll).setVisibility(View.VISIBLE);
+
         Log.d(TAG, "Creando mensaje de ayuda");
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         View customLayout = getLayoutInflater().inflate(R.layout.custom_alert_dialog, null);
@@ -576,7 +578,7 @@ public class ListaSenalesActivity extends AppCompatActivity implements SearchVie
                     }
                     senales.get(i).setCompoundDrawablesWithIntrinsicBounds(null, d, null, null);
                 }
-                //findViewById(R.id.scroll).setVisibility(View.INVISIBLE);
+                findViewById(R.id.scroll).setVisibility(View.VISIBLE);
             }
     }
 
