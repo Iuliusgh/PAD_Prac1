@@ -61,11 +61,12 @@
         android:scaleY="2"
         app:srcCompat="?android:attr/actionModeWebSearchDrawable" />
 
-    <androidx.appcompat.widget.AppCompatButton
+    <Button
             android:id="@+id/filtro_nombre"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+
         android:textColor="@color/white"
         android:background="@color/purple_500"
         android:text="@string/filtro_nombre"
@@ -75,7 +76,7 @@
         app:layout_constraintBottom_toTopOf="@+id/guideline3"
         />
 
-    <androidx.appcompat.widget.AppCompatButton
+    <Button
         android:id="@+id/filtro_forma"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -88,13 +89,11 @@
         app:layout_constraintStart_toEndOf="@id/filtro_nombre"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.appcompat.widget.AppCompatButton
+    <Button
         android:id="@+id/filtro_color"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:textColor="@color/white"
-android:background="@color/purple_500"
         android:text="@string/filtro_color"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/filtro_forma"
@@ -140,7 +139,6 @@ android:background="@color/purple_500"
         android:background="@color/white"
         android:elevation="10dp"
         android:orientation="horizontal"
-
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -151,7 +149,6 @@ android:background="@color/purple_500"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent"
-            android:background="@color/background"
             app:layout_constraintBottom_toTopOf="@id/guidelineSearch"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -181,20 +178,6 @@ android:background="@color/purple_500"
                 >
             </LinearLayout>
         </ScrollView>
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/returnList"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/returnList"
-            android:background="@color/background"
-            android:textColor="@color/black"
-            android:paddingStart="10dp"
-            android:paddingEnd="10dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/scrollSearch"
-            app:layout_constraintBottom_toBottomOf="parent"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

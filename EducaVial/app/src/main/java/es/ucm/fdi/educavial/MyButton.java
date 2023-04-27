@@ -57,8 +57,8 @@ public class MyButton extends AppCompatButton {
         setIdButton(src.getIdButton());
         setAprendida(src.isAprendida());
         setCodigo(src.getCodigo());
-        setPosicionEnLista(src.getPosicionEnLista());
-        setDescripcionSenal(src.getDescripcionSenal());
+        setPosicionEnLista(getPosicionEnLista());
+        setDescripcionSenal(getDescripcionSenal());
         this.setCompoundDrawablesWithIntrinsicBounds(null,src.getCompoundDrawables()[1],null,null);
         this.setText(src.getText());
     }
