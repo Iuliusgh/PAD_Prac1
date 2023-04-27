@@ -186,15 +186,16 @@ public class EscanearActivity extends AppCompatActivity {
         imageView.setImageBitmap(senal);
         TextView info = (TextView) customLayout.findViewById(R.id.info);
         TextView title = (TextView) customLayout.findViewById(R.id.resultado);
+        title.setText("");
+        info.setText(analysisResult);
         if(sol){
             Senal s = viewModel.getSenalBycodigo(analysisResult);
-            title.setText(s.nombre);
-            info.setText(s.descripcion);
+            if(s != null){
+                title.setText(s.nombre);
+                info.setText(s.descripcion);
+            }
         }
-        else{
-            title.setText("");
-            info.setText(analysisResult);
-        }
+
 
         Button retur = (Button) customLayout.findViewById(R.id.escanear_volver);
 
@@ -342,7 +343,7 @@ public class EscanearActivity extends AppCompatActivity {
                     "R-401a",
                     "R-403c"
             };
-            if (maxConfidence<0.8) ret="No se ha podido reconocer la señal, prueba otra vez.";
+            if (maxConfidence<0.9) ret="No se ha podido reconocer la señal, prueba otra vez.";
             else{
                 sol = true;
                 ret = classes[max];
