@@ -31,7 +31,7 @@ public class SenalRepository {
         senal=Senaldao.GetSenalsbyforma();
         return senal;
     }
-    public LiveData<List<Senal>> getAllSenalsById(){return Senaldao.GetAllSenalsById();}
+
     public void deleteAllSenals() {
         new SenalRepository.DeleteAllAsyncTask(Senaldao).execute();
     }
