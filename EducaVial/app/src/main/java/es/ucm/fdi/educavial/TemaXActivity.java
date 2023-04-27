@@ -92,6 +92,7 @@ public class TemaXActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Log.i(TAG, "Botón anterior pulsado");
+                stopRepro();
                 pos--;
                 if(pos == 0){
                     ant.setEnabled(false);
@@ -107,6 +108,7 @@ public class TemaXActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Log.i(TAG, "Botón siguiente pulsado");
+                stopRepro();
                 pos++;
                 bar.setProgress( bar.getProgress() + barValue);
                 if(pos == cont.size()){
@@ -201,6 +203,12 @@ public class TemaXActivity extends AppCompatActivity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void stopRepro(){
+        if(textToSpeech != null){
+            textToSpeech.shutdown();
+        }
     }
 
     @Override
