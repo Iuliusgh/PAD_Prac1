@@ -103,7 +103,6 @@
     <string name="filtro_forma">Forma</string>
     <string name="filtro_color">Color</string>
     <string name="loading">Cargando...</string>
-    <string name="no_conection">¡No hay conexión!</string>
 
 
 </resources>

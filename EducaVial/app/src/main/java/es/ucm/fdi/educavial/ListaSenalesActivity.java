@@ -7,10 +7,8 @@ import static com.android.volley.Request.Method.GET;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.content.res.AppCompatResources;
 import androidx.lifecycle.ViewModelProviders;
 
-import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -18,8 +16,6 @@ import android.graphics.PorterDuff;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.PictureDrawable;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -31,8 +27,6 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import androidx.appcompat.widget.SearchView;
-import androidx.loader.app.LoaderManager;
-
 import android.widget.TextView;
 
 import com.android.volley.Cache;
@@ -58,7 +52,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 import okhttp3.HttpUrl;
-import pl.droidsonroids.gif.GifImageView;
 
 
 public class ListaSenalesActivity extends AppCompatActivity implements SearchView.OnQueryTextListener {
@@ -300,23 +293,6 @@ public class ListaSenalesActivity extends AppCompatActivity implements SearchVie
         requestQueue.start();
 
 
-        Log.i(TAG, "Capturando informaciones de busqueda");
-        ConnectivityManager cm =
-                (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-
-        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
-        boolean isConnected = activeNetwork != null &&
-                activeNetwork.isConnectedOrConnecting();
-        if(!isConnected){
-            findViewById(androidx.constraintlayout.widget.R.id.constraint).setVisibility(View.INVISIBLE);
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setMessage("¡No hay conexión a Internet!");
-            builder.setPositiveButton("Aceptar", null);
-            AlertDialog dialog = builder.create();
-            dialog.show();
-        }
-
-
         viewModel= ViewModelProviders.of(this).get(Senalviewmodel.class);
         viewModel.getSenallist().observe(this,senalList->{
             int tam=senalList.size();
@@ -329,85 +305,80 @@ public class ListaSenalesActivity extends AppCompatActivity implements SearchVie
                     MyButton senal =  new MyButton(this);
                     String signalCode=senalList.get(i *3+j).codigo.toLowerCase().replaceFirst("-","");
                     final int aux=index;
+                    HttpUrl.Builder urlBuilder = HttpUrl.parse(BASE_URL).newBuilder();
+                    urlBuilder.addQueryParameter(QUERY_PARAM, "query");
+                    urlBuilder.addQueryParameter(TITLES, "File"+ Uri.decode(":")+"Spain_traffic_signal_"+signalCode+".svg");
+                    urlBuilder.addQueryParameter(PROP, "imageinfo");
+                    urlBuilder.addQueryParameter(IIPROP, "url");
+                    urlBuilder.addQueryParameter(FORMAT, "json");
                     senal.setCodigo(senalList.get(i *3+j).codigo);
                     senal.setDescripcionSenal(senalList.get(i *3+j).descripcion);
                     senal.setAprendida(senalList.get(i*3+j).aprendido);
                     senal.setIdButton(senalList.get(i*3+j).id);
+                    String urlWithQueryParams = urlBuilder.build().toString();
+                    StringRequest stringRequest = new StringRequest(GET, urlWithQueryParams,
+                            new com.android.volley.Response.Listener<String>() {
+                                @Override
+                                public void onResponse(String response) {
+                                    try {
+                                        JSONObject jsonObject = new JSONObject(response);
+                                        JSONObject queryObject = jsonObject.getJSONObject("query");
+                                        JSONObject pagesObject = queryObject.getJSONObject("pages");
+                                        JSONObject menosUnoObject = pagesObject.getJSONObject("-1");
+                                        JSONArray imageinfoArray = (JSONArray) menosUnoObject.get("imageinfo");
+                                        JSONObject info = imageinfoArray.getJSONObject(0);
+                                        String url = info.getString("url");
+                                        res[aux]=url;
+                                    }
+                                    catch (JSONException e){
+                                        e.printStackTrace();
+                                    }
+                                    numRequests--;
+                                    if(numRequests==0) {
+                                        Log.i("Volley", "Requests completed");
+                                        new Thread(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                try {
+                                                    for (int l=0;l<tam;l++) {
+                                                        InputStream inputStream = new URL(res[l]).openStream();
+                                                        SVG svg = SVG.getFromInputStream(inputStream);
+                                                        Drawable drawable = new PictureDrawable(svg.renderToPicture());
+                                                        Bitmap bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(),drawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
+                                                        Canvas c=new Canvas(bitmap);
+                                                        drawable.setBounds(0,0,c.getWidth(),c.getHeight());
+                                                        drawable.draw(c);
+                                                        fotos.add(bitmap);
+                                                    }
+                                                    runOnUiThread(new Runnable() {
+                                                        @Override
+                                                        public void run() {
+                                                            setFotos();
+                                                        }
+                                                    });
+                                                } catch (IOException | SVGParseException e) {
+                                                    throw new RuntimeException(e);
+                                                }
+                                            }
+                                        }).start();
+                                    }
+                                }
+                            },
+                            new com.android.volley.Response.ErrorListener() {
+                                @Override
+                                public void onErrorResponse(VolleyError error) {
+                                    Log.i("Volley", "fallo de conexion");
+                                }
+                            });
+                    requestQueue.add(stringRequest);
+                    senal.setPosicionEnLista(index);
+                    index++;
+                    numRequests++;
                     senal.setText(senalList.get(i *3+j).nombre);
+
                     senal.setBackgroundColor(Color.TRANSPARENT);
                     senal.setTextColor(Color.BLACK);
                     senal.setTextSize(10);
-                    if(!isConnected){
-                        senal.setCompoundDrawablesWithIntrinsicBounds(null, AppCompatResources.getDrawable(this,R.drawable.placeholder),null,null);
-                    }
-                    else{
-                        HttpUrl.Builder urlBuilder = HttpUrl.parse(BASE_URL).newBuilder();
-                        urlBuilder.addQueryParameter(QUERY_PARAM, "query");
-                        urlBuilder.addQueryParameter(TITLES, "File"+ Uri.decode(":")+"Spain_traffic_signal_"+signalCode+".svg");
-                        urlBuilder.addQueryParameter(PROP, "imageinfo");
-                        urlBuilder.addQueryParameter(IIPROP, "url");
-                        urlBuilder.addQueryParameter(FORMAT, "json");
-                        String urlWithQueryParams = urlBuilder.build().toString();
-                        StringRequest stringRequest = new StringRequest(GET, urlWithQueryParams,
-                                new com.android.volley.Response.Listener<String>() {
-                                    @Override
-                                    public void onResponse(String response) {
-                                        try {
-                                            JSONObject jsonObject = new JSONObject(response);
-                                            JSONObject queryObject = jsonObject.getJSONObject("query");
-                                            JSONObject pagesObject = queryObject.getJSONObject("pages");
-                                            JSONObject menosUnoObject = pagesObject.getJSONObject("-1");
-                                            JSONArray imageinfoArray = (JSONArray) menosUnoObject.get("imageinfo");
-                                            JSONObject info = imageinfoArray.getJSONObject(0);
-                                            String url = info.getString("url");
-                                            res[aux]=url;
-                                        }
-                                        catch (JSONException e){
-                                            e.printStackTrace();
-                                        }
-                                        numRequests--;
-                                        if(numRequests==0) {
-                                            Log.i("Volley", "Requests completed");
-                                            new Thread(new Runnable() {
-                                                @Override
-                                                public void run() {
-                                                    try {
-                                                        for (int l=0;l<tam;l++) {
-                                                            InputStream inputStream = new URL(res[l]).openStream();
-                                                            SVG svg = SVG.getFromInputStream(inputStream);
-                                                            Drawable drawable = new PictureDrawable(svg.renderToPicture());
-                                                            Bitmap bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(),drawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
-                                                            Canvas c=new Canvas(bitmap);
-                                                            drawable.setBounds(0,0,c.getWidth(),c.getHeight());
-                                                            drawable.draw(c);
-                                                            fotos.add(bitmap);
-                                                        }
-                                                        runOnUiThread(new Runnable() {
-                                                            @Override
-                                                            public void run() {
-                                                                setFotos();
-                                                                findViewById(androidx.constraintlayout.widget.R.id.constraint).setVisibility(View.INVISIBLE);
-                                                            }
-                                                        });
-                                                    } catch (IOException | SVGParseException e) {
-                                                        throw new RuntimeException(e);
-                                                    }
-                                                }
-                                            }).start();
-                                        }
-                                    }
-                                },
-                                new com.android.volley.Response.ErrorListener() {
-                                    @Override
-                                    public void onErrorResponse(VolleyError error) {
-                                        Log.i("Volley", "fallo de conexion");
-                                    }
-                                });
-                        requestQueue.add(stringRequest);
-                    }
-                    index++;
-                    numRequests++;
-
                     if(senal.isAprendida()){
                         senal.setOnClickListener(new View.OnClickListener() {
                             @Override
@@ -456,6 +427,7 @@ public class ListaSenalesActivity extends AppCompatActivity implements SearchVie
                     }
                     senales.get(i).setCompoundDrawablesWithIntrinsicBounds(null, d, null, null);
                 }
+                findViewById(androidx.constraintlayout.widget.R.id.constraint).setVisibility(View.INVISIBLE);
             }
     }
 
