@@ -6,7 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background"
-    tools:context=".ReproducirActivity">
+    tools:context=".ReproducirActivity"
+    android:configChanges="orientation|screenSize">
 
     <TextView
         android:id="@+id/homeTitle"
