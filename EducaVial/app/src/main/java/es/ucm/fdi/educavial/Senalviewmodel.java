@@ -25,6 +25,7 @@ public class Senalviewmodel extends AndroidViewModel {
     LiveData<List<Senal>> getSenallist(){
         return Senallist;
     }
+    public LiveData<List<Senal>> getAllSenalsById(){ return repository.getAllSenalsById();}
     public LiveData<List<Senal>> GetSenalsbycolor(){
         Senallist=repository.GetSenalsbycolor();
         return Senallist;

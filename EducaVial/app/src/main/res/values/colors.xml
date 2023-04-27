@@ -12,4 +12,5 @@
     <color name="red">#FF1100</color>
     <color name="transparent">#00FFC8C8</color>
     <color name="senal_bloqueada">#FF242424</color>
+    <color name="boton_pulsado">#FFC107</color>
 </resources>
