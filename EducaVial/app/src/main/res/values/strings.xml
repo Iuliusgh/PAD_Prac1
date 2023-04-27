@@ -46,16 +46,16 @@
 
     <!-- Alert Dialog -->
     <string name="alert_title">Ayuda</string>
-    <string name="alert_config_text">En esta pantalla puedes activar/desactivar una configuración</string>
-    <string name="alert_profile_text">Pantalla de perfil de usuario que muestra las opciones y datos del usuario </string>
-    <string name="alert_syllabus_text">Pulsa en un tema para empezar con él.</string>
-    <string name="alert_examination_text">Pulsa en un tema para evaluarte</string>
+    <string name="alert_config_text">En esta pantalla puedes modificar la configuración de la aplicación.</string>
+    <string name="alert_profile_text">Pantalla de perfil de usuario que muestra las opciones y datos del usuario.</string>
+    <string name="alert_syllabus_text">Pulsa en un tema para empezar a estudiar.</string>
+    <string name="alert_examination_text">Pulsa en un tema para evaluarte.</string>
     <string name="alert_button_theme_text"></string>
-    <string name="alert_theme_text">Aquí muestra información de la señal, una vez aprendida pulsar siguiente.</string>
-    <string name="alert_video_text">En esta pantalla se muestra un video con el contenido con dos botones uno de pausar y otro de reanudar</string>
+    <string name="alert_theme_text">Aquí podrás ver la información del temario, pulsa siguiente para avanzar.</string>
+    <string name="alert_video_text">En esta pantalla puedes utilizar el reproductor para ver un vídeo.</string>
     <string name="alert_scanner_text">En esta pantalla puedes escanear una señal y obtener información sobre ella. Cuadra la señal dentro del rectángulo para obtener mejores resultados.</string>
     <string name="alert_tutorial_text">En esta pantalla se muestra un video explicativo sobre el uso de la aplicación.</string>
-    <string name="alert_test_text">Una vez completado te muestra correcto o incorrecto</string>
+    <string name="alert_test_text">Pulsa en una de las imágenes y después en el nombre corespondiente. Puedes reintentar el test si fallas.</string>
     <string name="alert_list_signal_text">Aqui puedes visualizar la lista de señales aprendidas</string>
     <!-- Content description -->
     <string name="profile_des">Boton para acceder al perfil</string>
