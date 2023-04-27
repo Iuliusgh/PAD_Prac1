@@ -17,6 +17,7 @@ import androidx.lifecycle.ViewModelProviders;
 
 import android.Manifest;
 import android.content.DialogInterface;
+import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -61,6 +62,7 @@ public class EscanearActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(R.layout.activity_escanear);
 
         viewModel= ViewModelProviders.of(this).get(Senalviewmodel.class);

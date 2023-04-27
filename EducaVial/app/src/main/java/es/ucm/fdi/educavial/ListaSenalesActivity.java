@@ -12,6 +12,7 @@ import androidx.appcompat.widget.AppCompatButton;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.content.Context;
+import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -92,6 +93,7 @@ public class ListaSenalesActivity extends AppCompatActivity implements SearchVie
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lista_senales);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         findViewById(R.id.constraintSearch).setVisibility(View.GONE);
         findViewById(R.id.scroll).setVisibility(View.GONE);
         ActionBar actionBar = getSupportActionBar();
