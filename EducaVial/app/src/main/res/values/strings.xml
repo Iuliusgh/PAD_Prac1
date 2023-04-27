@@ -103,6 +103,7 @@
     <string name="filtro_forma">Forma</string>
     <string name="filtro_color">Color</string>
     <string name="loading">Cargando...</string>
+    <string name="returnList">Volver a la lista de señales</string>
 
 
 </resources>

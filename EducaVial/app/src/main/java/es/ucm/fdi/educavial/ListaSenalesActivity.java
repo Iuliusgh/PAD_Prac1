@@ -7,6 +7,7 @@ import static com.android.volley.Request.Method.GET;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.graphics.Bitmap;
@@ -75,7 +76,8 @@ public class ListaSenalesActivity extends AppCompatActivity implements SearchVie
 
 
 
-    private Button filtroNombre, filtroForma,filtroColor;
+    private AppCompatButton filtroNombre, filtroForma,filtroColor,volverList;
+    private boolean nombrePulsado =false, colorPulsado=false, formaPulsado=false;
     private ImageButton search;
     private SearchView searchView;
 
@@ -87,6 +89,7 @@ public class ListaSenalesActivity extends AppCompatActivity implements SearchVie
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lista_senales);
         findViewById(R.id.constraintSearch).setVisibility(View.GONE);
+        findViewById(R.id.scroll).setVisibility(View.GONE);
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             //actionBar.setHomeAsUpIndicator(R.drawable.volver);
@@ -98,6 +101,7 @@ public class ListaSenalesActivity extends AppCompatActivity implements SearchVie
         filtroNombre = findViewById(R.id.filtro_nombre);
         filtroColor=findViewById(R.id.filtro_color);
         filtroForma=findViewById(R.id.filtro_forma);
+
         LinearLayout parentLinearLayout=findViewById(R.id.lista);
         initUI(parentLinearLayout);
         search.setOnClickListener(new View.OnClickListener() {
@@ -111,6 +115,23 @@ public class ListaSenalesActivity extends AppCompatActivity implements SearchVie
         filtroNombre.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                nombrePulsado =!nombrePulsado;
+                if(nombrePulsado){
+                    filtroNombre.setBackgroundColor(getResources().getColor(R.color.boton_pulsado));
+                    filtroNombre.setTextColor(getResources().getColor(R.color.black));
+                }
+                else{
+                    filtroNombre.setBackgroundColor(getResources().getColor(R.color.purple_500));
+                    filtroNombre.setTextColor(getResources().getColor(R.color.white));
+                    resetUI(senales,findViewById(R.id.lista));
+                }
+                filtroNombre.setEnabled(false);
+                filtroColor.setBackgroundColor(getResources().getColor(R.color.purple_500));
+                filtroColor.setTextColor(getResources().getColor(R.color.white));
+                colorPulsado=false;
+                filtroForma.setBackgroundColor(getResources().getColor(R.color.purple_500));
+                filtroForma.setTextColor(getResources().getColor(R.color.white));
+                formaPulsado=false;
                 viewModel.GetSenalsbynombre().observe(ListaSenalesActivity.this, senalList -> {
                     Collections.sort(senales,(MyButton a, MyButton b)->{
                         int idA=a.getIdButton();
@@ -140,30 +161,50 @@ public class ListaSenalesActivity extends AppCompatActivity implements SearchVie
                             senal.setTextColor(Color.BLACK);
                             senal.setTextSize(10);
                             senal.setLayoutParams(new LinearLayout.LayoutParams(0,LinearLayout.LayoutParams.WRAP_CONTENT,1));
-                            senal.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View view) {
-                                    senal_titulo.setText(senal.getText());
-                                    senal_info.setText(senal.getDescripcionSenal());
-                                    if(numRequests == 0){
-                                        int w=senales.get(2).getWidth();
-                                        int h=senales.get(2).getWidth();
-                                        int i = senal.getPosicionEnLista();
-                                        senal_imagen.setImageDrawable(senal.getCompoundDrawables()[1]);
+                            if(senal.isAprendida()) {
+                                senal.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        senal_titulo.setText(senal.getText());
+                                        senal_info.setText(senal.getDescripcionSenal());
+                                        if (numRequests == 0) {
+                                            int w = senales.get(2).getWidth();
+                                            int h = senales.get(2).getWidth();
+                                            int i = senal.getPosicionEnLista();
+                                            senal_imagen.setImageDrawable(senal.getCompoundDrawables()[1]);
+                                        }
+                                        senalDialog.show();
                                     }
-                                    senalDialog.show();
-                                }
-                            });
+                                });
+                            }
                             row.addView(senal);
                         }
                         parentLinearLayout.addView(row);
                     }
                 });
+                filtroNombre.setEnabled(true);
             }
             });
         filtroColor.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                colorPulsado=!colorPulsado;
+                if(colorPulsado){
+                    filtroColor.setBackgroundColor(getResources().getColor(R.color.boton_pulsado));
+                    filtroColor.setTextColor(getResources().getColor(R.color.black));
+                }
+                else{
+                    filtroColor.setBackgroundColor(getResources().getColor(R.color.purple_500));
+                    filtroColor.setTextColor(getResources().getColor(R.color.white));
+                    resetUI(senales,findViewById(R.id.lista));
+                }
+                filtroColor.setEnabled(false);
+                filtroNombre.setBackgroundColor(getResources().getColor(R.color.purple_500));
+                filtroNombre.setTextColor(getResources().getColor(R.color.white));
+                nombrePulsado=false;
+                filtroForma.setBackgroundColor(getResources().getColor(R.color.purple_500));
+                filtroForma.setTextColor(getResources().getColor(R.color.white));
+                formaPulsado=false;
                 viewModel.GetSenalsbycolor().observe(ListaSenalesActivity.this, senalList -> {
                     Collections.sort(senales,(MyButton a, MyButton b)->{
                         int idA=a.getIdButton();
@@ -187,36 +228,56 @@ public class ListaSenalesActivity extends AppCompatActivity implements SearchVie
                         row.setOrientation(LinearLayout.HORIZONTAL);
                         row.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
                         for (int j = 0; j < 3 && (3 * i) + j < tam; j++) {
-                            MyButton senal= new MyButton(ListaSenalesActivity.this);
+                            MyButton senal = new MyButton(ListaSenalesActivity.this);
                             senal.copy(senales.get(i * 3 + j));
                             senal.setBackgroundColor(Color.TRANSPARENT);
                             senal.setTextColor(Color.BLACK);
                             senal.setTextSize(10);
-                            senal.setLayoutParams(new LinearLayout.LayoutParams(0,LinearLayout.LayoutParams.WRAP_CONTENT,1));
+                            senal.setLayoutParams(new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1));
+                            if(senal.isAprendida()){
                             senal.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View view) {
                                     senal_titulo.setText(senal.getText());
                                     senal_info.setText(senal.getDescripcionSenal());
-                                    if(numRequests == 0){
-                                        int w=senales.get(2).getWidth();
-                                        int h=senales.get(2).getWidth();
+                                    if (numRequests == 0) {
+                                        int w = senales.get(2).getWidth();
+                                        int h = senales.get(2).getWidth();
                                         int i = senal.getPosicionEnLista();
                                         senal_imagen.setImageDrawable(senal.getCompoundDrawables()[1]);
                                     }
                                     senalDialog.show();
                                 }
                             });
+                        }
                             row.addView(senal);
                         }
                         parentLinearLayout.addView(row);
                     }
                 });
+                filtroColor.setEnabled(true);
             }
         });
         filtroForma.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                formaPulsado=!formaPulsado;
+                if(formaPulsado){
+                    filtroForma.setBackgroundColor(getResources().getColor(R.color.boton_pulsado));
+                    filtroForma.setTextColor(getResources().getColor(R.color.black));
+                }
+                else{
+                    filtroForma.setBackgroundColor(getResources().getColor(R.color.purple_500));
+                    filtroForma.setTextColor(getResources().getColor(R.color.white));
+                    resetUI(senales,findViewById(R.id.lista));
+                }
+                filtroForma.setEnabled(false);
+                filtroColor.setBackgroundColor(getResources().getColor(R.color.purple_500));
+                filtroColor.setTextColor(getResources().getColor(R.color.white));
+                colorPulsado=false;
+                filtroNombre.setBackgroundColor(getResources().getColor(R.color.purple_500));
+                filtroNombre.setTextColor(getResources().getColor(R.color.white));
+                nombrePulsado =false;
                 viewModel.GetSenalsbyforma().observe(ListaSenalesActivity.this, senalList -> {
                     Collections.sort(senales,(MyButton a, MyButton b)->{
                         int idA=a.getIdButton();
@@ -246,25 +307,28 @@ public class ListaSenalesActivity extends AppCompatActivity implements SearchVie
                             senal.setTextColor(Color.BLACK);
                             senal.setTextSize(10);
                             senal.setLayoutParams(new LinearLayout.LayoutParams(0,LinearLayout.LayoutParams.WRAP_CONTENT,1));
-                            senal.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View view) {
-                                    senal_titulo.setText(senal.getText());
-                                    senal_info.setText(senal.getDescripcionSenal());
-                                    if(numRequests == 0){
-                                        int w=senales.get(2).getWidth();
-                                        int h=senales.get(2).getWidth();
-                                        int i = senal.getPosicionEnLista();
-                                        senal_imagen.setImageDrawable(senal.getCompoundDrawables()[1]);
+                            if(senal.isAprendida()) {
+                                senal.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        senal_titulo.setText(senal.getText());
+                                        senal_info.setText(senal.getDescripcionSenal());
+                                        if (numRequests == 0) {
+                                            int w = senales.get(2).getWidth();
+                                            int h = senales.get(2).getWidth();
+                                            int i = senal.getPosicionEnLista();
+                                            senal_imagen.setImageDrawable(senal.getCompoundDrawables()[1]);
+                                        }
+                                        senalDialog.show();
                                     }
-                                    senalDialog.show();
-                                }
-                            });
+                                });
+                            }
                             row.addView(senal);
                         }
                         parentLinearLayout.addView(row);
                     }
                 });
+                filtroForma.setEnabled(true);
             }
         });
 
@@ -283,6 +347,66 @@ public class ListaSenalesActivity extends AppCompatActivity implements SearchVie
             public void onClick(View view) {
                 senalDialog.dismiss();
             }
+        });
+        volverList=findViewById(R.id.returnList);
+        volverList.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                findViewById(R.id.constraintSearch).setVisibility(View.GONE);
+                findViewById(R.id.scroll).setVisibility(View.VISIBLE);
+            }
+        });
+    }
+    void resetUI(ArrayList<MyButton> senalLista, LinearLayout parentLinearLayout){
+        findViewById(R.id.scroll).setVisibility(View.INVISIBLE);
+        viewModel.getAllSenalsById().observe(ListaSenalesActivity.this, senalList -> {
+            Collections.sort(senalLista, (MyButton a, MyButton b) -> {
+                int idA = a.getIdButton();
+                int idB = b.getIdButton();
+                int indexA = -1;
+                int indexB = -1;
+                for (int i = 0; i < senalList.size(); i++) {
+                    if (senalList.get(i).getId() == idA) {
+                        indexA = i;
+                    }
+                    if (senalList.get(i).getId() == idB) {
+                        indexB = i;
+                    }
+                }
+                return Integer.compare(indexA, indexB);
+            });
+            parentLinearLayout.removeAllViews();
+            int tam = senalLista.size();
+            for (int i = 0; i < Math.ceil((double) tam / 3); i++) {
+                LinearLayout row = new LinearLayout(ListaSenalesActivity.this);
+                row.setOrientation(LinearLayout.HORIZONTAL);
+                row.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+                for (int j = 0; j < 3 && (3 * i) + j < tam; j++) {
+                    MyButton senal = new MyButton(ListaSenalesActivity.this);
+                    senal.copy(senales.get(i * 3 + j));
+                    senal.setBackgroundColor(Color.TRANSPARENT);
+                    senal.setTextColor(Color.BLACK);
+                    senal.setTextSize(10);
+                    senal.setLayoutParams(new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1));
+                    senal.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            senal_titulo.setText(senal.getText());
+                            senal_info.setText(senal.getDescripcionSenal());
+                            if (numRequests == 0) {
+                                int w = senales.get(2).getWidth();
+                                int h = senales.get(2).getWidth();
+                                int i = senal.getPosicionEnLista();
+                                senal_imagen.setImageDrawable(senal.getCompoundDrawables()[1]);
+                            }
+                            senalDialog.show();
+                        }
+                    });
+                    row.addView(senal);
+                }
+                parentLinearLayout.addView(row);
+            }
+            findViewById(R.id.scroll).setVisibility(View.VISIBLE);
         });
     }
     private void initUI(LinearLayout parentLinearLayout){
@@ -416,8 +540,8 @@ public class ListaSenalesActivity extends AppCompatActivity implements SearchVie
 
     private void setFotos() {
             if (numRequests == 0) {
-                int w=senales.get(2).getWidth();
-                int h=senales.get(2).getWidth();
+                int w=senales.get(2).getMinWidth();
+                int h=senales.get(2).getMinWidth();
                 for (int i = 0; i < fotos.size(); i++) {
                     double r=(double) fotos.get(i).getHeight()/(double) fotos.get(i).getWidth();
 
@@ -428,6 +552,7 @@ public class ListaSenalesActivity extends AppCompatActivity implements SearchVie
                     senales.get(i).setCompoundDrawablesWithIntrinsicBounds(null, d, null, null);
                 }
                 findViewById(androidx.constraintlayout.widget.R.id.constraint).setVisibility(View.INVISIBLE);
+                findViewById(R.id.scroll).setVisibility(View.VISIBLE);
             }
     }
 
@@ -476,20 +601,22 @@ public class ListaSenalesActivity extends AppCompatActivity implements SearchVie
                 senal.setTextColor(Color.BLACK);
                 senal.setTextSize(10);
                 senal.setLayoutParams(new LinearLayout.LayoutParams(0,LinearLayout.LayoutParams.WRAP_CONTENT,1));
-                senal.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        senal_titulo.setText(senal.getText());
-                        senal_info.setText(senal.getDescripcionSenal());
-                        if(numRequests == 0){
-                            int w=senales.get(2).getWidth();
-                            int h=senales.get(2).getWidth();
-                            int i = senal.getPosicionEnLista();
-                            senal_imagen.setImageDrawable(senal.getCompoundDrawables()[1]);
+                if(senal.isAprendida()) {
+                    senal.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            senal_titulo.setText(senal.getText());
+                            senal_info.setText(senal.getDescripcionSenal());
+                            if (numRequests == 0) {
+                                int w = senales.get(2).getWidth();
+                                int h = senales.get(2).getWidth();
+                                int i = senal.getPosicionEnLista();
+                                senal_imagen.setImageDrawable(senal.getCompoundDrawables()[1]);
+                            }
+                            senalDialog.show();
                         }
-                        senalDialog.show();
-                    }
-                });
+                    });
+                }
                 listaSenales.add(senal);
             }
         }
