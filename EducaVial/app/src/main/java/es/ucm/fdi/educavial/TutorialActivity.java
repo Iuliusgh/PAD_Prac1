@@ -37,7 +37,7 @@ public class TutorialActivity extends AppCompatActivity {
         }
 
         video=(VideoView) findViewById(R.id.videoView);
-        String path = "android.resource://" + getPackageName() + "/"+ R.raw.carreteras;
+        String path = "android.resource://" + getPackageName() + "/"+ R.raw.tutorial;
         video.setVideoURI(Uri.parse(path));
 
         MediaController media = new MediaController(this);

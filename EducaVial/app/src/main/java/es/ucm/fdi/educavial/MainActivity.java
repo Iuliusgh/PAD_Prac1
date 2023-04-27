@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.loader.app.LoaderManager;
 import androidx.preference.PreferenceManager;
 
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -120,11 +121,27 @@ public class MainActivity extends AppCompatActivity {
 
         SharedPreferences prefs = getSharedPreferences("my_prefs", MODE_PRIVATE);
         boolean isFirstTime = prefs.getBoolean("is_first_time", true);
+        AlertDialog.Builder tuto = new AlertDialog.Builder(this, R.style.MyAlertDialogStyle);
+        View customLayoutTuto = getLayoutInflater().inflate(R.layout.custom_dialog_tutorial, null);
+        tuto.setView(customLayoutTuto);
+        tuto.setPositiveButton("Ver tutorial", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                tutorial();
+            }
+        });
+        tuto.setNegativeButton("Saltar tutorial", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        Dialog tutorial = tuto.create();
+        tutorial.setCancelable(false);
 
         if (isFirstTime) {
             // La aplicación está siendo iniciada por primera vez
             // Mostrar un diálogo para solicitar correo y usuario
-
             AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.MyAlertDialogStyle);
             View customLayout = getLayoutInflater().inflate(R.layout.custom_activity_dialog_main, null);
             builder.setView(customLayout);
@@ -152,11 +169,11 @@ public class MainActivity extends AppCompatActivity {
                         editor.putString("usuario", usuario);
                         editor.putBoolean("is_first_time", false);
                         editor.apply();
-                        //recreate();
-
                         dialog1.dismiss();
+                        tutorial.show();
                     }
                 }
+
             };
             if (dialog1 != null) {
                 dialog1.setCanceledOnTouchOutside(false);
@@ -167,9 +184,9 @@ public class MainActivity extends AppCompatActivity {
                         b.setOnClickListener(myListener);
                     }
                 });
-
-                dialog1.show();
             }
+            dialog1.show();
+
         }
 
 

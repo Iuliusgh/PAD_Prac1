@@ -107,5 +107,6 @@
     <string name="loading">Cargando...</string>
     <string name="returnList">Volver a la lista de señales</string>
 
-
+    <!--Tutorial-->
+    <string name="tuto">Parece que es la primera vez que utilizas EducaVial, ¿quieres ver un tutorial?</string>
 </resources>
