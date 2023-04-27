@@ -68,7 +68,6 @@
             android:layout_weight="1"
         android:textColor="@color/white"
         android:background="@color/purple_500"
-
         android:text="@string/filtro_nombre"
         app:layout_constraintStart_toEndOf="@id/imageButton3"
         app:layout_constraintEnd_toStartOf="@id/filtro_forma"
@@ -83,7 +82,6 @@
         android:layout_weight="1"
         android:textColor="@color/white"
         android:background="@color/purple_500"
-
         android:text="@string/filtro_forma"
         app:layout_constraintBottom_toTopOf="@+id/guideline3"
         app:layout_constraintEnd_toStartOf="@id/filtro_color"
