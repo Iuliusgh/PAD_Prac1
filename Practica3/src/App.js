@@ -17,9 +17,14 @@ function App() {
       axios
         .get(`https://www.googleapis.com/books/v1/volumes?q=${search}&maxResults=40&printType=BOOKS`)
         .then((response) => {
+          localStorage.setItem("ant_search", localStorage.getItem("search"));
+          localStorage.setItem("ant_author", localStorage.getItem("author"));
+          localStorage.setItem("ant_title", localStorage.getItem("title"));
           localStorage.setItem("response_data_items", JSON.stringify(response.data.items));
           localStorage.setItem("response_data_empty", JSON.stringify(response.data.totalItems === 0));
           localStorage.setItem("search", JSON.stringify(search));
+          localStorage.setItem("author", JSON.stringify(author));
+          localStorage.setItem("title", JSON.stringify(title));
           setBooks(response.data.items);
           setLoading(false);
           setBooksEmpty(response.data.totalItems === 0);
@@ -43,6 +48,16 @@ function App() {
       window.removeEventListener("offline", handleOnlineStatus);
     };
   }, []);
+  
+  const handleRetrieve = () => {
+    const savedSearch = JSON.parse(localStorage.getItem("ant_search"));
+    const savedAuthor = JSON.parse(localStorage.getItem("ant_author"));
+    const savedTitle = JSON.parse(localStorage.getItem("ant_title"));
+  
+    setSearch(savedSearch || "");
+    setAuthor(savedAuthor || "");
+    setTitle(savedTitle || "");
+  };  
 
   const handleSearch = () => {
     if (title === "" && author === "") {
@@ -69,6 +84,7 @@ function App() {
         <input type="text" id="author" placeholder='Autor' value={author} onChange={(e) => setAuthor(e.target.value)} />
       </div>
       <div className='inputs'><button onClick={handleSearch}>Buscar</button></div>
+      <div className='inputs1'><button onClick={handleRetrieve}>Recuperar</button></div>
 
       {online ? (
         loading ? (

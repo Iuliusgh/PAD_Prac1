@@ -79,6 +79,13 @@ input[type="text"] {
   flex-direction: column;
 }
 
+.inputs1{
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  margin-top: 5px;
+}
+
 label{
   display: block;
   margin-bottom: 0.5rem;
